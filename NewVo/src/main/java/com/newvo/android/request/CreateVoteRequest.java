@@ -18,6 +18,7 @@ public class CreateVoteRequest extends AbstractRequest {
     public void setValue(int value){
         if(value != -1 && value != 1){
             Log.e("JSON", value + " is not equal to -1 or 1.");
+            return;
         }
         addParam("value", value + "");
     }
