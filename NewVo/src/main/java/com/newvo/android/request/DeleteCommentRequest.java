@@ -9,7 +9,7 @@ public class DeleteCommentRequest extends AbstractRequest {
     private int id = -1;
 
     public DeleteCommentRequest() {
-        super("/api/v1/posts/:", POST);
+        super("/api/v1/posts/", POST);
     }
 
     public void setPostId(int postId){
@@ -24,7 +24,7 @@ public class DeleteCommentRequest extends AbstractRequest {
 
     private void updateUrlData(){
         if(postId != -1 && id != -1){
-            setUrlData(postId + "/comments/:" + id);
+            setUrlData(postId + "/comments/" + id);
         }
     }
 }

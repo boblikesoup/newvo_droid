@@ -6,7 +6,7 @@ package com.newvo.android.request;
 public class DeleteFollowingRequest extends AbstractRequest {
 
     public DeleteFollowingRequest() {
-        super("/api/v1/followings/:", DELETE);
+        super("/api/v1/followings/", DELETE);
     }
 
     public void setFollowedId(int id){

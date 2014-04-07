@@ -6,7 +6,7 @@ package com.newvo.android.request;
 public class UpdateUserDescriptionRequest extends AbstractRequest {
 
     public UpdateUserDescriptionRequest() {
-        super("/api/v1/users/describe", PATCH);
+        super("/api/v1/users/", PATCH);
     }
 
     public void setDescription(String description){

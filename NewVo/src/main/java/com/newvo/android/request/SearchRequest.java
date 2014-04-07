@@ -18,7 +18,7 @@ public class SearchRequest extends AbstractRequest {
     private Set<Integer> usedPostIds = new TreeSet<Integer>();
 
     public SearchRequest() {
-        super("/ap/v1/posts/search", GET);
+        super("/ap/v1/posts/search/", GET);
     }
 
     public void setQuery(String query){
