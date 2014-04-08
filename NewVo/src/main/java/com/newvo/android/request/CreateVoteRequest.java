@@ -5,14 +5,14 @@ import android.util.Log;
 /**
  * Created by David on 4/6/2014.
  */
-public class CreateVoteRequest extends AbstractRequest {
+public class CreateVoteRequest extends PostRequest {
 
     public CreateVoteRequest(){
-        super("/api/v1/votes", POST);
+        super("/api/v1/votes");
     }
 
     public void setPhotoId(int id){
-        addParam("photo", id + "");
+        addBodyParam("photo", id + "");
     }
 
     public void setValue(int value){
@@ -20,6 +20,6 @@ public class CreateVoteRequest extends AbstractRequest {
             Log.e("JSON", value + " is not equal to -1 or 1.");
             return;
         }
-        addParam("value", value + "");
+        addBodyParam("value", value + "");
     }
 }

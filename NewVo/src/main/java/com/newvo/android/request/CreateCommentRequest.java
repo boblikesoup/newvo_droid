@@ -3,12 +3,12 @@ package com.newvo.android.request;
 /**
  * Created by David on 4/5/2014.
  */
-public class CreateCommentRequest extends AbstractRequest {
+public class CreateCommentRequest extends PostRequest {
 
     private static final String BODY = "body";
 
     public CreateCommentRequest() {
-        super("/api/v1/posts/:", POST);
+        super("/api/v1/posts/:");
     }
 
     public void setPostId(int id){
@@ -16,6 +16,6 @@ public class CreateCommentRequest extends AbstractRequest {
     }
 
     public void setBody(String body){
-        addParam(BODY, body);
+        addBodyParam(BODY, body);
     }
 }

@@ -1,6 +1,13 @@
 package com.newvo.android.request;
 
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+import com.koushikdutta.ion.builder.Builders;
+import com.koushikdutta.ion.builder.LoadBuilder;
+import com.newvo.android.NewVo;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.util.ArrayList;
@@ -13,15 +20,12 @@ import java.util.Map;
  */
 abstract class AbstractRequest {
 
-    final static String GET = "get";
-    final static String POST = "post";
-    final static String DELETE = "delete";
-    final static String PATCH = "patch";
+    final static String GET = "GET";
+    final static String DELETE = "DELETE";
+    final static String PATCH = "PATCH";
 
     static String authKey = "jJZxrA4NMpiCyyFgFTiXWh0VtV71aXN7";
     static String website = "http://newvo.herokuapp.com";
-
-    private final ServiceHandler service = new ServiceHandler();
 
     private final String requestPattern;
     private final String requestType;
@@ -33,11 +37,12 @@ abstract class AbstractRequest {
     AbstractRequest(String requestPattern, String requestType){
         this.requestPattern = requestPattern;
         this.requestType = requestType;
+        addUrlParam("newvo_token", authKey);
 
     }
 
 
-    void addParam(String name, String value){
+    void addUrlParam(String name, String value){
         params.put(name, value);
     }
 
@@ -45,8 +50,28 @@ abstract class AbstractRequest {
         this.urlData = urlData;
     }
 
-    String makeRequest(){
-        return service.makeServiceCall(website + requestPattern + urlData, requestType, getParams());
+    void makeRequest(FutureCallback<JsonObject> callback){
+        String url = website + requestPattern + urlData;
+        LoadBuilder<Builders.Any.B> builder = Ion.with(NewVo.CONTEXT);
+        Builders.Any.B load;
+        //Add URL params
+        List<NameValuePair> params = getParams();
+        if (params != null && !params.isEmpty()) {
+            String paramString = URLEncodedUtils
+                    .format(params, "utf-8");
+            url += "?" + paramString;
+        }
+        load = builder.load(requestType, url);
+
+        //Add miscellaneous data. Used by PostRequest
+        addMiscData(load);
+
+        load.asJsonObject().setCallback(callback);
+
+    }
+
+    void addMiscData(Builders.Any.B load) {
+        //Do nothing. Override in PostRequest.
     }
 
     private List<NameValuePair> getParams(){

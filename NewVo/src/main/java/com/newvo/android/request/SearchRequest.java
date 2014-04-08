@@ -1,5 +1,8 @@
 package com.newvo.android.request;
 
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
+
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -22,7 +25,7 @@ public class SearchRequest extends AbstractRequest {
     }
 
     public void setQuery(String query){
-        super.addParam(QUERY, query);
+        super.addUrlParam(QUERY, query);
     }
 
     public void addUsedPostId(int id){
@@ -30,7 +33,7 @@ public class SearchRequest extends AbstractRequest {
     }
 
     @Override
-    public String makeRequest() {
+    public void makeRequest(FutureCallback<JsonObject> jsonObject) {
         StringBuilder strBuilder = new StringBuilder();
         strBuilder.append("[");
         for(Integer postId : usedPostIds){
@@ -40,7 +43,6 @@ public class SearchRequest extends AbstractRequest {
             strBuilder.append(postId);
         }
         strBuilder.append("]");
-        addParam(USED_POST_IDS, strBuilder.toString());
-        return super.makeRequest();
+        addUrlParam(USED_POST_IDS, strBuilder.toString());
     }
 }

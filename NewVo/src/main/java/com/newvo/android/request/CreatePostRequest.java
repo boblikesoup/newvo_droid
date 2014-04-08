@@ -5,18 +5,18 @@ import android.util.Log;
 /**
  * Created by David on 4/6/2014.
  */
-public class CreatePostRequest extends AbstractRequest {
+public class CreatePostRequest extends PostRequest {
 
     public static final int PUBLIC = 0;
     public static final int FRIENDS = 1;
     public static final int GROUP = 2;
 
     CreatePostRequest() {
-        super("/api/v1/posts", POST);
+        super("/api/v1/posts");
     }
 
     public void setDescription(String description){
-        addParam("description", description);
+        addUrlParam("description", description);
     }
 
     public void setViewableBy(int viewableBy){
@@ -24,7 +24,7 @@ public class CreatePostRequest extends AbstractRequest {
             Log.e("JSON", viewableBy + " is not within range 0-2.");
             return;
         }
-        addParam("viewable_by", viewableBy + "");
+        addBodyParam("viewable_by", viewableBy + "");
 
     }
 }

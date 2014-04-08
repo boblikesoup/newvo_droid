@@ -4,16 +4,17 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.v4.widget.DrawerLayout;
 import android.view.*;
 import android.widget.TextView;
-import com.newvo.android.request.ServiceHandler;
 
 
 public class NewVo extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+
+    public static Context CONTEXT;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -28,6 +29,7 @@ public class NewVo extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        CONTEXT = this;
         setContentView(R.layout.newvo_home);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
@@ -38,10 +40,6 @@ public class NewVo extends Activity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
-
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-        new ServiceHandler().makeServiceCall("http://newvo.herokuapp.com/api/v1/posts/search/?newvo_token=jJZxrA4NMpiCyyFgFTiXWh0VtV71aXN7&used_post_ids=[1,2]&query=global", ServiceHandler.GET);
     }
 
     @Override
