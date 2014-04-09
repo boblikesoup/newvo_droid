@@ -8,18 +8,19 @@ public class DeleteCommentRequest extends PostRequest {
     private int postId = -1;
     private int id = -1;
 
-    public DeleteCommentRequest() {
+    public DeleteCommentRequest(int postId, int id) {
         super("/api/v1/posts/");
+        setPostId(postId);
+        setId(id);
+        updateUrlData();
     }
 
-    public void setPostId(int postId){
+    private void setPostId(int postId){
         this.postId = postId;
-        updateUrlData();
     }
 
-    public void setId(int id){
+    private void setId(int id){
         this.id = id;
-        updateUrlData();
     }
 
     private void updateUrlData(){

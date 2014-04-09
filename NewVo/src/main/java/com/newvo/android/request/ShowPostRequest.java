@@ -5,11 +5,12 @@ package com.newvo.android.request;
  */
 public class ShowPostRequest extends AbstractRequest {
 
-    public ShowPostRequest(){
+    public ShowPostRequest(int id){
         super("/api/v1/posts/", GET);
+        setPostId(id);
     }
 
-    public void setPostId(int id){
+    private void setPostId(int id){
         setUrlData(id + "");
     }
 }

@@ -12,11 +12,7 @@ public class CurrentUserProfileRequest extends AbstractRequest {
         super("/api/v1/users", GET);
     }
 
-    public void makeRequest(FutureCallback<CurrentUserProfile> callback, boolean hasClass) {
+    public void makeRequest(FutureCallback<CurrentUserProfile> callback) {
         super.makeRequest(CurrentUserProfile.class, callback);
-    }
-
-    public void makeRequest(FutureCallback<String> callback) {
-        super.makeRequest(null, callback);
     }
 }

@@ -5,11 +5,12 @@ package com.newvo.android.request;
  */
 public class CreateFollowingRequest extends PostRequest {
 
-    public CreateFollowingRequest() {
+    public CreateFollowingRequest(int id) {
         super("/api/v1/followings");
+        setFollowedId(id);
     }
 
-    public void setFollowedId(int id){
+    private void setFollowedId(int id){
         addBodyParam("followed_id", id + "");
     }
 }

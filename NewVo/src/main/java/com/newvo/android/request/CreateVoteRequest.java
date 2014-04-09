@@ -7,15 +7,17 @@ import android.util.Log;
  */
 public class CreateVoteRequest extends PostRequest {
 
-    public CreateVoteRequest(){
+    public CreateVoteRequest(int id, int value){
         super("/api/v1/votes");
+        setPhotoId(id);
+        setValue(value);
     }
 
-    public void setPhotoId(int id){
+    private void setPhotoId(int id){
         addBodyParam("photo", id + "");
     }
 
-    public void setValue(int value){
+    private void setValue(int value){
         if(value != -1 && value != 1){
             Log.e("JSON", value + " is not equal to -1 or 1.");
             return;

@@ -17,15 +17,19 @@ public class CreatePostRequest extends PostRequest {
     private String image1Location;
     private String image2Location;
 
-    CreatePostRequest() {
+    CreatePostRequest(String description, int viewableBy, String image1, String image2) {
         super("/api/v1/posts");
+        setDescription(description);
+        setViewableBy(viewableBy);
+        setImage1(image1);
+        setImage2(image2);
     }
 
-    public void setDescription(String description){
+    private void setDescription(String description){
         addUrlParam("description", description);
     }
 
-    public void setViewableBy(int viewableBy){
+    private void setViewableBy(int viewableBy){
         if(viewableBy < 0 || viewableBy > 2){
             Log.e("JSON", viewableBy + " is not within range 0-2.");
             return;
@@ -33,11 +37,11 @@ public class CreatePostRequest extends PostRequest {
         addBodyParam("viewable_by", viewableBy + "");
     }
 
-    public void setImage1(String location){
+    private void setImage1(String location){
         this.image1Location = location;
     }
 
-    public void setImage2(String location){
+    private void setImage2(String location){
         this.image2Location = location;
     }
 

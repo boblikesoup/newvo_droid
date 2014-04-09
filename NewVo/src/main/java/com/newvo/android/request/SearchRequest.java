@@ -1,8 +1,7 @@
 package com.newvo.android.request;
 
-import com.google.gson.JsonObject;
-import com.koushikdutta.async.future.FutureCallback;
-
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -20,28 +19,27 @@ public class SearchRequest extends AbstractRequest {
 
     private Set<Integer> usedPostIds = new TreeSet<Integer>();
 
-    public SearchRequest() {
+    public SearchRequest(String query, Integer... usedPostIds) {
         super("/ap/v1/posts/search/", GET);
+        setQuery(query);
+        if(usedPostIds != null && usedPostIds.length > 0){
+            this.usedPostIds = new HashSet<Integer>(Arrays.asList(usedPostIds));
+            //Add Used Post IDs to URL
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder.append("[");
+            for(Integer postId : usedPostIds){
+                if(strBuilder.length() != 1){
+                    strBuilder.append(",");
+                }
+                strBuilder.append(postId);
+            }
+            strBuilder.append("]");
+            addUrlParam(USED_POST_IDS, strBuilder.toString());
+        }
     }
 
-    public void setQuery(String query){
+    private void setQuery(String query){
         super.addUrlParam(QUERY, query);
     }
 
-    public void addUsedPostId(int id){
-        usedPostIds.add(id);
-    }
-
-    public void makeRequest(FutureCallback<JsonObject> jsonObject) {
-        StringBuilder strBuilder = new StringBuilder();
-        strBuilder.append("[");
-        for(Integer postId : usedPostIds){
-            if(strBuilder.length() != 1){
-                strBuilder.append(",");
-            }
-            strBuilder.append(postId);
-        }
-        strBuilder.append("]");
-        addUrlParam(USED_POST_IDS, strBuilder.toString());
-    }
 }

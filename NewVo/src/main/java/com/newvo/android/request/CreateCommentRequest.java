@@ -7,15 +7,17 @@ public class CreateCommentRequest extends PostRequest {
 
     private static final String BODY = "body";
 
-    public CreateCommentRequest() {
+    public CreateCommentRequest(int id, String body) {
         super("/api/v1/posts/:");
+        setPostId(id);
+        setBody(body);
     }
 
-    public void setPostId(int id){
+    private void setPostId(int id){
         setUrlData(id + "/comments");
     }
 
-    public void setBody(String body){
+    private void setBody(String body){
         addBodyParam(BODY, body);
     }
 }

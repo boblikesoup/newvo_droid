@@ -5,11 +5,12 @@ package com.newvo.android.request;
  */
 public class DeleteFollowingRequest extends AbstractRequest {
 
-    public DeleteFollowingRequest() {
+    public DeleteFollowingRequest(int id) {
         super("/api/v1/followings/", DELETE);
+        setFollowedId(id);
     }
 
-    public void setFollowedId(int id){
+    private void setFollowedId(int id){
         setUrlData(id + "");
     }
 }

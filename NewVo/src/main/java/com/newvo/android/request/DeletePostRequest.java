@@ -5,11 +5,12 @@ package com.newvo.android.request;
  */
 public class DeletePostRequest extends AbstractRequest {
 
-    public DeletePostRequest(){
+    public DeletePostRequest(int id){
         super("/api/v1/posts/", DELETE);
+        setPostId(id);
     }
 
-    public void setPostId(int id){
+    private void setPostId(int id){
         setUrlData(id + "");
     }
 }

@@ -5,11 +5,12 @@ package com.newvo.android.request;
  */
 public class OtherUserProfileRequest extends AbstractRequest {
 
-    public OtherUserProfileRequest() {
+    public OtherUserProfileRequest(int id) {
         super("api/v1/users/:id", GET);
+        setId(id);
     }
 
-    public void setId(int id){
+    private void setId(int id){
         setUrlData(id + "");
     }
 }
