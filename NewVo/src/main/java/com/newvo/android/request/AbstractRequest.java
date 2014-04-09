@@ -1,6 +1,5 @@
 package com.newvo.android.request;
 
-import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.koushikdutta.ion.builder.Builders;
@@ -50,8 +49,15 @@ abstract class AbstractRequest {
         this.urlData = urlData;
     }
 
-    void makeRequest(FutureCallback<JsonObject> callback){
-        String url = website + requestPattern + urlData;
+    void makeRequest(Class clazz, FutureCallback callback){
+        String url = website;
+        if(requestPattern != null){
+            url += requestPattern;
+        }
+        if(urlData != null){
+            url += urlData;
+        }
+
         LoadBuilder<Builders.Any.B> builder = Ion.with(NewVo.CONTEXT);
         Builders.Any.B load;
         //Add URL params
@@ -66,7 +72,11 @@ abstract class AbstractRequest {
         //Add miscellaneous data. Used by PostRequest
         addMiscData(load);
 
-        load.asJsonObject().setCallback(callback);
+        if(clazz != null){
+            load.as(clazz).setCallback(callback);
+        } else {
+            load.asString().setCallback(callback);
+        }
 
     }
 

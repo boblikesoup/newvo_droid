@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.*;
 import android.widget.TextView;
+import com.koushikdutta.async.future.FutureCallback;
+import com.newvo.android.json.CurrentUserProfile;
+import com.newvo.android.request.CurrentUserProfileRequest;
 
 
 public class NewVo extends Activity
@@ -40,6 +43,13 @@ public class NewVo extends Activity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        new CurrentUserProfileRequest().makeRequest(new FutureCallback<CurrentUserProfile>() {
+            @Override
+            public void onCompleted(Exception e, CurrentUserProfile result) {
+                int i = 0;
+            }
+        }, true);
     }
 
     @Override

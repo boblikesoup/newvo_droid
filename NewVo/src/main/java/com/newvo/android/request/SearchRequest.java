@@ -32,7 +32,6 @@ public class SearchRequest extends AbstractRequest {
         usedPostIds.add(id);
     }
 
-    @Override
     public void makeRequest(FutureCallback<JsonObject> jsonObject) {
         StringBuilder strBuilder = new StringBuilder();
         strBuilder.append("[");

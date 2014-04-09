@@ -6,6 +6,6 @@ package com.newvo.android.request;
 public class ActivityFeedRequest extends AbstractRequest {
 
     public ActivityFeedRequest() {
-        super("api/v1/activity_feed", GET);
+        super("/api/v1/activity_feed", GET);
     }
 }
