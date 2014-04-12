@@ -58,7 +58,7 @@ abstract class AbstractRequest {
             url += urlData;
         }
 
-        LoadBuilder<Builders.Any.B> builder = Ion.with(NewVo.CONTEXT);
+        LoadBuilder<Builders.Any.B> builder = Ion.with(NewVo.getContext());
         Builders.Any.B load;
         //Add URL params
         List<NameValuePair> params = getParams();
