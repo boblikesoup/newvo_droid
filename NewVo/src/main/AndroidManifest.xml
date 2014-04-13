@@ -4,11 +4,9 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/newvo_icon"
-        android:label="@string/app_name"
-        android:theme="@style/CustomActionBarTheme" >
+        android:label="@string/app_name">
         <activity
             android:name="com.newvo.android.NewVo"
-            android:uiOptions="splitActionBarWhenNarrow"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

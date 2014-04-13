@@ -2,13 +2,36 @@
 <resources>
 
     <string name="app_name">NewVo</string>
-    <string name="title_search">Search</string>
-    <string name="title_profile">Profile</string>
+
+    <string name="title_home">Home</string>
     <string name="title_create_post">Create Post</string>
-    <string name="title_notifications">Your Activity</string>
+    <string name="title_activity">Activity</string>
+    <string name="title_profile">Profile</string>
+
+    <string name="title_search">Search</string>
     <string name="title_social">Friends</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
+    <string name="desc_list_item_icon"/>
+
+    <string name="log_out">Log Out</string>
+
+    <string-array name="nav_drawer_items">
+        <item >@string/title_home</item>
+        <item >@string/title_create_post</item>
+        <item >@string/title_activity</item>
+        <item >@string/title_profile</item>
+        <item >@string/log_out</item>
+    </string-array>
+
+    <array name="nav_drawer_icons">
+        <item>@drawable/home</item>
+        <item>@drawable/hanger</item>
+        <item>@drawable/groups</item>
+        <item>@drawable/profile</item>
+        <item>@drawable/x</item>
+    </array>
 
 </resources>

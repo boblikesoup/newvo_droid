@@ -1,19 +1,20 @@
 package com.newvo.android;
 
 import android.app.Activity;
-import android.app.ListFragment;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
+import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 /**
  * Created by David on 4/11/2014.
  */
-public class SearchFragment extends ListFragment {
+public class SearchFragment extends Fragment {
 
     @InjectView(R.id.search)
     EditText search;
@@ -32,6 +33,7 @@ public class SearchFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.search, container, false);
+        ButterKnife.inject(this, rootView);
 
         searchList.setAdapter(new ComparisonAdapter(NewVo.getContext(), R.layout.comparison));
 

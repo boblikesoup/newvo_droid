@@ -1,6 +1,5 @@
 package com.newvo.android;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,9 +21,4 @@ public class SettingsFragment extends Fragment {
         return main;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        activity.setTitle(R.string.action_settings);
-    }
 }
