@@ -24,7 +24,9 @@
                   android:layout_weight="2.5">
         <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content"
                      android:id="@+id/first_choice"
-                     android:adjustViewBounds="false"/>
+                     android:adjustViewBounds="false"
+                     android:src="@drawable/check"
+                     android:background="@null"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="vertical"
@@ -34,6 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/second_choice" android:layout_gravity="center_horizontal"
-                android:adjustViewBounds="false"/>
+                android:adjustViewBounds="false"
+                android:background="@null"/>
     </LinearLayout>
 </LinearLayout>

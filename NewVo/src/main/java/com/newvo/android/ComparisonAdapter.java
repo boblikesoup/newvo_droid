@@ -9,14 +9,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+import com.newvo.android.json.CurrentUserProfile;
+import com.newvo.android.json.Post;
+import com.newvo.android.request.CurrentUserProfileRequest;
+
+import java.util.List;
 
 /**
  * Created by David on 4/11/2014.
  */
-public class ComparisonAdapter extends ArrayAdapter {
+public class ComparisonAdapter extends ArrayAdapter<Post> {
 
     public ComparisonAdapter(Context context, int resource) {
         super(context, resource);
+        load();
     }
 
     @Override
@@ -30,9 +38,53 @@ public class ComparisonAdapter extends ArrayAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.name.setText("testname");
+        Post item = getItem(position);
+
+        holder.name.setText(item.getUserName());
+        holder.question.setText(item.getDescription());
+        holder.numberOfComments.setText(item.getComments().size());
+
+        if(item.getHasSinglePicture()){
+            holder.secondChoice.setImageResource(R.drawable.x);
+        } else {
+            holder.secondChoice.setImageResource(R.drawable.check);
+        }
+
+        loadImage(holder.userIcon, item.getProfilePic());
+        if(item.getPhotos().size() > 0){
+            loadImage(holder.firstImage, item.getPhotos().get(0).getUrl());
+        }
+        if(item.getPhotos().size() > 1){
+            loadImage(holder.secondImage, item.getPhotos().get(1).getUrl());
+        }
+
+        holder.expandButton.setImageResource(android.R.drawable.ic_menu_more);
+
+
 
         return convertView;
+    }
+
+    public void load() {
+        new CurrentUserProfileRequest().request(new FutureCallback<CurrentUserProfile>() {
+            @Override
+            public void onCompleted(Exception e, CurrentUserProfile result) {
+                if(result != null && result.getData() != null){
+                    List<Post> posts = result.getData().getPosts();
+                    if(posts != null){
+                        addAll(posts);
+                    }
+                }
+            }
+        });
+    }
+
+    public void loadImage(ImageView view, String location){
+        if(location != null){
+            Ion.with(view)
+                    .placeholder(R.drawable.x)
+                    .load(location);
+        }
     }
 
     static class ViewHolder {
