@@ -36,8 +36,8 @@ public class FragmentRetriever {
 
 
     public Fragment retrieveFragment(String name) {
-        if(name == activity.getString(R.string.title_home)){
-            return new SearchFragment();
+        if(name.equals(activity.getString(R.string.title_home))){
+            return new HomeFragment();
         }
         //Default to home.
         return new SettingsFragment();
