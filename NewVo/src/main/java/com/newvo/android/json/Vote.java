@@ -5,63 +5,70 @@ import com.google.gson.annotations.SerializedName;
 
 public class Vote {
    	private Integer id;
-
+    @SerializedName("votable_id")
+    private Integer votableId;
+    @SerializedName("user_id")
+    private Integer userId;
+    private Integer value;
+    @SerializedName("post_id")
+    private Integer postId;
+    @SerializedName("votable_type")
+    private String votableType;
    	private String photo;
 
-    @SerializedName("post_id")
-   	private Integer postId;
+    public Integer getId() {
+        return id;
+    }
 
-    @SerializedName("user_id")
-   	private Integer userId;
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-   	private Integer value;
+    public Integer getVotableId() {
+        return votableId;
+    }
 
-    @SerializedName("votable_id")
-   	private Integer votableId;
+    public void setVotableId(Integer votableId) {
+        this.votableId = votableId;
+    }
 
-    @SerializedName("votable_type")
-   	private String votableType;
+    public Integer getUserId() {
+        return userId;
+    }
 
- 	public Integer getId(){
-		return this.id;
-	}
-	public void setId(Integer id){
-		this.id = id;
-	}
- 	public String getPhoto(){
-		return this.photo;
-	}
-	public void setPhoto(String photo){
-		this.photo = photo;
-	}
- 	public Integer getPostId(){
-		return this.postId;
-	}
-	public void setPostId(Integer postId){
-		this.postId = postId;
-	}
- 	public Integer getUserId(){
-		return this.userId;
-	}
-	public void setUserId(Integer userId){
-		this.userId = userId;
-	}
- 	public int getValue(){
-		return this.value;
-	}
-	public void setValue(int value){
-		this.value = value;
-	}
- 	public int getVotableId(){
-		return this.votableId;
-	}
-	public void setVotableId(int votableId){
-		this.votableId = votableId;
-	}
- 	public String getVotableType(){
-		return this.votableType;
-	}
-	public void setVotableType(String votableType){
-		this.votableType = votableType;
-	}
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getValue() {
+        return value;
+    }
+
+    public void setValue(Integer value) {
+        this.value = value;
+    }
+
+    public Integer getPostId() {
+        return postId;
+    }
+
+    public void setPostId(Integer postId) {
+        this.postId = postId;
+    }
+
+    public String getVotableType() {
+        return votableType;
+    }
+
+    public void setVotableType(String votableType) {
+        this.votableType = votableType;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 }

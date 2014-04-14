@@ -42,9 +42,9 @@ public class ComparisonAdapter extends ArrayAdapter<Post> {
 
         holder.name.setText(item.getUserName());
         holder.question.setText(item.getDescription());
-        holder.numberOfComments.setText(item.getComments().size());
+        holder.numberOfComments.setText("Comments (" + item.getComments().size() + ")");
 
-        if(item.getHasSinglePicture()){
+        if(item.isSinglePicture()){
             holder.secondChoice.setImageResource(R.drawable.x);
         } else {
             holder.secondChoice.setImageResource(R.drawable.check);

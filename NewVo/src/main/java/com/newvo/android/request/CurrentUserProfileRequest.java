@@ -15,4 +15,8 @@ public class CurrentUserProfileRequest extends AbstractRequest {
     public void request(FutureCallback<CurrentUserProfile> callback) {
         super.makeRequest(CurrentUserProfile.class, callback);
     }
+
+    public void request2(FutureCallback<String> callback) {
+        super.makeRequest(null, callback);
+    }
 }
