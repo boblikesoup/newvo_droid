@@ -3,16 +3,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="500dp"
+              android:baselineAligned="false"
+              android:background="@null">
 
 
     <include android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             layout="@layout/comparison_title" android:layout_gravity="center_horizontal"/>
+             android:layout_height="75dp"
+             layout="@layout/comparison_title" android:layout_gravity="center_horizontal"
+        />
     <include android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             layout="@layout/comparison_images" android:layout_gravity="center_horizontal"/>
+             android:layout_height="325dp"
+             layout="@layout/comparison_images" android:layout_gravity="center_horizontal"
+        />
     <include android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             layout="@layout/comparison_selection" android:layout_gravity="center_horizontal"/>
+             android:layout_height="100dp"
+             layout="@layout/comparison_selection" android:layout_gravity="center_horizontal"
+        />
 </LinearLayout>

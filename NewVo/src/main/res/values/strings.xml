@@ -31,7 +31,7 @@
         <item>@drawable/hanger</item>
         <item>@drawable/groups</item>
         <item>@drawable/profile</item>
-        <item>@drawable/x</item>
+        <item>@drawable/x_image</item>
     </array>
 
 </resources>

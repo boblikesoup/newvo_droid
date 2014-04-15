@@ -22,7 +22,7 @@ public class HomeFragment extends Fragment {
 
         ListView listView = new ListView(inflater.getContext());
 
-        listView.setAdapter(new ComparisonAdapter(NewVo.getContext(), R.layout.comparison));
+        listView.setAdapter(new ComparisonAdapter(inflater.getContext(), R.layout.comparison));
         return listView;
     }
 

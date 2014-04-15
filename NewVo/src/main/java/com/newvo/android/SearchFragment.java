@@ -35,7 +35,7 @@ public class SearchFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.search, container, false);
         ButterKnife.inject(this, rootView);
 
-        searchList.setAdapter(new ComparisonAdapter(NewVo.getContext(), R.layout.comparison));
+        searchList.setAdapter(new ComparisonAdapter(inflater.getContext(), R.layout.comparison));
 
         return rootView;
     }
