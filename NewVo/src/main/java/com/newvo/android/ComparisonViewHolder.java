@@ -30,6 +30,10 @@ public class ComparisonViewHolder {
     LinearLayout firstImageContainer;
     @InjectView(R.id.second_image_container)
     LinearLayout secondImageContainer;
+    @InjectView(R.id.buffer1)
+    LinearLayout buffer1;
+    @InjectView(R.id.buffer2)
+    LinearLayout buffer2;
 
     public ComparisonViewHolder(View view) {
         ButterKnife.inject(this, view);
@@ -51,8 +55,13 @@ public class ComparisonViewHolder {
         if(item.getPhotos().size() > 1){
             loadImage(secondImage, item.getPhotos().get(1).getUrl());
             secondImageContainer.setVisibility(View.VISIBLE);
+            buffer1.setVisibility(View.GONE);
+            buffer2.setVisibility(View.GONE);
+
         } else {
             secondImageContainer.setVisibility(View.GONE);
+            buffer1.setVisibility(View.INVISIBLE);
+            buffer2.setVisibility(View.INVISIBLE);
         }
 
         mainButton.setImageResource(R.drawable.comments);
@@ -61,7 +70,6 @@ public class ComparisonViewHolder {
     public void loadImage(ImageView view, String location){
         if(location != null){
             Ion.with(view)
-                    .placeholder(R.drawable.x_image)
                     .load(location);
         }
     }

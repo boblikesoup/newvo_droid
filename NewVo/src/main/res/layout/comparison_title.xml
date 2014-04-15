@@ -13,6 +13,7 @@
             android:id="@+id/question" android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_margin="10dp"
-            android:gravity="center"/>
+            android:gravity="center"
+        />
 
 </LinearLayout>
