@@ -17,6 +17,11 @@
     <string name="desc_list_item_icon"/>
 
     <string name="log_out">Log Out</string>
+    <string name="comment_description">button for comments</string>
+    <string name="second_selection_description">button for second selection</string>
+    <string name="first_selection_description">button for first selection</string>
+    <string name="first_image_description">first image to compare</string>
+    <string name="second_image_description">second image to compare</string>
 
     <string-array name="nav_drawer_items">
         <item >@string/title_home</item>

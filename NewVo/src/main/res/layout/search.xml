@@ -17,5 +17,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/search"
         android:layout_gravity="bottom"
-        android:layout_weight="0"/>
+        android:layout_weight="0"
+        android:inputType="textAutoComplete"/>
 </LinearLayout>
