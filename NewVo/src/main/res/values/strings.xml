@@ -26,17 +26,15 @@
     <string-array name="nav_drawer_items">
         <item >@string/title_home</item>
         <item >@string/title_create_post</item>
-        <item >@string/title_activity</item>
         <item >@string/title_profile</item>
-        <item >@string/log_out</item>
+        <item >@string/action_settings</item>
     </string-array>
 
     <array name="nav_drawer_icons">
         <item>@drawable/home</item>
         <item>@drawable/hanger</item>
-        <item>@drawable/groups</item>
         <item>@drawable/profile</item>
-        <item>@drawable/x_image</item>
+        <item>@drawable/settings</item>
     </array>
 
 </resources>

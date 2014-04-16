@@ -38,9 +38,13 @@ public class FragmentRetriever {
     public Fragment retrieveFragment(String name) {
         if(name.equals(activity.getString(R.string.title_home))){
             return new HomeFragment();
+        } else if(name.equals(activity.getString(R.string.title_create_post))){
+            return new CreatePostFragment();
+        } else if(name.equals(activity.getString(R.string.action_settings))){
+            return new SettingsFragment();
         }
         //Default to home.
-        return new SettingsFragment();
+        return new HomeFragment();
     }
 
     public void add(NavigationDrawerItem navigationDrawerItem) {
@@ -53,7 +57,7 @@ public class FragmentRetriever {
 
     public int retrievePosition(String name) {
         for(int i = 0; i < navDrawerItems.size(); i++){
-            if(navDrawerItems.get(i).getTitle() == name){
+            if(navDrawerItems.get(i).getTitle().equals(name)){
                 return i;
             }
         }
