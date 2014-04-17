@@ -22,6 +22,8 @@
     <string name="first_selection_description">button for first selection</string>
     <string name="first_image_description">first image to compare</string>
     <string name="second_image_description">second image to compare</string>
+    <string name="camera_description">Take Picture with a Camera</string>
+    <string name="folder_description">Select Image from a Folder</string>
 
     <string-array name="nav_drawer_items">
         <item >@string/title_home</item>
