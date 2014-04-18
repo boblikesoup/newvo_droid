@@ -23,7 +23,7 @@
         android:scaleType="fitCenter"
         android:layout_margin="10dp"
         android:contentDescription="@string/comment_description"
-        android:src="@drawable/comments"/>
+        android:src="@drawable/post_button"/>
 
     <ImageButton
         android:layout_width="match_parent"
@@ -34,6 +34,7 @@
         android:layout_weight="1"
         android:layout_marginRight="10dp"
         android:scaleType="fitCenter"
-        android:contentDescription="@string/second_selection_description"/>
+        android:contentDescription="@string/second_selection_description"
+        android:src="@drawable/x_button"/>
 
 </LinearLayout>

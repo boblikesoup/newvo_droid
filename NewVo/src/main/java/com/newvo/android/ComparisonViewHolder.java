@@ -64,7 +64,6 @@ public class ComparisonViewHolder {
             buffer2.setVisibility(View.INVISIBLE);
         }
 
-        mainButton.setImageResource(R.drawable.comments);
     }
 
     public void loadImage(ImageView view, String location){
