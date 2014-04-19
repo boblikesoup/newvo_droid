@@ -4,13 +4,16 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import com.koushikdutta.ion.Ion;
 
 /**
  * Created by David on 4/16/2014.
@@ -61,15 +64,32 @@ public class CreatePostFragment extends Fragment {
         folderCamera1.cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intent, 1);
             }
         });
         folderCamera2.cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intent, 2);
+            }
+        });
+
+        folderCamera1.folderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, 3);
+            }
+        });
+        folderCamera2.folderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, 4);
             }
         });
 
@@ -79,21 +99,32 @@ public class CreatePostFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            if(requestCode == 1){
-                firstImage.setImageBitmap(imageBitmap);
-                loadSecondOption();
-            } else if(requestCode == 2){
-                secondImage.setImageBitmap(imageBitmap);
-            }
+        if (resultCode == Activity.RESULT_OK)
+            if (requestCode <= 1) {
+                Bundle extras = data.getExtras();
+                Bitmap imageBitmap = (Bitmap) extras.get("data");
+                if (requestCode == 1) {
+                    firstImage.setImageBitmap(imageBitmap);
+                    loadSecondOption();
+                } else if (requestCode == 2) {
+                    secondImage.setImageBitmap(imageBitmap);
+                }
 
-        }
+            } else {
+                Uri selectedImage = data.getData();
+                if (requestCode == 3) {
+                    Ion.with(firstImage).load(selectedImage.toString());
+                    loadSecondOption();
+                } else if (requestCode == 4) {
+                    Ion.with(secondImage).load(selectedImage.toString());
+                }
+            }
     }
 
     private void loadSecondOption(){
-        //TODO: Create loading sequence for second option.
+        buffer1.setVisibility(View.GONE);
+        buffer2.setVisibility(View.GONE);
+        secondImageContainer.setVisibility(View.VISIBLE);
     }
 
     class ViewHolder {
