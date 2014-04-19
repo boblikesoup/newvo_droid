@@ -125,6 +125,7 @@ public class CreatePostFragment extends Fragment {
         buffer1.setVisibility(View.GONE);
         buffer2.setVisibility(View.GONE);
         secondImageContainer.setVisibility(View.VISIBLE);
+        secondChoice.setImageResource(R.drawable.x_button);
     }
 
     class ViewHolder {
