@@ -24,6 +24,8 @@
     <string name="second_image_description">second image to compare</string>
     <string name="camera_description">Take Picture with a Camera</string>
     <string name="folder_description">Select Image from a Folder</string>
+    <string name="selection_button">selection button</string>
+    <string name="comments">expand for comments</string>
 
     <string-array name="nav_drawer_items">
         <item >@string/title_home</item>

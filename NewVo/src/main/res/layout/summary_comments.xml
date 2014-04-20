@@ -10,12 +10,15 @@
         android:layout_height="match_parent"
         android:id="@+id/comments_icon"
         android:src="@drawable/comments"
-        android:background="@null"/>
+        android:background="@null"
+        android:layout_weight="1"
+        android:contentDescription="@string/comments"/>
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/relativeLayout">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/relativeLayout"
+        android:layout_weight="1">
 
         <TextView
             android:layout_width="wrap_content"
@@ -35,9 +38,11 @@
     </RelativeLayout>
 
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/settings_icon"
-        android:background="@null"/>
+        android:background="@null"
+        android:src="@drawable/options"
+        android:layout_weight="1"/>
 
 </LinearLayout>

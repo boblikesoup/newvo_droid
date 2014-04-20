@@ -6,13 +6,17 @@
               android:layout_height="match_parent">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/choice_icon"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/choice_icon"
+        android:src="@drawable/check_button"
+        android:layout_weight="1"
+        android:contentDescription="@string/selection_button"/>
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
         <TextView
             android:layout_width="wrap_content"
@@ -32,9 +36,10 @@
     </RelativeLayout>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/percent"/>
+        android:id="@+id/percent"
+        android:layout_weight="1"/>
 
 </LinearLayout>
