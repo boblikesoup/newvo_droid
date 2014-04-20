@@ -40,6 +40,8 @@ public class FragmentRetriever {
             return new HomeFragment();
         } else if(name.equals(activity.getString(R.string.title_create_post))){
             return new CreatePostFragment();
+        } else if(name.equals(R.string.title_profile)){
+            return new ProfileFragment();
         } else if(name.equals(activity.getString(R.string.action_settings))){
             return new SettingsFragment();
         }
