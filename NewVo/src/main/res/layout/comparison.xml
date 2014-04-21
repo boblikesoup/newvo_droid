@@ -10,17 +10,18 @@
 
 
     <include android:layout_width="match_parent"
-             android:layout_height="match_parent"
+             android:layout_height="wrap_content"
              layout="@layout/comparison_title" android:layout_gravity="center_horizontal"
              android:layout_marginBottom="2dp"
              android:layout_marginTop="2dp"
-             android:layout_weight="0.15"/>
+        />
     <include android:layout_width="match_parent"
-             android:layout_height="match_parent"
+             android:layout_height="@dimen/image_height"
              layout="@layout/comparison_images" android:layout_gravity="center_horizontal"
-             android:layout_weight="0.65"/>
+        />
+
     <include android:layout_width="match_parent"
-             android:layout_height="match_parent"
+             android:layout_height="75dp"
              layout="@layout/comparison_selection" android:layout_gravity="center_horizontal"
-             android:layout_weight="0.200"/>
+        />
 </LinearLayout>

@@ -2,6 +2,7 @@ package com.newvo.android.request;
 
 import android.widget.ArrayAdapter;
 import com.koushikdutta.async.future.FutureCallback;
+import com.newvo.android.ComparisonViewHolder;
 import com.newvo.android.json.CurrentUserProfile;
 import com.newvo.android.json.Post;
 
@@ -32,6 +33,20 @@ public class CurrentUserProfileRequest extends AbstractRequest {
                     List<Post> posts = result.getData().getPosts();
                     if(posts != null){
                         adapter.addAll(posts);
+                    }
+                }
+            }
+        });
+    }
+
+    public static void loadSingle(final ComparisonViewHolder viewHolder){
+        new CurrentUserProfileRequest().request(new FutureCallback<CurrentUserProfile>() {
+            @Override
+            public void onCompleted(Exception e, CurrentUserProfile result) {
+                if(result != null && result.getData() != null){
+                    List<Post> posts = result.getData().getPosts();
+                    if(posts != null && !posts.isEmpty()){
+                        viewHolder.setItem(posts.get(0));
                     }
                 }
             }

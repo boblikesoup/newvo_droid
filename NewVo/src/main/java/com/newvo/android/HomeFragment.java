@@ -5,7 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import butterknife.ButterKnife;
+import com.newvo.android.request.CurrentUserProfileRequest;
 
 /**
  * Created by David on 4/13/2014.
@@ -18,11 +19,10 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        ListView listView = new ListView(inflater.getContext());
-
-        listView.setAdapter(new ComparisonAdapter(inflater.getContext(), R.layout.comparison));
-        return listView;
+        View rootView = inflater.inflate(R.layout.comparison, container, false);
+        ButterKnife.inject(this, rootView);
+        CurrentUserProfileRequest.loadSingle(new ComparisonViewHolder(rootView));
+        return rootView;
     }
 
 }
