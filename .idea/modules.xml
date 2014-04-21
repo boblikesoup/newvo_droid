@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/NewVo.iml" filepath="$PROJECT_DIR$/NewVo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/NewVo/NewVo-NewVo.iml" filepath="$PROJECT_DIR$/NewVo/NewVo-NewVo.iml" />
       <module fileurl="file://$PROJECT_DIR$/newvo_droid.iml" filepath="$PROJECT_DIR$/newvo_droid.iml" />
     </modules>
   </component>

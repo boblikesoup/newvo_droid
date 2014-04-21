@@ -36,17 +36,26 @@ public class FragmentRetriever {
 
 
     public Fragment retrieveFragment(String name) {
-        if(name.equals(activity.getString(R.string.title_home))){
+        if(compareToString(name,R.string.title_home)){
             return new HomeFragment();
-        } else if(name.equals(activity.getString(R.string.title_create_post))){
+        } else if(compareToString(name,R.string.title_create_post)){
             return new CreatePostFragment();
-        } else if(name.equals(R.string.title_profile)){
+        } else if(compareToString(name,R.string.title_profile)){
             return new ProfileFragment();
-        } else if(name.equals(activity.getString(R.string.action_settings))){
+        } else if(compareToString(name,R.string.action_settings)){
             return new SettingsFragment();
         }
         //Default to home.
         return new HomeFragment();
+    }
+
+    private boolean compareToString(String name, int resId){
+        if(name == null){
+            return false;
+        } else {
+            return name.equals(activity.getString(resId));
+        }
+
     }
 
     public void add(NavigationDrawerItem navigationDrawerItem) {

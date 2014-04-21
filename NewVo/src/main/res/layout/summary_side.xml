@@ -11,7 +11,8 @@
         android:id="@+id/choice_icon"
         android:src="@drawable/check_button"
         android:layout_weight="1"
-        android:contentDescription="@string/selection_button"/>
+        android:contentDescription="@string/selection_button"
+        android:scaleType="centerInside"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

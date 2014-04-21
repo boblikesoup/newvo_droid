@@ -1,6 +1,5 @@
 package com.newvo.android;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,8 +25,4 @@ public class HomeFragment extends Fragment {
         return listView;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-    }
 }

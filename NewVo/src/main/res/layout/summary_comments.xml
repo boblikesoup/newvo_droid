@@ -12,7 +12,8 @@
         android:src="@drawable/comments"
         android:background="@null"
         android:layout_weight="1"
-        android:contentDescription="@string/comments"/>
+        android:contentDescription="@string/comments"
+        android:scaleType="centerInside"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -31,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:id="@+id/votes_notification"
+            android:id="@+id/comments_notification"
             android:layout_toRightOf="@+id/number_of_comments"
             android:layout_centerVertical="true"
             android:textColor="#ff0100"/>
@@ -43,6 +44,7 @@
         android:id="@+id/settings_icon"
         android:background="@null"
         android:src="@drawable/options"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:scaleType="centerInside"/>
 
 </LinearLayout>
