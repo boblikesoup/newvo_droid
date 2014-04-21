@@ -4,11 +4,6 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
-import butterknife.ButterKnife;
-import butterknife.InjectView;
 import com.newvo.android.json.Post;
 import com.newvo.android.request.CurrentUserProfileRequest;
 
@@ -24,13 +19,13 @@ public class SummaryAdapter extends ArrayAdapter<Post> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+        SummaryViewHolder holder;
         if (convertView == null) {
             convertView = NewVo.inflate(R.layout.summary, null);
-            holder = new ViewHolder(convertView);
+            holder = new SummaryViewHolder(convertView);
             convertView.setTag(holder);
         } else {
-            holder = (ViewHolder) convertView.getTag();
+            holder = (SummaryViewHolder) convertView.getTag();
         }
 
         Post item = getItem(position);
@@ -39,58 +34,4 @@ public class SummaryAdapter extends ArrayAdapter<Post> {
         return convertView;
     }
 
-
-    class ViewHolder {
-
-        @InjectView(R.id.first_votes)
-        View firstVotesView;
-        SideViewHolder firstVotes;
-
-        @InjectView(R.id.second_votes)
-        View secondVotesView;
-        SideViewHolder secondVotes;
-
-        @InjectView(R.id.first_image)
-        ImageView firstImage;
-        @InjectView(R.id.second_image)
-        ImageView secondView;
-
-        //Comments Section
-        @InjectView(R.id.comments_icon)
-        ImageButton commentsIcon;
-        @InjectView(R.id.settings_icon)
-        ImageButton settingsIcon;
-        @InjectView(R.id.number_of_comments)
-        TextView numberOfComments;
-        @InjectView(R.id.comments_notification)
-        TextView commentsNotification;
-
-
-        public ViewHolder(View view) {
-            ButterKnife.inject(this, view);
-            firstVotes = new SideViewHolder(firstVotesView);
-            secondVotes = new SideViewHolder(secondVotesView);
-        }
-
-        public void setItem(Post post){
-        }
-
-    }
-
-    class SideViewHolder {
-
-        @InjectView(R.id.choice_icon)
-        ImageView choiceIcon;
-        @InjectView(R.id.votes)
-        TextView votes;
-        @InjectView(R.id.votes_notification)
-        TextView votesNotification;
-        @InjectView(R.id.percent)
-        TextView percent;
-
-        public SideViewHolder(View view) {
-            ButterKnife.inject(this, view);
-        }
-
-    }
 }

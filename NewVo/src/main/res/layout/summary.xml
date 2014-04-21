@@ -3,40 +3,48 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="200dp"
-              android:background="@color/light_transparent_background">
+              android:layout_height="match_parent"
+              android:background="@null">
 
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        layout="@layout/summary_side"
-        android:layout_weight="1"
-        android:id="@+id/first_votes"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="125dp"
+        android:background="@color/light_transparent_background">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/first_image"
-        android:layout_weight="1"
-        android:contentDescription="@string/first_image_description"/>
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/summary_side"
+            android:layout_weight="1"
+            android:id="@+id/first_votes"/>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/second_image"
-        android:layout_weight="1"
-        android:contentDescription="@string/second_image_description"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/first_image"
+            android:layout_weight="1"
+            android:contentDescription="@string/first_image_description"/>
 
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        layout="@layout/summary_side"
-        android:layout_weight="1"
-        android:id="@+id/second_votes"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/second_image"
+            android:layout_weight="1"
+            android:contentDescription="@string/second_image_description"/>
 
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        layout="@layout/summary_comments"
-        android:layout_weight="1"/>
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/summary_side"
+            android:layout_weight="1"
+            android:id="@+id/second_votes"/>
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/summary_comments"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
 </LinearLayout>
