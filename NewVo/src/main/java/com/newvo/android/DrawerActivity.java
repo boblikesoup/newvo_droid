@@ -89,9 +89,7 @@ public class DrawerActivity extends Activity {
         int position = fragmentRetriever.retrievePosition(name);
 
         if (fragment != null) {
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.frame_container, fragment).commit();
+            displayFragment(fragment, name);
 
             // update selected item and title, then close the drawer
             drawerList.setItemChecked(position, true);
@@ -102,6 +100,13 @@ public class DrawerActivity extends Activity {
             // error in creating fragment
             Log.e("MainActivity", "Error in creating fragment");
         }
+    }
+
+    public void displayFragment(Fragment fragment, String name){
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.frame_container, fragment).commit();
+        setTitle(name);
     }
 
 

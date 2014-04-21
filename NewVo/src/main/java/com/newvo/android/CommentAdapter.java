@@ -24,7 +24,7 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = NewVo.inflate(R.layout.comparison, null);
+            convertView = NewVo.inflate(R.layout.comment_single, null);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {

@@ -22,7 +22,7 @@ public class SummaryAdapter extends ArrayAdapter<Post> {
         SummaryViewHolder holder;
         if (convertView == null) {
             convertView = NewVo.inflate(R.layout.summary, null);
-            holder = new SummaryViewHolder(convertView);
+            holder = new SummaryViewHolder(getContext(), convertView);
             convertView.setTag(holder);
         } else {
             holder = (SummaryViewHolder) convertView.getTag();

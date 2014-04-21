@@ -1,5 +1,6 @@
 package com.newvo.android;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -14,6 +15,8 @@ import com.newvo.android.json.Post;
  * Created by David on 4/21/2014.
  */
 public class SummaryViewHolder {
+
+    private final Context context;
 
     @InjectView(R.id.first_votes)
     View firstVotesView;
@@ -38,11 +41,14 @@ public class SummaryViewHolder {
     @InjectView(R.id.comments_notification)
     TextView commentsNotification;
 
-    public SummaryViewHolder(View view) {
+    public SummaryViewHolder(Context context, View view) {
+        this.context = context;
         ButterKnife.inject(this, view);
+        firstVotes = new SideViewHolder(firstVotesView);
+        secondVotes = new SideViewHolder(secondVotesView);
     }
 
-    public void setItem(Post item) {
+    public void setItem(final Post item) {
         Photo photo = item.getPhotos().get(0);
         loadImage(firstImage, photo.getUrl());
         firstVotes.votes.setText(photo.getUpvotes() + "");
@@ -65,6 +71,15 @@ public class SummaryViewHolder {
         firstVotes.percent.setText(votes + "%");
 
         numberOfComments.setText(item.getComments().size() + "");
+
+        if(!item.getComments().isEmpty() && context instanceof DrawerActivity) {
+            commentsIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                        ((DrawerActivity)context).displayFragment(new CommentsFragment(item), "Comments");
+                }
+            });
+        }
 
 
     }
