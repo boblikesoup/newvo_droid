@@ -3,10 +3,11 @@ package com.newvo.android;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,11 @@ import android.widget.*;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.koushikdutta.ion.Ion;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by David on 4/16/2014.
@@ -51,6 +57,7 @@ public class CreatePostFragment extends Fragment {
 
     ViewHolder folderCamera2;
 
+    private String currentPhotoPath;
 
 
     @Override
@@ -64,15 +71,13 @@ public class CreatePostFragment extends Fragment {
         folderCamera1.cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, 1);
+                startIntent(1);
             }
         });
         folderCamera2.cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, 2);
+                startIntent(2);
             }
         });
 
@@ -102,15 +107,11 @@ public class CreatePostFragment extends Fragment {
         if (resultCode == Activity.RESULT_OK) {
             ImageView imageView = (requestCode % 2 == 1) ? firstImage : secondImage;
             LinearLayout folderCameraLayout = (requestCode % 2 == 1) ? folderCameraLayout1 : folderCameraLayout2;
+            String photoPath = (requestCode <= 2) ? currentPhotoPath : data.getData().toString();
 
-            if (requestCode <= 2) {
-                Bundle extras = data.getExtras();
-                Bitmap imageBitmap = (Bitmap) extras.get("data");
-                imageView.setImageBitmap(imageBitmap);
-            } else {
-                Uri selectedImage = data.getData();
-                Ion.with(imageView).load(selectedImage.toString());
-            }
+
+            Ion.with(imageView).load(photoPath);
+
             if (requestCode % 2 == 1) {
                 loadSecondOption();
             }
@@ -137,4 +138,38 @@ public class CreatePostFragment extends Fragment {
         }
 
     }
+
+    private void startIntent(int requestCode){
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File photoFile = null;
+        try {
+            photoFile = createImageFile();
+        } catch (IOException ex) {
+            Log.e("newvo","Failed to create image file.");
+        }
+
+        if(photoFile != null){
+            intent.putExtra(MediaStore.EXTRA_OUTPUT,
+                    Uri.fromFile(photoFile));
+            startActivityForResult(intent, requestCode);
+        }
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = "file:" + image.getAbsolutePath();
+        return image;
+    }
+
 }
