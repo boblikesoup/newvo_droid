@@ -12,7 +12,9 @@
         android:src="@drawable/check_button"
         android:layout_weight="1"
         android:contentDescription="@string/selection_button"
-        android:scaleType="centerInside"/>
+        android:scaleType="centerInside"
+        android:layout_gravity="center"
+        android:layout_margin="2dp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -24,7 +26,8 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/votes"
-            android:layout_centerVertical="true"/>
+            android:layout_centerInParent="true"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -41,6 +44,9 @@
         android:layout_height="match_parent"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/percent"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:gravity="center"
+        />
 
 </LinearLayout>

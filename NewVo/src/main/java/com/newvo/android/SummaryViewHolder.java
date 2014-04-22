@@ -65,7 +65,7 @@ public class SummaryViewHolder {
             secondVotes.choiceIcon.setImageResource(R.drawable.x_button);
             totalVotes = photo.getUpvotes() + photo.getDownvotes();
             int votes = photo.getDownvotes() * 100 / totalVotes;
-            secondVotes.percent.setText(votes + "");
+            secondVotes.percent.setText(votes + "%");
         }
         int votes = photo.getUpvotes() * 100 / totalVotes;
         firstVotes.percent.setText(votes + "%");
