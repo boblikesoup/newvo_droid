@@ -99,26 +99,24 @@ public class CreatePostFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK)
-            if (requestCode <= 1) {
+        if (resultCode == Activity.RESULT_OK) {
+            ImageView imageView = (requestCode % 2 == 1) ? firstImage : secondImage;
+            LinearLayout folderCameraLayout = (requestCode % 2 == 1) ? folderCameraLayout1 : folderCameraLayout2;
+
+            if (requestCode <= 2) {
                 Bundle extras = data.getExtras();
                 Bitmap imageBitmap = (Bitmap) extras.get("data");
-                if (requestCode == 1) {
-                    firstImage.setImageBitmap(imageBitmap);
-                    loadSecondOption();
-                } else if (requestCode == 2) {
-                    secondImage.setImageBitmap(imageBitmap);
-                }
-
+                imageView.setImageBitmap(imageBitmap);
             } else {
                 Uri selectedImage = data.getData();
-                if (requestCode == 3) {
-                    Ion.with(firstImage).load(selectedImage.toString());
-                    loadSecondOption();
-                } else if (requestCode == 4) {
-                    Ion.with(secondImage).load(selectedImage.toString());
-                }
+                Ion.with(imageView).load(selectedImage.toString());
             }
+            if (requestCode % 2 == 1) {
+                loadSecondOption();
+            }
+
+            folderCameraLayout.setVisibility(View.GONE);
+        }
     }
 
     private void loadSecondOption(){
