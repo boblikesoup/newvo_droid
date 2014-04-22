@@ -15,7 +15,9 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:layout_width="match_parent"
                   android:layout_height="100dp"
-                  android:orientation="horizontal">
+                  android:orientation="horizontal"
+                  android:layout_marginLeft="15dp"
+                  android:layout_marginRight="15dp">
 
         <ImageButton
             android:id="@+id/first_choice"
@@ -33,7 +35,7 @@
             android:id="@+id/main_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
+            android:layout_margin="20dp"
             android:layout_weight="1"
             android:background="@null"
             android:contentDescription="@string/comment_description"
