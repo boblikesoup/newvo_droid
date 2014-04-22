@@ -1,39 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="100dp">
-    <ImageButton android:layout_width="match_parent" android:layout_height="match_parent"
-                 android:id="@+id/first_choice"
-                 android:adjustViewBounds="false"
-                 android:src="@drawable/check_button"
-                 android:background="@null"
-                 android:scaleType="fitCenter"
-                 android:layout_weight="1"
-                 android:layout_marginLeft="10dp"
-                 android:contentDescription="@string/first_selection_description"/>
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
-    <ImageButton
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/main_button"
-        android:background="@null"
-        android:layout_weight="1"
-        android:scaleType="fitCenter"
-        android:layout_margin="10dp"
-        android:contentDescription="@string/comment_description"
-        android:src="@drawable/comments"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+    </LinearLayout>
 
-    <ImageButton
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/second_choice"
-        android:adjustViewBounds="false"
-        android:background="@null"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="100dp"
+                  android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/first_choice"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:adjustViewBounds="false"
+            android:background="@null"
+            android:contentDescription="@string/first_selection_description"
+            android:scaleType="fitCenter"
+            android:src="@drawable/check_button"/>
+
+        <ImageButton
+            android:id="@+id/main_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:contentDescription="@string/comment_description"
+            android:scaleType="fitCenter"
+            android:src="@drawable/comments"/>
+
+        <ImageButton
+            android:id="@+id/second_choice"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:adjustViewBounds="false"
+            android:background="@null"
+            android:contentDescription="@string/second_selection_description"
+            android:scaleType="fitCenter"
+            android:src="@drawable/x_button"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginRight="10dp"
-        android:scaleType="fitCenter"
-        android:contentDescription="@string/second_selection_description"/>
+        android:id="@+id/linearLayout">
+    </LinearLayout>
 
 </LinearLayout>

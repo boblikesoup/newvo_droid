@@ -11,7 +11,8 @@
         android:layout_width="fill_parent"
         android:layout_height="125dp"
         android:background="@color/light_transparent_background"
-        android:layout_margin="2dp">
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp">
 
         <include
             android:layout_width="match_parent"

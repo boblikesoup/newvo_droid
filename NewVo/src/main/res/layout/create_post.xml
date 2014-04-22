@@ -3,7 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              android:layout_height="match_parent"
               android:baselineAligned="false"
               android:background="@null"
               android:id="@+id/comparison_view">
@@ -22,6 +22,6 @@
     <include android:layout_width="match_parent"
              android:layout_height="75dp"
              layout="@layout/create_post_selection" android:layout_gravity="center_horizontal"
-             android:layout_weight="0"/>
+             android:layout_weight="1"/>
 
 </LinearLayout>

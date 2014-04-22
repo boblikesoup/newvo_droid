@@ -1,40 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
+              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="100dp">
-    <ImageButton android:layout_width="match_parent" android:layout_height="match_parent"
-                 android:id="@+id/first_choice"
-                 android:adjustViewBounds="false"
-                 android:src="@drawable/check_button"
-                 android:background="@null"
-                 android:scaleType="fitCenter"
-                 android:layout_weight="1"
-                 android:layout_marginLeft="10dp"
-                 android:contentDescription="@string/first_selection_description"/>
+              android:layout_height="match_parent">
 
-    <ImageButton
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/main_button"
-        android:background="@null"
-        android:layout_weight="1"
-        android:scaleType="fitCenter"
-        android:layout_margin="10dp"
-        android:contentDescription="@string/comment_description"
-        android:src="@drawable/post_button"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+    </LinearLayout>
 
-    <ImageButton
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/second_choice"
-        android:adjustViewBounds="false"
-        android:background="@null"
+        android:layout_height="100dp">
+
+        <ImageButton android:layout_width="match_parent" android:layout_height="match_parent"
+                     android:id="@+id/first_choice"
+                     android:adjustViewBounds="false"
+                     android:src="@drawable/check_button"
+                     android:background="@null"
+                     android:scaleType="fitCenter"
+                     android:layout_weight="1"
+                     android:layout_marginLeft="10dp"
+                     android:contentDescription="@string/first_selection_description"/>
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/main_button"
+            android:background="@null"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:layout_margin="10dp"
+            android:contentDescription="@string/comment_description"
+            android:src="@drawable/post_button"/>
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/second_choice"
+            android:adjustViewBounds="false"
+            android:background="@null"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"
+            android:scaleType="fitCenter"
+            android:contentDescription="@string/second_selection_description"
+            android:src="@drawable/x_button"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginRight="10dp"
-        android:scaleType="fitCenter"
-        android:contentDescription="@string/second_selection_description"
-        android:src="@drawable/x_button"/>
+        android:id="@+id/linearLayout">
+    </LinearLayout>
 
 </LinearLayout>
