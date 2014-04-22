@@ -7,8 +7,8 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/NewVo" />
+            <option value="F:\newvo_droid" />
+            <option value="F:\newvo_droid\NewVo" />
           </set>
         </option>
       </GradleProjectSettings>
