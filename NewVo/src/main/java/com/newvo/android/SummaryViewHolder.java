@@ -76,7 +76,7 @@ public class SummaryViewHolder {
             commentsIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                        ((DrawerActivity)context).displayFragment(new CommentsFragment(item), "Comments");
+                        ((DrawerActivity)context).displayFragment(new CommentsFragment(item), "Profile > Comments");
                 }
             });
         }

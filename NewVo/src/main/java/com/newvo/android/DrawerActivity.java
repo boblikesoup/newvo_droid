@@ -3,6 +3,7 @@ package com.newvo.android;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -86,15 +87,10 @@ public class DrawerActivity extends Activity {
         // update the main content by replacing fragments
         Fragment fragment = fragmentRetriever.retrieveFragment(name);
 
-        int position = fragmentRetriever.retrievePosition(name);
-
         if (fragment != null) {
             displayFragment(fragment, name);
 
             // update selected item and title, then close the drawer
-            drawerList.setItemChecked(position, true);
-            drawerList.setSelection(position);
-            setTitle(name);
             drawerLayout.closeDrawer(drawerList);
         } else {
             // error in creating fragment
@@ -102,11 +98,30 @@ public class DrawerActivity extends Activity {
         }
     }
 
+    private FragmentManager.OnBackStackChangedListener backStackChangedListener = new FragmentManager.OnBackStackChangedListener() {
+        @Override
+        public void onBackStackChanged() {
+            int backStackEntryCount = getFragmentManager().getBackStackEntryCount();
+            if (backStackEntryCount > 0) {
+                FragmentManager.BackStackEntry backStackEntryAt = getFragmentManager().getBackStackEntryAt(backStackEntryCount - 1);
+                setTitle(backStackEntryAt.getBreadCrumbTitle());
+            } else {
+                onBackPressed();
+            }
+        }
+    };
+
     public void displayFragment(Fragment fragment, String name){
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.frame_container, fragment).commit();
-        setTitle(name);
+        if(name.equals(getString(R.string.title_home))){
+            fragmentManager.removeOnBackStackChangedListener(backStackChangedListener);
+            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            fragmentManager.addOnBackStackChangedListener(backStackChangedListener);
+        }
+        FragmentTransaction transaction = fragmentManager.beginTransaction()
+                .replace(R.id.frame_container, fragment).setBreadCrumbTitle(name).addToBackStack(name);
+        transaction.commit();
+
     }
 
 
@@ -141,6 +156,15 @@ public class DrawerActivity extends Activity {
     public void setTitle(CharSequence title) {
         super.setTitle(title);
         getActionBar().setTitle(title);
+        int resId = fragmentRetriever.retrieveIcon(title.toString());
+        if(resId > -1){
+            getActionBar().setIcon(resId);
+        }
+        int position = fragmentRetriever.retrievePosition(title.toString());
+        if(position > -1){
+            drawerList.setItemChecked(position, true);
+            drawerList.setSelection(position);
+        }
     }
 
     //region Toggle Support

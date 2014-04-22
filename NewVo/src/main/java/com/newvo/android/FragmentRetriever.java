@@ -75,6 +75,15 @@ public class FragmentRetriever {
         return -1;
     }
 
+    public int retrieveIcon(String name){
+        for(int i = 0; i < navDrawerItems.size(); i++){
+            if(navDrawerItems.get(i).getTitle().equals(name)){
+                return navDrawerItems.get(i).getIcon();
+            }
+        }
+        return -1;
+    }
+
     public String retrieveName(int position) {
         return navDrawerItems.get(position).getTitle();
     }
