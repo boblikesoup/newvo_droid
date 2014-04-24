@@ -1,5 +1,6 @@
 package com.newvo.android.request;
 
+import android.content.Context;
 import android.util.Log;
 
 /**
@@ -7,18 +8,18 @@ import android.util.Log;
  */
 public class CreateVoteRequest extends PostRequest {
 
-    public CreateVoteRequest(int id, int value){
-        super("/api/v1/votes");
+    public CreateVoteRequest(Context context, int id, int value) {
+        super(context, "/api/v1/votes");
         setPhotoId(id);
         setValue(value);
     }
 
-    private void setPhotoId(int id){
+    private void setPhotoId(int id) {
         addBodyParam("photo", id + "");
     }
 
-    private void setValue(int value){
-        if(value != -1 && value != 1){
+    private void setValue(int value) {
+        if (value != -1 && value != 1) {
             Log.e("JSON", value + " is not equal to -1 or 1.");
             return;
         }

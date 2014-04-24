@@ -21,7 +21,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.comparison, container, false);
         ButterKnife.inject(this, rootView);
-        CurrentUserProfileRequest.loadSingle(new ComparisonViewHolder(rootView));
+        CurrentUserProfileRequest.loadSingle(getActivity(), new ComparisonViewHolder(rootView));
         return rootView;
     }
 

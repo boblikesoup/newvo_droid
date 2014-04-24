@@ -1,5 +1,6 @@
 package com.newvo.android.request;
 
+import android.content.Context;
 import com.koushikdutta.ion.builder.Builders;
 
 import java.util.HashMap;
@@ -14,8 +15,8 @@ abstract class PostRequest extends AbstractRequest {
 
     private Map<String, String> bodyParams = new HashMap<String, String>();
 
-    PostRequest(String requestType) {
-        super(POST, requestType);
+    PostRequest(Context context, String requestType) {
+        super(context, POST, requestType);
     }
 
     void addBodyParam(String name, String value) {
@@ -25,7 +26,7 @@ abstract class PostRequest extends AbstractRequest {
     @Override
     void addMiscData(Builders.Any.B load) {
         //Add body params
-        for(Map.Entry<String, String> param : bodyParams.entrySet()){
+        for (Map.Entry<String, String> param : bodyParams.entrySet()) {
             load.setBodyParameter(param.getKey(), param.getValue());
         }
     }

@@ -1,5 +1,7 @@
 package com.newvo.android.request;
 
+import android.content.Context;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,16 +21,16 @@ public class SearchRequest extends AbstractRequest {
 
     private Set<Integer> usedPostIds = new TreeSet<Integer>();
 
-    public SearchRequest(String query, Integer... usedPostIds) {
-        super("/ap/v1/posts/search/", GET);
+    public SearchRequest(Context context, String query, Integer... usedPostIds) {
+        super(context, "/ap/v1/posts/search/", GET);
         setQuery(query);
-        if(usedPostIds != null && usedPostIds.length > 0){
+        if (usedPostIds != null && usedPostIds.length > 0) {
             this.usedPostIds = new HashSet<Integer>(Arrays.asList(usedPostIds));
             //Add Used Post IDs to URL
             StringBuilder strBuilder = new StringBuilder();
             strBuilder.append("[");
-            for(Integer postId : usedPostIds){
-                if(strBuilder.length() != 1){
+            for (Integer postId : usedPostIds) {
+                if (strBuilder.length() != 1) {
                     strBuilder.append(",");
                 }
                 strBuilder.append(postId);
@@ -38,7 +40,7 @@ public class SearchRequest extends AbstractRequest {
         }
     }
 
-    private void setQuery(String query){
+    private void setQuery(String query) {
         super.addUrlParam(QUERY, query);
     }
 

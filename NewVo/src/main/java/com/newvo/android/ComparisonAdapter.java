@@ -1,6 +1,7 @@
 package com.newvo.android;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -21,7 +22,7 @@ public class ComparisonAdapter extends ArrayAdapter<Post> {
     public View getView(int position, View convertView, ViewGroup parent) {
         ComparisonViewHolder holder;
         if (convertView == null) {
-            convertView = NewVo.inflate(R.layout.comparison, null);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.comparison, null);
             holder = new ComparisonViewHolder(convertView);
             convertView.setTag(holder);
         } else {

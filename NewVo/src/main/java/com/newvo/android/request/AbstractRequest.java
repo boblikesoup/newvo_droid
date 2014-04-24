@@ -1,10 +1,10 @@
 package com.newvo.android.request;
 
+import android.content.Context;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.koushikdutta.ion.builder.Builders;
 import com.koushikdutta.ion.builder.LoadBuilder;
-import com.newvo.android.NewVo;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
@@ -32,8 +32,10 @@ abstract class AbstractRequest {
     private String urlData;
 
     private Map<String, String> params = new HashMap<String, String>();
+    private Context context;
 
-    AbstractRequest(String requestPattern, String requestType){
+    AbstractRequest(Context context, String requestPattern, String requestType) {
+        this.context = context;
         this.requestPattern = requestPattern;
         this.requestType = requestType;
         addUrlParam("newvo_token", authKey);
@@ -41,7 +43,7 @@ abstract class AbstractRequest {
     }
 
 
-    void addUrlParam(String name, String value){
+    void addUrlParam(String name, String value) {
         params.put(name, value);
     }
 
@@ -49,16 +51,16 @@ abstract class AbstractRequest {
         this.urlData = urlData;
     }
 
-    void makeRequest(Class clazz, FutureCallback callback){
+    void makeRequest(Class clazz, FutureCallback callback) {
         String url = website;
-        if(requestPattern != null){
+        if (requestPattern != null) {
             url += requestPattern;
         }
-        if(urlData != null){
+        if (urlData != null) {
             url += urlData;
         }
 
-        LoadBuilder<Builders.Any.B> builder = Ion.with(NewVo.getContext());
+        LoadBuilder<Builders.Any.B> builder = Ion.with(getContext());
         Builders.Any.B load;
         //Add URL params
         List<NameValuePair> params = getParams();
@@ -72,7 +74,7 @@ abstract class AbstractRequest {
         //Add miscellaneous data. Used by PostRequest
         addMiscData(load);
 
-        if(clazz != null){
+        if (clazz != null) {
             load.as(clazz).setCallback(callback);
         } else {
             load.asString().setCallback(callback);
@@ -84,11 +86,19 @@ abstract class AbstractRequest {
         //Do nothing. Override in PostRequest.
     }
 
-    private List<NameValuePair> getParams(){
+    private List<NameValuePair> getParams() {
         List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-        for(Map.Entry<String, String> param : params.entrySet()){
+        for (Map.Entry<String, String> param : params.entrySet()) {
             nameValuePairs.add(new BasicNameValuePair(param.getKey(), param.getValue()));
         }
         return nameValuePairs;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 }

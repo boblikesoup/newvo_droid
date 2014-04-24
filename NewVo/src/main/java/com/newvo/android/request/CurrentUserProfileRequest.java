@@ -1,5 +1,6 @@
 package com.newvo.android.request;
 
+import android.content.Context;
 import android.widget.ArrayAdapter;
 import com.koushikdutta.async.future.FutureCallback;
 import com.newvo.android.ComparisonViewHolder;
@@ -13,8 +14,8 @@ import java.util.List;
  */
 public class CurrentUserProfileRequest extends AbstractRequest {
 
-    public CurrentUserProfileRequest() {
-        super("/api/v1/users", GET);
+    public CurrentUserProfileRequest(Context context) {
+        super(context, "/api/v1/users", GET);
     }
 
     public void request(FutureCallback<CurrentUserProfile> callback) {
@@ -26,12 +27,12 @@ public class CurrentUserProfileRequest extends AbstractRequest {
     }
 
     public static void load(final ArrayAdapter adapter) {
-        new CurrentUserProfileRequest().request(new FutureCallback<CurrentUserProfile>() {
+        new CurrentUserProfileRequest(adapter.getContext()).request(new FutureCallback<CurrentUserProfile>() {
             @Override
             public void onCompleted(Exception e, CurrentUserProfile result) {
-                if(result != null && result.getData() != null){
+                if (result != null && result.getData() != null) {
                     List<Post> posts = result.getData().getPosts();
-                    if(posts != null){
+                    if (posts != null) {
                         adapter.addAll(posts);
                     }
                 }
@@ -39,13 +40,13 @@ public class CurrentUserProfileRequest extends AbstractRequest {
         });
     }
 
-    public static void loadSingle(final ComparisonViewHolder viewHolder){
-        new CurrentUserProfileRequest().request(new FutureCallback<CurrentUserProfile>() {
+    public static void loadSingle(Context context, final ComparisonViewHolder viewHolder) {
+        new CurrentUserProfileRequest(context).request(new FutureCallback<CurrentUserProfile>() {
             @Override
             public void onCompleted(Exception e, CurrentUserProfile result) {
-                if(result != null && result.getData() != null){
+                if (result != null && result.getData() != null) {
                     List<Post> posts = result.getData().getPosts();
-                    if(posts != null && !posts.isEmpty()){
+                    if (posts != null && !posts.isEmpty()) {
                         viewHolder.setItem(posts.get(0));
                     }
                 }
