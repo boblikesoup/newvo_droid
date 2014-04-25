@@ -27,6 +27,9 @@
     <string name="selection_button">selection button</string>
     <string name="comments">expand for comments</string>
     <string name="remove_comment">remove comment</string>
+    <string name="title_facebook_login">NewVo Login</string>
+    <string name="app_id">760522837298852</string>
+    <string name="title_login">NewVo Login</string>
 
     <string-array name="nav_drawer_items">
         <item >@string/title_home</item>
