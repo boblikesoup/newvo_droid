@@ -83,7 +83,7 @@ public class DrawerActivity extends Activity {
 
     }
 
-    private void displayView(String name) {
+    protected void displayView(String name) {
         // update the main content by replacing fragments
         Fragment fragment = fragmentRetriever.retrieveFragment(name);
 
