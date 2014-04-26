@@ -9,10 +9,10 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/newvo_icon"
-        android:theme="@style/NoActionBar"
         android:label="@string/app_name">
         <activity
-            android:name="com.newvo.android.SignInActivity">
+            android:name="com.newvo.android.SignInActivity"
+            android:theme="@style/NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
