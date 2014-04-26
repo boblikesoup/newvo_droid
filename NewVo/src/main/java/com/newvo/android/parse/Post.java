@@ -1,11 +1,13 @@
 package com.newvo.android.parse;
 
 import android.graphics.Bitmap;
+import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
 /**
  * Created by David on 4/26/2014.
  */
+@ParseClassName("Post")
 public class Post extends ParseObject {
 
     public String getUserId(){
