@@ -3,6 +3,7 @@ package com.newvo.android;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import com.parse.*;
 
 /**
@@ -17,6 +18,9 @@ public class SignInActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         Parse.initialize(this, "mnR3s9BtzI7VKxrPc6TJUovwxelScZcU8LRH5pLT", "TLZWWjjbzPxAQJiDfR1zcUkpN0jNaSVvQnyuqTaZ");
         ParseFacebookUtils.initialize("760522837298852");
 
@@ -49,8 +53,8 @@ public class SignInActivity extends Activity {
     private void assignUser(ParseUser user) {
         if (user != null) {
             Intent intent = new Intent(this, NewVo.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             startActivity(intent);
+            finish();
         }
     }
 }

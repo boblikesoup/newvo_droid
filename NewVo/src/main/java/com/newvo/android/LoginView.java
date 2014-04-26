@@ -32,6 +32,5 @@ public class LoginView extends LinearLayout {
     @OnClick (R.id.facebook_button)
     public void submit(){
         ParseFacebookUtils.logIn(activity, callback);
-
     }
 }
