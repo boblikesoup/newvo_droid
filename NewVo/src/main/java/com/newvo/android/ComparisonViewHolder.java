@@ -8,7 +8,7 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.koushikdutta.ion.Ion;
-import com.newvo.android.json.Post;
+import com.newvo.android.parse.Post;
 
 /**
  * Created by David on 4/15/2014.
@@ -16,9 +16,9 @@ import com.newvo.android.json.Post;
 public class ComparisonViewHolder {
     @InjectView(R.id.question)
     TextView question;
-    @InjectView(R.id.first_image)
+    @InjectView(R.id.photo1)
     ImageView firstImage;
-    @InjectView(R.id.second_image)
+    @InjectView(R.id.photo2)
     ImageView secondImage;
     @InjectView(R.id.main_button)
     ImageButton mainButton;
@@ -41,19 +41,21 @@ public class ComparisonViewHolder {
 
     public void setItem(Post item){
 
-        question.setText(item.getDescription());
+        question.setText(item.getCaption());
 
-        if(item.isSinglePicture()){
+        String photo2 = item.getPhoto2Url();
+        if(photo2 != null){
             secondChoice.setImageResource(R.drawable.x_button);
         } else {
             secondChoice.setImageResource(R.drawable.check_button);
         }
 
-        if(item.getPhotos().size() > 0){
-            loadImage(firstImage, item.getPhotos().get(0).getUrl());
+        String photo1 = item.getPhoto1Url();
+        if(photo1 != null){
+            Ion.with(firstImage).load(photo1);
         }
-        if(item.getPhotos().size() > 1){
-            loadImage(secondImage, item.getPhotos().get(1).getUrl());
+        if(photo2 != null){
+            Ion.with(secondImage).load(photo2);
             secondImageContainer.setVisibility(View.VISIBLE);
             buffer1.setVisibility(View.GONE);
             buffer2.setVisibility(View.GONE);

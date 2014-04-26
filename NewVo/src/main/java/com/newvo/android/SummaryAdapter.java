@@ -5,8 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import com.newvo.android.json.Post;
-import com.newvo.android.request.CurrentUserProfileRequest;
+import com.newvo.android.parse.Post;
 
 /**
  * Created by David on 4/20/2014.
@@ -15,7 +14,6 @@ public class SummaryAdapter extends ArrayAdapter<Post> {
 
     public SummaryAdapter(Context context, int resource) {
         super(context, resource);
-        CurrentUserProfileRequest.load(this);
     }
 
     @Override

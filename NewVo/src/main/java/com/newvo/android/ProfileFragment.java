@@ -6,6 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import com.newvo.android.parse.Post;
+import com.newvo.android.remote.CurrentUserProfileRequest;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+
+import java.util.List;
 
 /**
  * Created by David on 4/20/2014.
@@ -21,7 +27,15 @@ public class ProfileFragment extends Fragment {
 
         ListView listView = new ListView(inflater.getContext());
 
-        listView.setAdapter(new SummaryAdapter(inflater.getContext(), R.layout.summary));
+        final SummaryAdapter adapter = new SummaryAdapter(inflater.getContext(), R.layout.summary);
+        listView.setAdapter(adapter);
+
+        new CurrentUserProfileRequest().request(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                adapter.addAll(posts);
+            }
+        });
         return listView;
     }
 }

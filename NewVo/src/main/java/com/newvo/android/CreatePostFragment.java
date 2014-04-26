@@ -27,9 +27,9 @@ import java.util.Date;
 public class CreatePostFragment extends Fragment {
     @InjectView(R.id.question)
     TextView question;
-    @InjectView(R.id.first_image)
+    @InjectView(R.id.photo1)
     ImageView firstImage;
-    @InjectView(R.id.second_image)
+    @InjectView(R.id.photo2)
     ImageView secondImage;
     @InjectView(R.id.main_button)
     ImageButton mainButton;

@@ -1,13 +1,8 @@
 package com.newvo.android.parse;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
-import com.newvo.android.parse.Post;
-import com.newvo.android.parse.Suggestion;
-import com.newvo.android.parse.User;
-import com.newvo.android.parse.Vote;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -20,7 +15,7 @@ import java.io.ByteArrayOutputStream;
  */
 public class ParseReference {
 
-    public ParseReference(Context context) {
+    public static void initialize(){
         ParseUser.registerSubclass(User.class);
         ParseObject.registerSubclass(Post.class);
         ParseObject.registerSubclass(Suggestion.class);

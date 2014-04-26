@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             layout="@layout/summary_side"
             android:layout_weight="1"
-            android:id="@+id/first_votes"/>
+            android:id="@+id/votes1"/>
 
         <LinearLayout
             android:orientation="vertical"
@@ -33,7 +33,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/first_image"
+                android:id="@+id/photo1"
                 android:layout_weight="0.9"
                 android:contentDescription="@string/first_image_description"
                 android:scaleType="centerInside"
@@ -54,7 +54,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/second_image"
+                android:id="@+id/photo2"
                 android:layout_weight="0.9"
                 android:contentDescription="@string/second_image_description"
                 android:scaleType="centerInside"
@@ -68,7 +68,7 @@
             android:layout_height="match_parent"
             layout="@layout/summary_side"
             android:layout_weight="1"
-            android:id="@+id/second_votes"/>
+            android:id="@+id/votes2"/>
 
         <include
             android:layout_width="match_parent"

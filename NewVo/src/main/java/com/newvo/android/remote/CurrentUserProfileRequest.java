@@ -16,7 +16,6 @@ public class CurrentUserProfileRequest {
         User user = (User) User.getCurrentUser();
 
         query = ParseQuery.getQuery(Post.class);
-        query.whereEqualTo("user_id", user);
     }
 
     public void request(FindCallback<Post> callback){
