@@ -8,9 +8,9 @@ import com.parse.*;
 /**
  * Created by David on 4/25/2014.
  */
-public class LoginActivity extends Activity {
+public class SignInActivity extends Activity {
 
-    public LoginActivity() {
+    public SignInActivity() {
         super();
     }
 
@@ -40,6 +40,11 @@ public class LoginActivity extends Activity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        ParseFacebookUtils.finishAuthentication(requestCode, resultCode, data);
+    }
 
     private void assignUser(ParseUser user) {
         if (user != null) {

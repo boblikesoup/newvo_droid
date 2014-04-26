@@ -12,7 +12,7 @@
         android:theme="@style/NoActionBar"
         android:label="@string/app_name">
         <activity
-            android:name=".LoginActivity">
+            android:name="com.newvo.android.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
