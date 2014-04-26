@@ -26,30 +26,16 @@ public class Post extends ParseObject {
     }
 
 
-    public Bitmap getPhoto1(){
-        return ParseReference.parseFileToBitmap(getParseFile("photo_1"));
-    }
-    public String getPhoto1Url(){
-        ParseFile photo1 = getParseFile("photo_1");
-        if(photo1 == null){
-            return null;
-        }
-        return photo1.getUrl();
+    public ParseFile getPhoto1(){
+        return getParseFile("photo_1");
     }
     public void setPhoto1(Bitmap photo1){
         put("photo_1",ParseReference.bitmapToParseFile(photo1));
     }
 
 
-    public Bitmap getPhoto2(){
-        return ParseReference.parseFileToBitmap(getParseFile("photo_2"));
-    }
-    public String getPhoto2Url(){
-        ParseFile photo2 = getParseFile("photo_2");
-        if(photo2 == null){
-            return null;
-        }
-        return photo2.getUrl();
+    public ParseFile getPhoto2(){
+        return getParseFile("photo_2");
     }
     public void setPhoto2(Bitmap photo2){
         put("photo_2",ParseReference.bitmapToParseFile(photo2));

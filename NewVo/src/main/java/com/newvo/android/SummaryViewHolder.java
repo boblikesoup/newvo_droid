@@ -9,6 +9,8 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.koushikdutta.ion.Ion;
 import com.newvo.android.parse.Post;
+import com.parse.ParseFile;
+import com.parse.ParseImageView;
 
 /**
  * Created by David on 4/21/2014.
@@ -26,9 +28,9 @@ public class SummaryViewHolder {
     SideViewHolder secondVotes;
 
     @InjectView(R.id.photo1)
-    ImageView firstImage;
+    ParseImageView firstImage;
     @InjectView(R.id.photo2)
-    ImageView secondImage;
+    ParseImageView secondImage;
 
     //Suggestions Section
     @InjectView(R.id.suggestions_icon)
@@ -48,15 +50,16 @@ public class SummaryViewHolder {
     }
 
     public void setItem(final Post item) {
-        String photo1 = item.getPhoto1Url();
+        ParseFile photo1 = item.getPhoto1();
         if(photo1 != null){
-            Ion.with(firstImage).load(photo1);
+            firstImage.setParseFile(photo1);
+            firstImage.loadInBackground();
         }
 
-        String photo2 = item.getPhoto2Url();
+        ParseFile photo2 = item.getPhoto2();
         if (photo2 != null) {
-            Ion.with(secondImage).load(photo2);
-
+            secondImage.setParseFile(photo2);
+            secondImage.loadInBackground();
         }
         int votes1 = item.getVotes1();
         int votes2 = item.getVotes2();

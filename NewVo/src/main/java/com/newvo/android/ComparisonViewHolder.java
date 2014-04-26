@@ -9,6 +9,8 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.koushikdutta.ion.Ion;
 import com.newvo.android.parse.Post;
+import com.parse.ParseFile;
+import com.parse.ParseImageView;
 
 /**
  * Created by David on 4/15/2014.
@@ -17,9 +19,9 @@ public class ComparisonViewHolder {
     @InjectView(R.id.question)
     TextView question;
     @InjectView(R.id.photo1)
-    ImageView firstImage;
+    ParseImageView firstImage;
     @InjectView(R.id.photo2)
-    ImageView secondImage;
+    ParseImageView secondImage;
     @InjectView(R.id.main_button)
     ImageButton mainButton;
     @InjectView(R.id.first_choice)
@@ -43,19 +45,21 @@ public class ComparisonViewHolder {
 
         question.setText(item.getCaption());
 
-        String photo2 = item.getPhoto2Url();
+        ParseFile photo2 = item.getPhoto2();
         if(photo2 != null){
             secondChoice.setImageResource(R.drawable.x_button);
         } else {
             secondChoice.setImageResource(R.drawable.check_button);
         }
 
-        String photo1 = item.getPhoto1Url();
+        ParseFile photo1 = item.getPhoto1();
         if(photo1 != null){
-            Ion.with(firstImage).load(photo1);
+            firstImage.setParseFile(photo1);
+            firstImage.loadInBackground();
         }
         if(photo2 != null){
-            Ion.with(secondImage).load(photo2);
+            secondImage.setParseFile(photo2);
+            secondImage.loadInBackground();
             secondImageContainer.setVisibility(View.VISIBLE);
             buffer1.setVisibility(View.GONE);
             buffer2.setVisibility(View.GONE);
