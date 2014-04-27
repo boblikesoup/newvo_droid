@@ -112,8 +112,17 @@ public class CreatePostFragment extends Fragment {
                 } else {
                     caption = text.toString();
                 }
-                new CreatePostRequest(getActivity(), caption, file1, file2).request();
-                ((DrawerActivity) getActivity()).displayView(getActivity().getString(R.string.title_create_post));
+                Activity activity = getActivity();
+                if (activity != null) {
+                    try {
+                        new CreatePostRequest(activity, caption, file1, file2).request();
+                        ((DrawerActivity) activity).displayView(activity.getString(R.string.title_create_post));
+                    } catch (CreatePostRequest.MissingCaptionError createPostError) {
+                        Toast.makeText(activity, activity.getString(R.string.missing_caption), Toast.LENGTH_LONG).show();
+                    } catch (CreatePostRequest.MissingImageError createPostError) {
+                        Toast.makeText(activity, activity.getString(R.string.needs_image), Toast.LENGTH_LONG).show();
+                    }
+                }
             }
         });
 

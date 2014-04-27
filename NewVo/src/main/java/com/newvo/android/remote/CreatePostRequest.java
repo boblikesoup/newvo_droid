@@ -16,9 +16,11 @@ public class CreatePostRequest {
 
     private Post post;
 
-    public CreatePostRequest(Context context, String caption, String image1, String image2){
-        if(image1 == null || caption == null || caption.isEmpty()){
-            return;
+    public CreatePostRequest(Context context, String caption, String image1, String image2) throws MissingCaptionError, MissingImageError {
+        if(caption == null || caption.isEmpty()){
+            throw new MissingCaptionError();
+        } else if(image1 == null){
+            throw new MissingImageError();
         }
         post = new Post();
         post.setCaption(caption);
@@ -55,5 +57,11 @@ public class CreatePostRequest {
         } else {
             post.saveEventually(saveCallback);
         }
+    }
+
+    public class MissingCaptionError extends Error {
+    }
+
+    public class MissingImageError extends Error {
     }
 }
