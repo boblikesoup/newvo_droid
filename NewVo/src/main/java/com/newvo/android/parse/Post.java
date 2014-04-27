@@ -26,6 +26,17 @@ public class Post extends ParseObject {
     public static final String VOTES_0 = "votes_0";
     public static final String VOTES_1 = "votes_1";
     public static final String SUGGESTIONS = "suggestions";
+    public static final String STATUS = "status";
+    public static final String VIEWABLE_BY = "viewable_by";
+
+    //status strings
+    public static final String ACTIVE = "active";
+    public static final String INACTIVE = "inactive";
+    public static final String DELETED = "deleted";
+
+    //viewable by strings
+    public static final String PUBLIC = "public";
+
 
     public User getUser() {
         return (User) getParseUser(USER_ID);
@@ -39,6 +50,10 @@ public class Post extends ParseObject {
     }
     public void setCaption(String caption) {
         put(CAPTION, caption);
+        String[] split = caption.split("\\s+");
+        for(String str : split){
+            add("caption_search", str);
+        }
     }
 
 
@@ -75,14 +90,61 @@ public class Post extends ParseObject {
     public int getNumberOfSuggestions() {
         return getInt(SUGGESTIONS);
     }
+    public void setNumberOfSuggestions(int numberOfSuggestions) {
+        put(SUGGESTIONS, numberOfSuggestions);
+    }
 
     public static ParseFile createParseFile(ContentResolver contentResolver, String uri){
         try {
             final Bitmap bitmap = MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(uri));
-            return new ParseFile("image.png", ParseReference.bitmapToByteArray(bitmap));
+            return new ParseFile("Image.jpg", ParseReference.bitmapToByteArray(bitmap));
         } catch (IOException e) {
             Log.e("NewVo", "Bitmap could not be located for image");
         }
         return null;
+    }
+
+    public String getStatus(){
+        int status = getInt(STATUS);
+        switch (status) {
+            case 0:
+                return ACTIVE;
+            case 1:
+                return INACTIVE;
+            case 2:
+                return DELETED;
+        }
+        return null;
+    }
+    public void setStatus(String status) {
+        int statusInt = -1;
+        if(status.equals(ACTIVE)){
+            statusInt = 0;
+        } else if(status.equals(INACTIVE)){
+            statusInt = 1;
+        } else if(status.equals(DELETED)){
+            statusInt = 2;
+        }
+        if(statusInt > -1){
+            put(STATUS, statusInt);
+        }
+    }
+
+    public String getViewableBy(){
+        int status = getInt(VIEWABLE_BY);
+        switch (status) {
+            case 0:
+                return PUBLIC;
+        }
+        return null;
+    }
+    public void setViewableBy(String viewableBy) {
+        int viewableByInt = -1;
+        if(viewableBy.equals(PUBLIC)){
+            viewableByInt = 0;
+        }
+        if(viewableByInt > -1){
+            put(VIEWABLE_BY, viewableByInt);
+        }
     }
 }
