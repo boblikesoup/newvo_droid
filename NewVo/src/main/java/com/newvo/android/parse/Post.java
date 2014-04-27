@@ -97,7 +97,9 @@ public class Post extends ParseObject {
     public static ParseFile createParseFile(ContentResolver contentResolver, String uri){
         try {
             final Bitmap bitmap = MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(uri));
-            return new ParseFile("Image.jpg", ParseReference.bitmapToByteArray(bitmap));
+            byte[] data = ParseReference.bitmapToByteArray(bitmap);
+            ParseFile parseFile = new ParseFile("Image.jpg", data);
+            return parseFile;
         } catch (IOException e) {
             Log.e("NewVo", "Bitmap could not be located for image");
         }

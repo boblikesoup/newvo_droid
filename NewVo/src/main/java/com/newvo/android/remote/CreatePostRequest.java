@@ -3,7 +3,6 @@ package com.newvo.android.remote;
 import android.content.Context;
 import com.newvo.android.parse.Post;
 import com.newvo.android.parse.User;
-import com.parse.ParseACL;
 import com.parse.ParseFile;
 import com.parse.SaveCallback;
 
@@ -24,9 +23,13 @@ public class CreatePostRequest {
         }
         post = new Post();
         post.setCaption(caption);
-        post.setPhoto1(getParseFile(context, image1));
+        ParseFile photo1 = getParseFile(context, image1);
+        photo1.saveInBackground();
+        post.setPhoto1(photo1);
         if(image2 != null){
-            post.setPhoto2(getParseFile(context, image2));
+            ParseFile photo2 = getParseFile(context, image2);
+            photo2.saveInBackground();
+            post.setPhoto2(photo2);
         }
         User currentUser = (User) getCurrentUser();
         post.setUser(currentUser);
@@ -35,12 +38,6 @@ public class CreatePostRequest {
         post.setVotes1(0);
         post.setVotes2(0);
         post.setNumberOfSuggestions(0);
-
-        ParseACL acl = new ParseACL();
-        acl.setPublicReadAccess(true);
-        acl.setWriteAccess(currentUser, true);
-        acl.setReadAccess(currentUser, true);
-        post.setACL(acl);
     }
 
     private ParseFile getParseFile(Context context, String image1) {

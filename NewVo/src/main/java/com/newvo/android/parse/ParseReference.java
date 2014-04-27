@@ -3,10 +3,7 @@ package com.newvo.android.parse;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
-import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseObject;
-import com.parse.ParseUser;
+import com.parse.*;
 
 import java.io.ByteArrayOutputStream;
 
@@ -20,6 +17,9 @@ public class ParseReference {
         ParseObject.registerSubclass(Post.class);
         ParseObject.registerSubclass(Suggestion.class);
         ParseObject.registerSubclass(Vote.class);
+        ParseACL acl = new ParseACL();
+        acl.setPublicReadAccess(true);
+        ParseACL.setDefaultACL(acl, true);
     }
 
     public static Bitmap parseFileToBitmap(ParseFile parseFile) {
@@ -46,7 +46,7 @@ public class ParseReference {
             return null;
         }
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream);
         return stream.toByteArray();
     }
 

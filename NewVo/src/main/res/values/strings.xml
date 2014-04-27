@@ -32,6 +32,7 @@
     <string name="title_login">NewVo Login</string>
     <string name="missing_caption">Needs a Caption</string>
     <string name="needs_image">Needs an Image</string>
+    <string name="post_created">Post Created Successfully!</string>
 
     <string-array name="nav_drawer_items">
         <item >@string/title_home</item>
