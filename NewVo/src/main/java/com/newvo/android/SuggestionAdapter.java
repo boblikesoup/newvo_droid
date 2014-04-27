@@ -1,6 +1,7 @@
 package com.newvo.android;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,9 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.newvo.android.parse.Suggestion;
+import com.newvo.android.remote.RemoveSuggestionRequest;
+import com.parse.DeleteCallback;
+import com.parse.ParseException;
 
 /**
  * Created by David on 4/20/2014.
@@ -49,8 +53,23 @@ public class SuggestionAdapter extends ArrayAdapter<Suggestion> {
             ButterKnife.inject(this, view);
         }
 
-        public void setItem(Suggestion suggestion){
+        public void setItem(final Suggestion suggestion){
             suggestionText.setText(suggestion.getBody());
+            suggestionX.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new RemoveSuggestionRequest(suggestion).request(new DeleteCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if(e == null){
+                                SuggestionAdapter.this.remove(suggestion);
+                            } else {
+                                Log.e("NewVo", "Failed to remove suggestion.");
+                            }
+                        }
+                    });
+                }
+            });
         }
 
     }
