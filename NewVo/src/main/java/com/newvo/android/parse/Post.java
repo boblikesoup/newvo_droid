@@ -11,52 +11,62 @@ import com.parse.ParseObject;
 @ParseClassName("Post")
 public class Post extends ParseObject {
 
+    public static final String USER_ID = User.USER_ID;
+    public static final String POST_ID = "post_id";
+
+    public static final String CAPTION = "caption";
+    public static final String PHOTO_1 = "photo_1";
+    public static final String PHOTO_2 = "photo_2";
+    public static final String VOTES_0 = "votes_0";
+    public static final String VOTES_1 = "votes_1";
+    public static final String SUGGESTIONS = "suggestions";
+
     public String getUserId(){
-        return getString("user_id");
+        return getString(USER_ID);
     }
     public void setUserId(String userId){
-        put("user_id", userId);
+        put(USER_ID, userId);
     }
 
     public String getCaption(){
-        return getString("caption");
+        return getString(CAPTION);
     }
     public void setCaption(String caption){
-        put("caption", caption);
+        put(CAPTION, caption);
     }
 
 
     public ParseFile getPhoto1(){
-        return getParseFile("photo_1");
+        return getParseFile(PHOTO_1);
     }
     public void setPhoto1(Bitmap photo1){
-        put("photo_1",ParseReference.bitmapToParseFile(photo1));
+        put(PHOTO_1,ParseReference.bitmapToParseFile(photo1));
     }
 
 
     public ParseFile getPhoto2(){
-        return getParseFile("photo_2");
+        return getParseFile(PHOTO_2);
     }
     public void setPhoto2(Bitmap photo2){
-        put("photo_2",ParseReference.bitmapToParseFile(photo2));
+        put(PHOTO_2,ParseReference.bitmapToParseFile(photo2));
     }
 
 
     public int getVotes1(){
-        return getInt("votes_0");
+        return getInt(VOTES_0);
     }
     public void setVotes1(int votes1){
-        put("votes_0",votes1);
+        put(VOTES_0,votes1);
     }
 
     public int getVotes2(){
-        return getInt("votes_1");
+        return getInt(VOTES_1);
     }
     public void setVotes2(int votes2){
-        put("votes_1",votes2);
+        put(VOTES_1,votes2);
     }
 
     public int getNumberOfSuggestions(){
-        return getInt("suggestions");
+        return getInt(SUGGESTIONS);
     }
 }

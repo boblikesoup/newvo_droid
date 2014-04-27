@@ -9,19 +9,23 @@ import com.parse.ParseObject;
 @ParseClassName("Vote")
 public class Vote extends ParseObject {
 
+    public static final String POST_ID = Post.POST_ID;
+    public static final String USER_ID = User.USER_ID;
+    public static final String VOTE = "vote";
+
     public int getVote(){
-        return getInt("vote");
+        return getInt(VOTE);
     }
     public void setVote(int vote){
-        put("vote", vote);
+        put(VOTE, vote);
     }
 
     public User getUser(){
-        return (User) getParseObject("user_id");
+        return (User) getParseObject(USER_ID);
     }
 
     public Post getPost(){
-        return (Post) getParseObject("post_id");
+        return (Post) getParseObject(POST_ID);
     }
 
 }

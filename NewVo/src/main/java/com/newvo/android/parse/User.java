@@ -9,8 +9,11 @@ import com.parse.ParseUser;
 @ParseClassName("_User")
 public class User extends ParseUser {
 
+    public static final String USERNAME = "username";
+    public static final String USER_ID = "user_id";
+
     public String getUserId(){
-        return getString("username");
+        return getString(USERNAME);
     }
 
 }

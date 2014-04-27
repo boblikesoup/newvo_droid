@@ -3,10 +3,7 @@
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/NewVo/libs/parse/Parse-1.4.3.jar!/" />
     </CLASSES>
-    <JAVADOC>
-      <root url="file://$PROJECT_DIR$/NewVo/libs/parse/Parse-1.4.3-javadoc" />
-      <root url="file://$PROJECT_DIR$/NewVo/libs/parse/Parse-1.4.3-javadoc/com/parse/class-use" />
-    </JAVADOC>
+    <JAVADOC />
     <SOURCES />
   </library>
 </component>
