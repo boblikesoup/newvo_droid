@@ -116,7 +116,7 @@ public class CreatePostFragment extends Fragment {
                 if (activity != null) {
                     try {
                         new CreatePostRequest(activity, caption, file1, file2).request();
-                        ((DrawerActivity) activity).displayView(activity.getString(R.string.title_create_post));
+                        ((DrawerActivity) activity).refreshFragment();
                         Toast.makeText(activity, activity.getString(R.string.post_created), Toast.LENGTH_LONG).show();
                     } catch (CreatePostRequest.MissingCaptionError createPostError) {
                         Toast.makeText(activity, activity.getString(R.string.missing_caption), Toast.LENGTH_LONG).show();

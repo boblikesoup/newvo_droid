@@ -119,9 +119,17 @@ public class DrawerActivity extends Activity {
             fragmentManager.addOnBackStackChangedListener(backStackChangedListener);
         }
         FragmentTransaction transaction = fragmentManager.beginTransaction()
-                .replace(R.id.frame_container, fragment).setBreadCrumbTitle(name).addToBackStack(name);
+                .replace(R.id.frame_container, fragment, name).setBreadCrumbTitle(name).addToBackStack(name);
         transaction.commit();
 
+    }
+
+    public void refreshFragment(){
+        Fragment currentFragment = getFragmentManager().findFragmentByTag(getTitle().toString());
+        FragmentTransaction fragTransaction = getFragmentManager().beginTransaction();
+        fragTransaction.detach(currentFragment);
+        fragTransaction.attach(currentFragment);
+        fragTransaction.commit();
     }
 
 

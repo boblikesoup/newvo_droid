@@ -50,9 +50,9 @@ public class CreatePostRequest {
 
     public void request(SaveCallback saveCallback){
         if(saveCallback == null){
-            post.saveEventually();
+            post.saveInBackground();
         } else {
-            post.saveEventually(saveCallback);
+            post.saveInBackground(saveCallback);
         }
     }
 

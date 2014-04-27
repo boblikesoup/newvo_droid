@@ -46,7 +46,7 @@ public class ParseReference {
             return null;
         }
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         return stream.toByteArray();
     }
 
