@@ -7,7 +7,7 @@
               android:orientation="vertical">
 
     <EditText
-        android:id="@+id/question"
+        android:id="@+id/caption"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@null"

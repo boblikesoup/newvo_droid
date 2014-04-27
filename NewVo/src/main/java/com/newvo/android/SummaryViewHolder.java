@@ -64,6 +64,9 @@ public class SummaryViewHolder {
         int votes1 = item.getVotes1();
         int votes2 = item.getVotes2();
         int totalVotes = votes1 + votes2;
+        if(totalVotes == 0){
+            totalVotes = 1;
+        }
 
         int votes = votes1 * 100 / totalVotes;
         firstVotes.percent.setText(votes + "%");

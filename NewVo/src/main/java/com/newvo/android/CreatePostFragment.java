@@ -15,6 +15,7 @@ import android.widget.*;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.koushikdutta.ion.Ion;
+import com.newvo.android.remote.CreatePostRequest;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,8 +26,8 @@ import java.util.Date;
  * Created by David on 4/16/2014.
  */
 public class CreatePostFragment extends Fragment {
-    @InjectView(R.id.question)
-    TextView question;
+    @InjectView(R.id.caption)
+    TextView caption;
     @InjectView(R.id.photo1)
     ImageView firstImage;
     @InjectView(R.id.photo2)
@@ -58,6 +59,9 @@ public class CreatePostFragment extends Fragment {
     ViewHolder folderCamera2;
 
     private String currentPhotoPath;
+
+    private String file1;
+    private String file2;
 
 
     @Override
@@ -98,6 +102,21 @@ public class CreatePostFragment extends Fragment {
             }
         });
 
+        mainButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CharSequence text = caption.getText();
+                String caption;
+                if (text == null) {
+                    caption = null;
+                } else {
+                    caption = text.toString();
+                }
+                new CreatePostRequest(getActivity(), caption, file1, file2).request();
+                ((DrawerActivity) getActivity()).displayView(getActivity().getString(R.string.title_create_post));
+            }
+        });
+
 
         return rootView;
     }
@@ -113,14 +132,17 @@ public class CreatePostFragment extends Fragment {
             Ion.with(imageView).load(photoPath);
 
             if (requestCode % 2 == 1) {
+                file1 = photoPath;
                 loadSecondOption();
+            } else {
+                file2 = photoPath;
             }
 
             folderCameraLayout.setVisibility(View.GONE);
         }
     }
 
-    private void loadSecondOption(){
+    private void loadSecondOption() {
         buffer1.setVisibility(View.GONE);
         buffer2.setVisibility(View.GONE);
         secondImageContainer.setVisibility(View.VISIBLE);
@@ -139,16 +161,16 @@ public class CreatePostFragment extends Fragment {
 
     }
 
-    private void startIntent(int requestCode){
+    private void startIntent(int requestCode) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         File photoFile = null;
         try {
             photoFile = createImageFile();
         } catch (IOException ex) {
-            Log.e("newvo","Failed to create image file.");
+            Log.e("newvo", "Failed to create image file.");
         }
 
-        if(photoFile != null){
+        if (photoFile != null) {
             intent.putExtra(MediaStore.EXTRA_OUTPUT,
                     Uri.fromFile(photoFile));
             startActivityForResult(intent, requestCode);

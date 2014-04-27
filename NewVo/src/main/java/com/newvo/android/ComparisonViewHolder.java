@@ -16,7 +16,7 @@ import com.parse.ParseImageView;
  * Created by David on 4/15/2014.
  */
 public class ComparisonViewHolder {
-    @InjectView(R.id.question)
+    @InjectView(R.id.caption)
     TextView question;
     @InjectView(R.id.photo1)
     ParseImageView firstImage;
