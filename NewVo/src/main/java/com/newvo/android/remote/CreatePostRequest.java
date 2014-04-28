@@ -15,7 +15,7 @@ public class CreatePostRequest {
 
     private Post post;
 
-    public CreatePostRequest(Context context, String caption, String image1, String image2) throws MissingCaptionError, MissingImageError {
+    public CreatePostRequest(Context context, String caption, ParseFile image1, ParseFile image2) throws MissingCaptionError, MissingImageError {
         if(caption == null || caption.isEmpty()){
             throw new MissingCaptionError();
         } else if(image1 == null){
@@ -23,13 +23,9 @@ public class CreatePostRequest {
         }
         post = new Post();
         post.setCaption(caption);
-        ParseFile photo1 = getParseFile(context, image1);
-        photo1.saveInBackground();
-        post.setPhoto1(photo1);
+        post.setPhoto1(image1);
         if(image2 != null){
-            ParseFile photo2 = getParseFile(context, image2);
-            photo2.saveInBackground();
-            post.setPhoto2(photo2);
+            post.setPhoto2(image2);
         }
         User currentUser = (User) getCurrentUser();
         post.setUser(currentUser);
@@ -40,9 +36,7 @@ public class CreatePostRequest {
         post.setNumberOfSuggestions(0);
     }
 
-    private ParseFile getParseFile(Context context, String image1) {
-        return Post.createParseFile(context.getContentResolver(), image1);
-    }
+
 
     public void request(){
         request(null);

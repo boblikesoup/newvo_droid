@@ -2,6 +2,7 @@ package com.newvo.android;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,8 +15,10 @@ import android.view.ViewGroup;
 import android.widget.*;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import com.koushikdutta.ion.Ion;
+import com.newvo.android.parse.Post;
 import com.newvo.android.remote.CreatePostRequest;
+import com.parse.ParseFile;
+import com.parse.ParseImageView;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,9 +32,9 @@ public class CreatePostFragment extends Fragment {
     @InjectView(R.id.caption)
     TextView caption;
     @InjectView(R.id.photo1)
-    ImageView firstImage;
+    ParseImageView firstImage;
     @InjectView(R.id.photo2)
-    ImageView secondImage;
+    ParseImageView secondImage;
     @InjectView(R.id.main_button)
     ImageButton mainButton;
     @InjectView(R.id.first_choice)
@@ -60,8 +63,8 @@ public class CreatePostFragment extends Fragment {
 
     private String currentPhotoPath;
 
-    private String file1;
-    private String file2;
+    private ParseFile file1;
+    private ParseFile file2;
 
 
     @Override
@@ -134,19 +137,20 @@ public class CreatePostFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
-            ImageView imageView = (requestCode % 2 == 1) ? firstImage : secondImage;
+            ParseImageView imageView = (requestCode % 2 == 1) ? firstImage : secondImage;
             LinearLayout folderCameraLayout = (requestCode % 2 == 1) ? folderCameraLayout1 : folderCameraLayout2;
             String photoPath = (requestCode <= 2) ? currentPhotoPath : data.getData().toString();
 
-
-            Ion.with(imageView).load(photoPath);
-
             if (requestCode % 2 == 1) {
-                file1 = photoPath;
+                file1 = getParseFile(getActivity(),photoPath);
+                imageView.setParseFile(file1);
                 loadSecondOption();
             } else {
-                file2 = photoPath;
+                file2 = getParseFile(getActivity(),photoPath);
+                imageView.setParseFile(file2);
             }
+
+            imageView.loadInBackground();
 
             folderCameraLayout.setVisibility(View.GONE);
         }
@@ -202,6 +206,12 @@ public class CreatePostFragment extends Fragment {
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = "file:" + image.getAbsolutePath();
         return image;
+    }
+
+    private static ParseFile getParseFile(Context context, String image1) {
+        ParseFile parseFile = Post.createParseFile(context.getContentResolver(), image1);
+        parseFile.saveInBackground();
+        return parseFile;
     }
 
 }

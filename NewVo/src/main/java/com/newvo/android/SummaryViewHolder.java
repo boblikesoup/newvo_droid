@@ -7,7 +7,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import com.koushikdutta.ion.Ion;
 import com.newvo.android.parse.Post;
 import com.parse.ParseFile;
 import com.parse.ParseImageView;
@@ -109,10 +108,4 @@ public class SummaryViewHolder {
 
     }
 
-    public void loadImage(ImageView view, String location) {
-        if (location != null) {
-            Ion.with(view)
-                    .load(location);
-        }
-    }
 }

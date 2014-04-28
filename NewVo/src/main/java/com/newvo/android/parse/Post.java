@@ -1,15 +1,9 @@
 package com.newvo.android.parse;
 
 import android.content.ContentResolver;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.provider.MediaStore;
-import android.util.Log;
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
-
-import java.io.IOException;
 
 /**
  * Created by David on 4/26/2014.
@@ -41,6 +35,7 @@ public class Post extends ParseObject {
     public User getUser() {
         return (User) getParseUser(USER_ID);
     }
+
     public void setUser(User user) {
         put(USER_ID, user);
     }
@@ -48,10 +43,11 @@ public class Post extends ParseObject {
     public String getCaption() {
         return getString(CAPTION);
     }
+
     public void setCaption(String caption) {
         put(CAPTION, caption);
         String[] split = caption.split("\\s+");
-        for(String str : split){
+        for (String str : split) {
             add("caption_search", str);
         }
     }
@@ -60,6 +56,7 @@ public class Post extends ParseObject {
     public ParseFile getPhoto1() {
         return getParseFile(PHOTO_1);
     }
+
     public void setPhoto1(ParseFile photo1) {
         put(PHOTO_1, photo1);
     }
@@ -68,6 +65,7 @@ public class Post extends ParseObject {
     public ParseFile getPhoto2() {
         return getParseFile(PHOTO_2);
     }
+
     public void setPhoto2(ParseFile photo2) {
         put(PHOTO_2, photo2);
     }
@@ -76,6 +74,7 @@ public class Post extends ParseObject {
     public int getVotes1() {
         return getInt(VOTES_0);
     }
+
     public void setVotes1(int votes1) {
         put(VOTES_0, votes1);
     }
@@ -83,6 +82,7 @@ public class Post extends ParseObject {
     public int getVotes2() {
         return getInt(VOTES_1);
     }
+
     public void setVotes2(int votes2) {
         put(VOTES_1, votes2);
     }
@@ -90,23 +90,21 @@ public class Post extends ParseObject {
     public int getNumberOfSuggestions() {
         return getInt(SUGGESTIONS);
     }
+
     public void setNumberOfSuggestions(int numberOfSuggestions) {
         put(SUGGESTIONS, numberOfSuggestions);
     }
 
-    public static ParseFile createParseFile(ContentResolver contentResolver, String uri){
-        try {
-            final Bitmap bitmap = MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(uri));
-            byte[] data = ParseReference.bitmapToByteArray(bitmap);
-            ParseFile parseFile = new ParseFile("Image.jpg", data);
-            return parseFile;
-        } catch (IOException e) {
-            Log.e("NewVo", "Bitmap could not be located for image");
+    public static ParseFile createParseFile(ContentResolver contentResolver, String uri) {
+        byte[] data = ParseReference.pathToByteArray(contentResolver, uri);
+        if(data == null){
+            return null;
         }
-        return null;
+        ParseFile parseFile = new ParseFile("Image.jpg", data);
+        return parseFile;
     }
 
-    public String getStatus(){
+    public String getStatus() {
         int status = getInt(STATUS);
         switch (status) {
             case 0:
@@ -118,21 +116,22 @@ public class Post extends ParseObject {
         }
         return null;
     }
+
     public void setStatus(String status) {
         int statusInt = -1;
-        if(status.equals(ACTIVE)){
+        if (status.equals(ACTIVE)) {
             statusInt = 0;
-        } else if(status.equals(INACTIVE)){
+        } else if (status.equals(INACTIVE)) {
             statusInt = 1;
-        } else if(status.equals(DELETED)){
+        } else if (status.equals(DELETED)) {
             statusInt = 2;
         }
-        if(statusInt > -1){
+        if (statusInt > -1) {
             put(STATUS, statusInt);
         }
     }
 
-    public String getViewableBy(){
+    public String getViewableBy() {
         int status = getInt(VIEWABLE_BY);
         switch (status) {
             case 0:
@@ -140,12 +139,13 @@ public class Post extends ParseObject {
         }
         return null;
     }
+
     public void setViewableBy(String viewableBy) {
         int viewableByInt = -1;
-        if(viewableBy.equals(PUBLIC)){
+        if (viewableBy.equals(PUBLIC)) {
             viewableByInt = 0;
         }
-        if(viewableByInt > -1){
+        if (viewableByInt > -1) {
             put(VIEWABLE_BY, viewableByInt);
         }
     }
