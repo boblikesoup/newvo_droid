@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -137,17 +138,30 @@ public class CreatePostFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
-            ParseImageView imageView = (requestCode % 2 == 1) ? firstImage : secondImage;
+            final ParseImageView imageView = (requestCode % 2 == 1) ? firstImage : secondImage;
             LinearLayout folderCameraLayout = (requestCode % 2 == 1) ? folderCameraLayout1 : folderCameraLayout2;
-            String photoPath = (requestCode <= 2) ? currentPhotoPath : data.getData().toString();
+            final String photoPath = (requestCode <= 2) ? currentPhotoPath : data.getData().toString();
 
             if (requestCode % 2 == 1) {
-                file1 = getParseFile(getActivity(),photoPath);
-                imageView.setParseFile(file1);
+                new AsyncTask(){
+                    @Override
+                    protected Object doInBackground(Object[] params) {
+                        file1 = getParseFile(getActivity(),photoPath);
+                        imageView.setParseFile(file1);
+                        return null;
+                    }
+                }.doInBackground(null);
+
                 loadSecondOption();
             } else {
-                file2 = getParseFile(getActivity(),photoPath);
-                imageView.setParseFile(file2);
+                new AsyncTask(){
+                    @Override
+                    protected Object doInBackground(Object[] params) {
+                        file2 = getParseFile(getActivity(),photoPath);
+                        imageView.setParseFile(file2);
+                        return null;
+                    }
+                }.doInBackground(null);
             }
 
             imageView.loadInBackground();
