@@ -26,25 +26,6 @@ public class ParseReference {
         ParseACL.setDefaultACL(acl, true);
     }
 
-    public static Bitmap parseFileToBitmap(ParseFile parseFile) {
-        if (parseFile == null) {
-            return null;
-        }
-        try {
-            return byteArrayToBitmap(parseFile.getData());
-        } catch (ParseException e) {
-            Log.e("NewVo", e.toString());
-            return null;
-        }
-    }
-
-    public static ParseFile bitmapToParseFile(Bitmap bitmap) {
-        if (bitmap == null) {
-            return null;
-        }
-        return new ParseFile("Image.jpg", bitmapToByteArray(bitmap));
-    }
-
     public static byte[] bitmapToByteArray(Bitmap bitmap) {
         if (bitmap == null) {
             return null;
@@ -52,13 +33,6 @@ public class ParseReference {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         return stream.toByteArray();
-    }
-
-    public static Bitmap byteArrayToBitmap(byte[] byteArray) {
-        if (byteArray == null) {
-            return null;
-        }
-        return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
     }
 
     public static byte[] pathToByteArray(ContentResolver contentResolver, String path) {

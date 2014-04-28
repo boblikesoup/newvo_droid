@@ -118,9 +118,13 @@ public class DrawerActivity extends Activity {
             fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             fragmentManager.addOnBackStackChangedListener(backStackChangedListener);
         }
-        FragmentTransaction transaction = fragmentManager.beginTransaction()
-                .replace(R.id.frame_container, fragment, name).setBreadCrumbTitle(name).addToBackStack(name);
-        transaction.commit();
+        if(name.equals(getTitle().toString())){
+            refreshFragment();
+        } else {
+            FragmentTransaction transaction = fragmentManager.beginTransaction()
+                    .replace(R.id.frame_container, fragment, name).setBreadCrumbTitle(name).addToBackStack(name);
+            transaction.commit();
+        }
 
     }
 

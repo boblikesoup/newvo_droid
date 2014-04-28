@@ -228,4 +228,13 @@ public class CreatePostFragment extends Fragment {
         return parseFile;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        file1 = null;
+        firstImage.setParseFile(null);
+        file2 = null;
+        secondImage.setParseFile(null);
+        caption.setText(null);
+    }
 }

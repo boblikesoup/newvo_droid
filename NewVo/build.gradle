@@ -40,4 +40,5 @@ dependencies {
     compile 'it.sephiroth.android.library.imagezoom:library:+'
     compile 'com.facebook:facebook-android-sdk:+@aar'
     compile files('libs/parse/Parse-1.4.3.jar')
+    compile files('libs/picasso/picasso-2.2.0.jar')
 }
