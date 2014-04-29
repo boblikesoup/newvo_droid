@@ -5,24 +5,28 @@ import com.newvo.android.parse.User;
 import com.parse.FindCallback;
 import com.parse.ParseQuery;
 
+import java.util.Arrays;
+
 /**
- * Created by David on 4/26/2014.
+ * Created by David on 4/28/2014.
  */
-public class CurrentUserProfileRequest {
+public class FeedRequest {
 
     private ParseQuery<Post> query;
 
-    public CurrentUserProfileRequest(){
+    public FeedRequest(){
         User user = (User) User.getCurrentUser();
 
         query = ParseQuery.getQuery(Post.class);
-        query.whereEqualTo(Post.USER_ID, user);
-        query.orderByDescending("createdAt");
+        query.setLimit(6);
+        query.whereEqualTo(Post.STATUS,0);
+        query.whereEqualTo(Post.VIEWABLE_BY,0);
+        query.include(Post.USER_ID);
+        query.whereNotContainedIn(Post.VOTED_ON_ARRAY, Arrays.asList(user.getUserId()));
+        query.orderByDescending(Post.CREATED_AT);
     }
 
     public void request(FindCallback<Post> callback){
         query.findInBackground(callback);
     }
-
-
 }

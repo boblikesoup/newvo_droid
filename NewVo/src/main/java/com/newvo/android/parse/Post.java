@@ -14,6 +14,8 @@ public class Post extends ParseObject {
     public static final String USER_ID = User.USER_ID;
     public static final String POST_ID = "post_id";
 
+    public static final String CREATED_AT = "createdAt";
+
     public static final String CAPTION = "caption";
     public static final String PHOTO_1 = "photo_1";
     public static final String PHOTO_2 = "photo_2";
@@ -22,6 +24,7 @@ public class Post extends ParseObject {
     public static final String SUGGESTIONS = "suggestions";
     public static final String STATUS = "status";
     public static final String VIEWABLE_BY = "viewable_by";
+    public static final String VOTED_ON_ARRAY = "voted_on_array";
 
     //status strings
     public static final String ACTIVE = "active";
