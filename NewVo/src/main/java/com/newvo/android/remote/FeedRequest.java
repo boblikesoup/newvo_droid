@@ -14,19 +14,20 @@ public class FeedRequest {
 
     private ParseQuery<Post> query;
 
-    public FeedRequest(){
-        User user = (User) User.getCurrentUser();
+    public FeedRequest() {
+        User user = User.getCurrentUser();
 
         query = ParseQuery.getQuery(Post.class);
         query.setLimit(6);
-        query.whereEqualTo(Post.STATUS,0);
-        query.whereEqualTo(Post.VIEWABLE_BY,0);
-        query.include(Post.USER_ID);
-        query.whereNotContainedIn(Post.VOTED_ON_ARRAY, Arrays.asList(user.getUserId()));
+        query.whereEqualTo(Post.STATUS, 0);
+        query.whereEqualTo(Post.VIEWABLE_BY, 0);
+        String userId = user.getUserId();
+        query.whereNotEqualTo(Post.USER_ID, user);
+        query.whereNotContainedIn(Post.VOTED_ON_ARRAY, Arrays.asList(userId));
         query.orderByDescending(Post.CREATED_AT);
     }
 
-    public void request(FindCallback<Post> callback){
+    public void request(FindCallback<Post> callback) {
         query.findInBackground(callback);
     }
 }

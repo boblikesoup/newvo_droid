@@ -13,7 +13,11 @@ public class User extends ParseUser {
     public static final String USER_ID = "user_id";
 
     public String getUserId(){
-        return getString(OBJECT_ID);
+        return getObjectId();
+    }
+
+    public static User getCurrentUser(){
+        return (User) ParseUser.getCurrentUser();
     }
 
 }

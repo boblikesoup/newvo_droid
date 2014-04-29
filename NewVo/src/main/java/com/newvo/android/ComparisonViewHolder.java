@@ -1,5 +1,7 @@
 package com.newvo.android;
 
+import android.content.Context;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -7,6 +9,7 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.newvo.android.parse.Post;
+import com.newvo.android.remote.VoteOnPostRequest;
 import com.parse.ParseFile;
 import com.parse.ParseImageView;
 
@@ -35,16 +38,26 @@ public class ComparisonViewHolder {
     @InjectView(R.id.buffer2)
     LinearLayout buffer2;
 
+    private Post post;
+    private Context context;
+    private boolean voted = false;
+
     public ComparisonViewHolder(View view) {
+        setView(view);
+    }
+
+    public void setView(View view){
         ButterKnife.inject(this, view);
+        context = view.getContext();
     }
 
     public void setItem(Post item){
+        this.post = item;
 
         question.setText(item.getCaption());
 
         ParseFile photo2 = item.getPhoto2();
-        if(photo2 != null){
+        if(photo2 == null){
             secondChoice.setImageResource(R.drawable.x_button);
         } else {
             secondChoice.setImageResource(R.drawable.check_button);
@@ -68,6 +81,42 @@ public class ComparisonViewHolder {
             buffer2.setVisibility(View.INVISIBLE);
         }
 
+        firstChoice.setOnClickListener(new ChoiceClickListener(context, 0));
+        secondChoice.setOnClickListener(new ChoiceClickListener(context, 1));
+
+        voted = false;
+
     }
 
+    public Post getPost() {
+        return post;
+    }
+
+    private class ChoiceClickListener implements View.OnClickListener {
+
+        private Context context;
+        private int vote;
+
+
+
+        public ChoiceClickListener(Context context, int vote){
+            this.context = context;
+            this.vote = vote;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if(!voted) {
+                voted = true;
+                new VoteOnPostRequest(post, vote).request();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        ((DrawerActivity) context).refreshFragment();
+                    }
+                }, 250);
+            }
+
+        }
+    }
 }

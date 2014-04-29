@@ -152,4 +152,17 @@ public class Post extends ParseObject {
             put(VIEWABLE_BY, viewableByInt);
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o == null || !(o instanceof Post)){
+            return false;
+        }
+        String objectId = getObjectId();
+        String otherObjectId = ((Post) o).getObjectId();
+        if(objectId == null || otherObjectId == null){
+            return false;
+        }
+        return objectId.equals(otherObjectId);
+    }
 }

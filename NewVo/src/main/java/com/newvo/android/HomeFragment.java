@@ -6,13 +6,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
+import com.newvo.android.parse.Post;
+import com.newvo.android.remote.FeedRequest;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+
+import java.util.List;
 
 /**
  * Created by David on 4/13/2014.
  */
 public class HomeFragment extends Fragment {
 
+    private List<Post> posts;
+    private int location = -1;
+
+    private ComparisonViewHolder holder;
+
     public HomeFragment() {
+        requestMorePosts();
     }
 
     @Override
@@ -20,7 +32,47 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.comparison, container, false);
         ButterKnife.inject(this, rootView);
+        if(holder == null){
+            holder = new ComparisonViewHolder(rootView);
+        } else {
+            holder.setView(rootView);
+        }
+        if(posts != null){
+            loadNextPost();
+        }
         return rootView;
+    }
+
+    private void loadNextPost(){
+        location++;
+        if(location > 2){
+            requestMorePosts();
+        }
+        if(!posts.isEmpty() && location < posts.size()){
+            if(holder.getPost() == null || !holder.getPost().equals(posts.get(location))){
+                holder.setItem(posts.get(location));
+            } else {
+                loadNextPost();
+            }
+        } else {
+            //TODO: You have read all of the posts, you wizard.
+        }
+    }
+
+    private void requestMorePosts(){
+        new FeedRequest().request(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                if(posts != null){
+                    HomeFragment.this.posts = posts;
+                    location = -1;
+                    if(holder != null && holder.getPost() == null){
+                        loadNextPost();
+                    }
+                }
+
+            }
+        });
     }
 
 }

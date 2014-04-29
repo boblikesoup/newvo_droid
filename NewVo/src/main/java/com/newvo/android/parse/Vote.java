@@ -23,9 +23,15 @@ public class Vote extends ParseObject {
     public User getUser(){
         return (User) getParseObject(USER_ID);
     }
+    public void setUser(User user) {
+        put(USER_ID, user);
+    }
 
     public Post getPost(){
         return (Post) getParseObject(POST_ID);
+    }
+    public void setPost(Post post) {
+        put(POST_ID, post);
     }
 
 }

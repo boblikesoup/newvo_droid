@@ -13,7 +13,7 @@ public class CurrentUserProfileRequest {
     private ParseQuery<Post> query;
 
     public CurrentUserProfileRequest(){
-        User user = (User) User.getCurrentUser();
+        User user = User.getCurrentUser();
 
         query = ParseQuery.getQuery(Post.class);
         query.whereEqualTo(Post.USER_ID, user);
