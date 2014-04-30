@@ -12,6 +12,7 @@ import butterknife.InjectView;
 import com.newvo.android.parse.Post;
 import com.newvo.android.parse.Suggestion;
 import com.newvo.android.remote.PostSuggestionsRequest;
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 
@@ -37,11 +38,16 @@ public class SuggestionsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.suggestions, container, false);
+        final View rootView = inflater.inflate(R.layout.suggestions, container, false);
         ButterKnife.inject(this, rootView);
 
         SummaryViewHolder summaryViewHolder = new SummaryViewHolder(getActivity(), summary);
-        summaryViewHolder.setItem(post);
+        summaryViewHolder.setItem(post, new DeleteCallback() {
+            @Override
+            public void done(ParseException e) {
+                getActivity().onBackPressed();
+            }
+        });
 
         new PostSuggestionsRequest(post).request(new FindCallback<Suggestion>() {
             @Override
@@ -53,9 +59,9 @@ public class SuggestionsFragment extends Fragment {
         return rootView;
     }
 
-    protected void initSuggestions(List<Suggestion> suggestions){
+    protected void initSuggestions(List<Suggestion> suggestions) {
         SuggestionAdapter adapter = new SuggestionAdapter(getActivity(), R.layout.suggestion_single);
-        if(post != null && post.getNumberOfSuggestions() > 0){
+        if (post != null && post.getNumberOfSuggestions() > 0) {
             adapter.addAll(suggestions);
         }
         suggestionsList.setAdapter(adapter);

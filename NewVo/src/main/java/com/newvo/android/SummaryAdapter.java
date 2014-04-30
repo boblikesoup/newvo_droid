@@ -1,11 +1,14 @@
 package com.newvo.android;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import com.newvo.android.parse.Post;
+import com.parse.DeleteCallback;
+import com.parse.ParseException;
 
 /**
  * Created by David on 4/20/2014.
@@ -27,8 +30,17 @@ public class SummaryAdapter extends ArrayAdapter<Post> {
             holder = (SummaryViewHolder) convertView.getTag();
         }
 
-        Post item = getItem(position);
-        holder.setItem(item);
+        final Post item = getItem(position);
+        holder.setItem(item, new DeleteCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    SummaryAdapter.this.remove(item);
+                } else {
+                    Log.e("NewVo", "Failed to remove suggestion.");
+                }
+            }
+        });
 
         return convertView;
     }

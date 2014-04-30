@@ -1,13 +1,17 @@
 package com.newvo.android;
 
 import android.content.Context;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.newvo.android.parse.Post;
+import com.newvo.android.remote.RemovePostRequest;
+import com.parse.DeleteCallback;
 import com.parse.ParseFile;
 import com.parse.ParseImageView;
 
@@ -48,9 +52,9 @@ public class SummaryViewHolder {
         secondVotes = new SideViewHolder(secondVotesView);
     }
 
-    public void setItem(final Post item) {
+    public void setItem(final Post item, final DeleteCallback deleteCallback) {
         ParseFile photo1 = item.getPhoto1();
-        if(photo1 != null){
+        if (photo1 != null) {
             firstImage.setParseFile(photo1);
             firstImage.loadInBackground();
         }
@@ -63,7 +67,7 @@ public class SummaryViewHolder {
         int votes1 = item.getVotes1();
         int votes2 = item.getVotes2();
         int totalVotes = votes1 + votes2;
-        if(totalVotes == 0){
+        if (totalVotes == 0) {
             totalVotes = 1;
         }
 
@@ -78,15 +82,32 @@ public class SummaryViewHolder {
         int numberOfSuggestions1 = item.getNumberOfSuggestions();
         numberOfSuggestions.setText(numberOfSuggestions1 + "");
 
-        if(numberOfSuggestions1 != 0 && context instanceof DrawerActivity) {
+        if (numberOfSuggestions1 != 0 && context instanceof DrawerActivity) {
             suggestionsIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                        ((DrawerActivity)context).displayFragment(new SuggestionsFragment(item), "Profile > Suggestions");
+                    ((DrawerActivity) context).displayFragment(new SuggestionsFragment(item), "Profile > Suggestions");
                 }
             });
         }
 
+        final PopupMenu popupMenu = new PopupMenu(context, settingsIcon);
+        popupMenu.getMenu().add("Delete");
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                if (menuItem.getTitle().equals("Delete")) {
+                    new RemovePostRequest(item).request(deleteCallback);
+                }
+                return false;
+            }
+        });
+        settingsIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupMenu.show();
+            }
+        });
 
     }
 
