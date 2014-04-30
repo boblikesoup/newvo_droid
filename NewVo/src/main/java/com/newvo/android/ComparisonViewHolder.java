@@ -1,6 +1,9 @@
 package com.newvo.android;
 
+import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ImageButton;
@@ -9,6 +12,7 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.newvo.android.parse.Post;
+import com.newvo.android.remote.CreateSuggestionRequest;
 import com.newvo.android.remote.VoteOnPostRequest;
 import com.parse.ParseFile;
 import com.parse.ParseImageView;
@@ -42,8 +46,13 @@ public class ComparisonViewHolder {
     private Context context;
     private boolean voted = false;
 
-    public ComparisonViewHolder(View view) {
+    private Fragment container;
+
+    private String suggestionText;
+
+    public ComparisonViewHolder(View view, Fragment container) {
         setView(view);
+        this.container = container;
     }
 
     public void setView(View view){
@@ -84,12 +93,40 @@ public class ComparisonViewHolder {
         firstChoice.setOnClickListener(new ChoiceClickListener(context, 0));
         secondChoice.setOnClickListener(new ChoiceClickListener(context, 1));
 
+        mainButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context,TextEntryActivity.class);
+                i.putExtra(TextEntryActivity.HINT, "Suggestion...");
+                if(suggestionText != null){
+                    i.putExtra(TextEntryActivity.TEXT, suggestionText);
+                }
+                container.startActivityForResult(i, TextEntryActivity.TEXT_REQUEST_CODE);
+            }
+        });
+
         voted = false;
 
     }
 
     public Post getPost() {
         return post;
+    }
+
+    public HomeFragment.OnActivityResult getOnActivityResult() {
+        return new HomeFragment.OnActivityResult() {
+            @Override
+            public void onActivityResult(int requestCode, int resultCode, Intent data) {
+                if(resultCode == Activity.RESULT_OK && requestCode == TextEntryActivity.TEXT_REQUEST_CODE){
+                    Object o = data.getExtras().get(TextEntryActivity.TEXT);
+                    if(o != null) {
+                        suggestionText = o.toString();
+                    } else {
+                        suggestionText = null;
+                    }
+                }
+            }
+        };
     }
 
     private class ChoiceClickListener implements View.OnClickListener {
@@ -109,6 +146,9 @@ public class ComparisonViewHolder {
             if(!voted) {
                 voted = true;
                 new VoteOnPostRequest(post, vote).request();
+                if(suggestionText != null && !suggestionText.equals("")){
+                    new CreateSuggestionRequest(post, suggestionText).request();
+                }
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     public void run() {

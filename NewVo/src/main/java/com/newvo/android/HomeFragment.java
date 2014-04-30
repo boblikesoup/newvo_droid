@@ -1,6 +1,7 @@
 package com.newvo.android;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,13 +28,17 @@ public class HomeFragment extends Fragment {
         requestMorePosts();
     }
 
+    private OnActivityResult onActivityResult;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.comparison, container, false);
         ButterKnife.inject(this, rootView);
         if(holder == null){
-            holder = new ComparisonViewHolder(rootView);
+            holder = new ComparisonViewHolder(rootView, this);
+            onActivityResult = holder.getOnActivityResult();
+
         } else {
             holder.setView(rootView);
         }
@@ -41,6 +46,18 @@ public class HomeFragment extends Fragment {
             loadNextPost();
         }
         return rootView;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(onActivityResult != null){
+            onActivityResult.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    public void setOnActivityResult(OnActivityResult onActivityResult) {
+        this.onActivityResult = onActivityResult;
     }
 
     private void loadNextPost(){
@@ -73,6 +90,10 @@ public class HomeFragment extends Fragment {
 
             }
         });
+    }
+
+    public static abstract class OnActivityResult {
+        public abstract void onActivityResult(int requestCode, int resultCode, Intent data);
     }
 
 }

@@ -41,6 +41,11 @@
                 android:name="com.facebook.sdk.ApplicationId"
                 android:value="@string/app_id"/>
         </activity>
+        <activity android:name="com.newvo.android.TextEntryActivity"
+                  android:label="My Activity"
+                  android:theme="@style/NoActionBar"
+                  android:screenOrientation="unspecified"
+                  android:windowSoftInputMode="stateAlwaysVisible"/>
     </application>
 
 </manifest>

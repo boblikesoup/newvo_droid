@@ -12,16 +12,33 @@ public class Suggestion extends ParseObject {
     public static final String BODY = "body";
     public static final String USER_ID = User.USER_ID;
     public static final String POST_ID = Post.POST_ID;
+    public static final String STATUS = "status";
 
     public String getBody(){
         return getString(BODY);
+    }
+    public void setBody(String body){
+        put(BODY, body);
     }
 
     public User getUser(){
         return (User) getParseObject(USER_ID);
     }
+    public void setUser(User user){
+        put(USER_ID, user);
+    }
 
     public Post getPost(){
         return (Post) getParseObject(POST_ID);
+    }
+    public void setPost(Post post) {
+        put(POST_ID, post);
+    }
+
+    public int getStatus(){
+        return getInt(STATUS);
+    }
+    public void setStatus(int status) {
+        put(STATUS, status);
     }
 }
