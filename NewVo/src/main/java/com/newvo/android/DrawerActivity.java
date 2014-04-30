@@ -129,11 +129,17 @@ public class DrawerActivity extends Activity {
     }
 
     public void refreshFragment(){
-        Fragment currentFragment = getFragmentManager().findFragmentByTag(getTitle().toString());
-        FragmentTransaction fragTransaction = getFragmentManager().beginTransaction();
-        fragTransaction.detach(currentFragment);
-        fragTransaction.attach(currentFragment);
-        fragTransaction.commit();
+        String name = getTitle().toString();
+        Fragment fragment = fragmentRetriever.retrieveFragment(name);
+
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.removeOnBackStackChangedListener(backStackChangedListener);
+        fragmentManager.popBackStackImmediate();
+        fragmentManager.addOnBackStackChangedListener(backStackChangedListener);
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction()
+                .replace(R.id.frame_container, fragment, name).setBreadCrumbTitle(name).addToBackStack(name);
+        transaction.commit();
     }
 
 

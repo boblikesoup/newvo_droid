@@ -2,6 +2,7 @@ package com.newvo.android.slidingmenu;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.newvo.android.R;
+import com.newvo.android.util.TypefaceUtil;
 
 import java.util.ArrayList;
 
@@ -51,6 +53,11 @@ public class NavigationDrawerListAdapter extends BaseAdapter {
         ImageView imgIcon = (ImageView) convertView.findViewById(R.id.icon);
         TextView txtTitle = (TextView) convertView.findViewById(R.id.title);
         TextView txtCount = (TextView) convertView.findViewById(R.id.counter);
+
+        //Set font
+        Typeface customTypeface = TypefaceUtil.getCustomTypeface(context, TypefaceUtil.UNIVERSAL_FONT);
+        txtTitle.setTypeface(customTypeface);
+        txtCount.setTypeface(customTypeface);
 
         imgIcon.setImageResource(navDrawerItems.get(position).getIcon());
         txtTitle.setText(navDrawerItems.get(position).getTitle());

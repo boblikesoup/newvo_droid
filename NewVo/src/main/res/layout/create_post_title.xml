@@ -13,8 +13,8 @@
         android:background="@null"
         android:gravity="center"
         android:inputType="textMultiLine"
-        android:hint="Enter Post Title..."
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        />
+        android:hint="Caption..."
+        android:textColorHint="@android:color/white"
+        android:textSize="26sp"/>
 
 </LinearLayout>
