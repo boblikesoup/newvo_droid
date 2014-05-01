@@ -102,7 +102,7 @@ public class ComparisonViewHolder {
                     i.putExtra(TextEntryActivity.TEXT, suggestionText);
                 }
                 container.startActivityForResult(i, TextEntryActivity.TEXT_REQUEST_CODE);
-                ((Activity)context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                ((Activity)context).overridePendingTransition(R.anim.appear, R.anim.disappear);
             }
         });
 
