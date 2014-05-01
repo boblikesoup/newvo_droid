@@ -45,7 +45,7 @@
                   android:label="My Activity"
                   android:theme="@style/NoActionBar"
                   android:screenOrientation="unspecified"
-                  android:windowSoftInputMode="stateAlwaysVisible"/>
+                  android:windowSoftInputMode="stateAlwaysVisible|adjustResize"/>
     </application>
 
 </manifest>

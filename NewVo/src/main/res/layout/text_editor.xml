@@ -5,28 +5,20 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="match_parent"
-                    android:layout_height="75dp"
-                    android:background="@color/light_transparent_background"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginBottom="2dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <EditText
+        <com.newvo.android.util.CloseableEditText
             android:id="@+id/text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="left"
+            android:layout_height="75dp"
             android:singleLine="false"
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white"
             android:textSize="26sp"
-            android:background="@null"
-            android:gravity="center"/>
-
-    </RelativeLayout>
+            android:background="@color/light_transparent_background"
+            android:gravity="center"
+            android:layout_gravity="bottom"/>
+    </LinearLayout>
 </LinearLayout>
