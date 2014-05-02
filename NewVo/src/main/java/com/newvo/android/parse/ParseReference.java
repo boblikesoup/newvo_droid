@@ -1,15 +1,16 @@
 package com.newvo.android.parse;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
-import com.parse.*;
+import com.parse.ParseACL;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
 /**
  * Created by David on 4/26/2014.
@@ -101,5 +102,23 @@ public class ParseReference {
             Log.e("NewVo", e.getMessage(), e);
             return null;
         }
+    }
+
+    public static void resizeFile(Context context, String path, File output){
+        resizeBitmap(getBitmap(context.getContentResolver(), path), output);
+    }
+
+    public static void resizeBitmap(Bitmap bitmap, File file) {
+        if (bitmap == null) {
+            return;
+        }
+        FileOutputStream out;
+        try {
+            out = new FileOutputStream(file);
+        } catch (FileNotFoundException e) {
+            Log.e("NewVo", "file not found exception" + file);
+            return;
+        }
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
     }
 }

@@ -46,6 +46,7 @@
                   android:theme="@style/NoActionBar"
                   android:screenOrientation="unspecified"
                   android:windowSoftInputMode="stateAlwaysVisible|adjustResize"/>
+        <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
     </application>
 
 </manifest>

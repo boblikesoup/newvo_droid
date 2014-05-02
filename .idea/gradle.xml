@@ -10,6 +10,8 @@
           <set>
             <option value="F:\newvo_droid" />
             <option value="F:\newvo_droid\NewVo" />
+            <option value="F:\newvo_droid\libraries" />
+            <option value="F:\newvo_droid\libraries\AndroidCrop" />
           </set>
         </option>
       </GradleProjectSettings>

@@ -78,6 +78,7 @@
     <orderEntry type="library" exported="" name="butterknife-4.0.1" level="project" />
     <orderEntry type="library" exported="" name="support-v4-19.1.0" level="project" />
     <orderEntry type="library" exported="" name="facebook-android-sdk-3.8.0" level="project" />
+    <orderEntry type="module" module-name="AndroidCrop" exported="" />
   </component>
 </module>
 

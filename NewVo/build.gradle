@@ -10,14 +10,12 @@ apply plugin: 'android'
 
 repositories {
     mavenCentral()
-    maven {
-        url "http://mente.github.io/facebook-api-android-aar"
-    }
+    maven { url 'http://mente.github.io/facebook-api-android-aar' }
 }
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.0.3"
+    buildToolsVersion '19.0.3'
 
     defaultConfig {
         minSdkVersion 14
@@ -41,4 +39,5 @@ dependencies {
     compile 'com.facebook:facebook-android-sdk:+@aar'
     compile files('libs/parse/Parse-1.4.3.jar')
     compile files('libs/picasso/picasso-2.2.0.jar')
+    compile project(':libraries:AndroidCrop')
 }

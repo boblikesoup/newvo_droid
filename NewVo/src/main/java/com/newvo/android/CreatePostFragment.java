@@ -16,10 +16,12 @@ import android.view.ViewGroup;
 import android.widget.*;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import com.newvo.android.parse.ParseReference;
 import com.newvo.android.parse.Post;
 import com.newvo.android.remote.CreatePostRequest;
 import com.parse.ParseFile;
 import com.parse.ParseImageView;
+import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,6 +32,11 @@ import java.util.Date;
  * Created by David on 4/16/2014.
  */
 public class CreatePostFragment extends Fragment {
+
+    public static final String IMAGE_NUMBER = "imageNumber";
+    private static final int IMAGE_CAPTURE = 2;
+    private static final int IMAGE_PICK = 4;
+
     @InjectView(R.id.caption)
     TextView caption;
     @InjectView(R.id.photo1)
@@ -66,6 +73,7 @@ public class CreatePostFragment extends Fragment {
 
     private ParseFile file1;
     private ParseFile file2;
+    private int imageNumber = -1;
 
 
     @Override
@@ -94,7 +102,8 @@ public class CreatePostFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, 3);
+                imageNumber = 1;
+                startActivityForResult(intent, IMAGE_PICK);
             }
         });
         folderCamera2.folderButton.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +111,8 @@ public class CreatePostFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, 4);
+                imageNumber = 2;
+                startActivityForResult(intent, IMAGE_PICK);
             }
         });
 
@@ -138,36 +148,62 @@ public class CreatePostFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
-            final ParseImageView imageView = (requestCode % 2 == 1) ? firstImage : secondImage;
-            LinearLayout folderCameraLayout = (requestCode % 2 == 1) ? folderCameraLayout1 : folderCameraLayout2;
-            final String photoPath = (requestCode <= 2) ? currentPhotoPath : data.getData().toString();
-
-            if (requestCode % 2 == 1) {
-                new AsyncTask(){
-                    @Override
-                    protected Object doInBackground(Object[] params) {
-                        file1 = getParseFile(getActivity(),photoPath);
-                        imageView.setParseFile(file1);
-                        return null;
-                    }
-                }.doInBackground(null);
-
-                loadSecondOption();
-            } else {
-                new AsyncTask(){
-                    @Override
-                    protected Object doInBackground(Object[] params) {
-                        file2 = getParseFile(getActivity(),photoPath);
-                        imageView.setParseFile(file2);
-                        return null;
-                    }
-                }.doInBackground(null);
+            if(imageNumber == -1){
+                return;
             }
 
-            imageView.loadInBackground();
+            if (requestCode ==  Crop.REQUEST_CROP) {
 
-            folderCameraLayout.setVisibility(View.GONE);
+                final ParseImageView imageView = (imageNumber % 2 == 1) ? firstImage : secondImage;
+                LinearLayout folderCameraLayout = (imageNumber % 2 == 1) ? folderCameraLayout1 : folderCameraLayout2;
+
+                if (imageNumber % 2 == 1) {
+                    new AsyncTask() {
+                        @Override
+                        protected Object doInBackground(Object[] params) {
+                            file1 = getParseFile(getActivity(), currentPhotoPath);
+                            imageView.setParseFile(file1);
+                            return null;
+                        }
+                    }.doInBackground(null);
+
+                    loadSecondOption();
+                } else {
+                    new AsyncTask() {
+                        @Override
+                        protected Object doInBackground(Object[] params) {
+                            file2 = getParseFile(getActivity(), currentPhotoPath);
+                            imageView.setParseFile(file2);
+                            return null;
+                        }
+                    }.doInBackground(null);
+                }
+
+                imageNumber = -1;
+
+                imageView.loadInBackground();
+
+                folderCameraLayout.setVisibility(View.GONE);
+
+            } else if (requestCode == IMAGE_CAPTURE || requestCode == IMAGE_PICK) {
+                String photoPath;
+                if(requestCode == IMAGE_CAPTURE) {
+                    photoPath = currentPhotoPath;
+                } else {
+                    photoPath = data.getData().toString();
+                }
+                try {
+                    File file = createImageFile();
+                    ParseReference.resizeFile(getActivity(), photoPath, file);
+                    new Crop(Uri.parse(currentPhotoPath)).output(Uri.parse(currentPhotoPath)).start(getActivity(), this);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
         }
+
     }
 
     private void loadSecondOption() {
@@ -189,7 +225,7 @@ public class CreatePostFragment extends Fragment {
 
     }
 
-    private void startIntent(int requestCode) {
+    private void startIntent(int imageNumber) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         File photoFile = null;
         try {
@@ -201,7 +237,8 @@ public class CreatePostFragment extends Fragment {
         if (photoFile != null) {
             intent.putExtra(MediaStore.EXTRA_OUTPUT,
                     Uri.fromFile(photoFile));
-            startActivityForResult(intent, requestCode);
+            this.imageNumber = imageNumber;
+            startActivityForResult(intent, IMAGE_CAPTURE);
         }
     }
 

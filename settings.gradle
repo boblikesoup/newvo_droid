@@ -1,1 +1,2 @@
 include ':NewVo'
+include ':libraries:AndroidCrop'
