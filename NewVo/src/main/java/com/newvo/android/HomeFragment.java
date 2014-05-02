@@ -42,8 +42,12 @@ public class HomeFragment extends Fragment {
         } else {
             holder.setView(rootView);
         }
-        if(posts != null){
-            loadNextPost();
+        if (posts != null) {
+            if ((holder.hasVoted() || location == -1)) {
+                loadNextPost();
+            } else {
+                loadPost();
+            }
         }
         return rootView;
     }
@@ -65,12 +69,12 @@ public class HomeFragment extends Fragment {
         if(location > 2){
             requestMorePosts();
         }
+        loadPost();
+    }
+
+    private void loadPost(){
         if(!posts.isEmpty() && location < posts.size()){
-            if(holder.getPost() == null || !holder.getPost().equals(posts.get(location))){
                 holder.setItem(posts.get(location));
-            } else {
-                loadNextPost();
-            }
         } else {
             //TODO: You have read all of the posts, you wizard.
         }
@@ -82,9 +86,9 @@ public class HomeFragment extends Fragment {
             public void done(List<Post> posts, ParseException e) {
                 if(posts != null){
                     HomeFragment.this.posts = posts;
-                    location = -1;
+                    location = 0;
                     if(holder != null && holder.getPost() == null){
-                        loadNextPost();
+                        loadPost();
                     }
                 }
 

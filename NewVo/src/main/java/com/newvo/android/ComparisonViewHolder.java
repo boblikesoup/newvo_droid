@@ -65,21 +65,33 @@ public class ComparisonViewHolder {
 
         question.setText(item.getCaption());
 
-        ParseFile photo2 = item.getPhoto2();
+        final ParseFile photo2 = item.getPhoto2();
         if(photo2 == null){
             secondChoice.setImageResource(R.drawable.x_button);
         } else {
             secondChoice.setImageResource(R.drawable.check_button);
         }
 
-        ParseFile photo1 = item.getPhoto1();
+        final ParseFile photo1 = item.getPhoto1();
         if(photo1 != null){
             firstImage.setParseFile(photo1);
             firstImage.loadInBackground();
+            firstImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((DrawerActivity) context).displayFragment(new ImageFragment(photo1), context.getString(R.string.title_image));
+                }
+            });
         }
         if(photo2 != null){
             secondImage.setParseFile(photo2);
             secondImage.loadInBackground();
+            secondImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((DrawerActivity) context).displayFragment(new ImageFragment(photo2), context.getString(R.string.title_image));
+                }
+            });
             secondImageContainer.setVisibility(View.VISIBLE);
             buffer1.setVisibility(View.GONE);
             buffer2.setVisibility(View.GONE);
@@ -159,5 +171,9 @@ public class ComparisonViewHolder {
             }
 
         }
+    }
+
+    public boolean hasVoted() {
+        return voted;
     }
 }

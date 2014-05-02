@@ -5,8 +5,6 @@ import com.newvo.android.parse.User;
 import com.parse.FindCallback;
 import com.parse.ParseQuery;
 
-import java.util.Arrays;
-
 /**
  * Created by David on 4/28/2014.
  */
@@ -23,7 +21,7 @@ public class FeedRequest {
         query.whereEqualTo(Post.VIEWABLE_BY, 0);
         String userId = user.getUserId();
         query.whereNotEqualTo(Post.USER_ID, user);
-        query.whereNotContainedIn(Post.VOTED_ON_ARRAY, Arrays.asList(userId));
+ //       query.whereNotContainedIn(Post.VOTED_ON_ARRAY, Arrays.asList(userId));
         query.orderByDescending(Post.CREATED_AT);
     }
 

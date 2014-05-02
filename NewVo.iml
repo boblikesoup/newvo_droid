@@ -57,7 +57,6 @@
       <sourceFolder url="file://$MODULE_DIR$/NewVo/src/androidTest/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/NewVo/src/androidTest/jni" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/NewVo/src/androidTest/rs" isTestSource="true" />
-      <excludeFolder url="file://$MODULE_DIR$/NewVo/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/NewVo/build/apk" />
       <excludeFolder url="file://$MODULE_DIR$/NewVo/build/assets" />
       <excludeFolder url="file://$MODULE_DIR$/NewVo/build/bundles" />
