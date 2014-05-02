@@ -53,16 +53,28 @@ public class SummaryViewHolder {
     }
 
     public void setItem(final Post item, final DeleteCallback deleteCallback) {
-        ParseFile photo1 = item.getPhoto1();
+        final ParseFile photo1 = item.getPhoto1();
         if (photo1 != null) {
             firstImage.setParseFile(photo1);
             firstImage.loadInBackground();
+            firstImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((DrawerActivity) context).displayFragment(new ImageFragment(photo1), context.getString(R.string.title_summary_image));
+                }
+            });
         }
 
-        ParseFile photo2 = item.getPhoto2();
+        final ParseFile photo2 = item.getPhoto2();
         if (photo2 != null) {
             secondImage.setParseFile(photo2);
             secondImage.loadInBackground();
+            secondImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((DrawerActivity) context).displayFragment(new ImageFragment(photo2), context.getString(R.string.title_summary_image));
+                }
+            });
         }
         int votes1 = item.getVotes1();
         int votes2 = item.getVotes2();
