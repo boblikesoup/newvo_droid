@@ -15,32 +15,13 @@
         android:id="@+id/buffer1">
     </LinearLayout>
 
-    <FrameLayout
+    <include
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        layout="@layout/create_post_image_container"
+        android:id="@+id/image_container_1"
         android:layout_weight="1"
-        android:layout_marginTop="2dp"
-        android:layout_marginRight="1dp"
-        android:background="@color/light_transparent_background"
-        android:id="@+id/first_image_container"
-        android:layout_marginBottom="2dp"
-        android:weightSum="2">
-
-        <include
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            layout="@layout/folder_camera"
-            android:id="@+id/folder_camera_1"
-            android:layout_gravity="center"
-            android:layout_margin="2dp"/>
-
-        <com.parse.ParseImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/photo1" android:layout_margin="2dp" android:scaleType="centerInside"
-            android:layout_gravity="center"
-            android:contentDescription="@string/first_image_description"/>
-    </FrameLayout>
+        android:layout_margin="2dp"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -51,33 +32,14 @@
         android:id="@+id/buffer2">
     </LinearLayout>
 
-    <FrameLayout
+    <include
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        layout="@layout/create_post_image_container"
+        android:id="@+id/image_container_2"
+        android:layout_gravity="center"
+        android:visibility="gone"
         android:layout_weight="1"
-        android:layout_marginTop="2dp"
-        android:layout_marginLeft="1dp"
-        android:background="@color/light_transparent_background"
-        android:id="@+id/second_image_container"
-        android:layout_marginBottom="2dp"
-        android:visibility="gone">
-
-        <include
-            layout="@layout/folder_camera"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/folder_camera_2"
-            android:layout_gravity="center"
-            android:layout_margin="2dp"/>
-
-        <com.parse.ParseImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/photo2" android:layout_margin="2dp" android:scaleType="centerInside"
-            android:layout_gravity="center"
-            android:contentDescription="@string/second_image_description"
-            />
-
-    </FrameLayout>
+        android:layout_margin="2dp"/>
 
 </LinearLayout>

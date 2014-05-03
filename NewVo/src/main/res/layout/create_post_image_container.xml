@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:layout_marginTop="2dp"
+    android:layout_marginRight="1dp"
+    android:background="@color/light_transparent_background"
+    android:layout_marginBottom="2dp"
+    android:weightSum="2">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:layout_gravity="center"
+                  android:background="@null"
+                  android:id="@+id/folder_camera_layout"
+                  android:visibility="visible">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            />
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/camera_button"
+            android:scaleType="centerInside"
+            android:layout_gravity="center"
+            android:src="@drawable/camera_image"
+            android:contentDescription="@string/camera_description"
+            android:background="@null"
+            android:layout_weight="0"
+            />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+        </LinearLayout>
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/folder_button"
+            android:scaleType="centerInside"
+            android:layout_gravity="center"
+            android:src="@drawable/folder_image"
+            android:contentDescription="@string/folder_description"
+            android:background="@null"
+            android:layout_weight="0"
+            />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            />
+
+    </LinearLayout>
+
+    <com.parse.ParseImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/photo" android:layout_margin="2dp" android:scaleType="centerInside"
+        android:layout_gravity="center"
+        android:contentDescription="@string/first_image_description"
+        android:visibility="gone"/>
+</FrameLayout>

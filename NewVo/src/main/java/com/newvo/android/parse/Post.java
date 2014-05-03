@@ -1,6 +1,5 @@
 package com.newvo.android.parse;
 
-import android.content.ContentResolver;
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -73,7 +72,6 @@ public class Post extends ParseObject {
         put(PHOTO_2, photo2);
     }
 
-
     public int getVotes1() {
         return getInt(VOTES_0);
     }
@@ -96,15 +94,6 @@ public class Post extends ParseObject {
 
     public void setNumberOfSuggestions(int numberOfSuggestions) {
         put(SUGGESTIONS, numberOfSuggestions);
-    }
-
-    public static ParseFile createParseFile(ContentResolver contentResolver, String uri) {
-        byte[] data = ParseReference.pathToByteArray(contentResolver, uri);
-        if(data == null){
-            return null;
-        }
-        ParseFile parseFile = new ParseFile("Image.jpg", data);
-        return parseFile;
     }
 
     public String getStatus() {

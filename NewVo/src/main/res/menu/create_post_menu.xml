@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/swap"
+        android:title="Swap Images"/>
+    <item
+        android:id="@+id/delete1"
+        android:title="Remove 1st Image"/>
+    <item
+        android:id="@+id/delete2"
+        android:title="Remove 2d Image"/>
+</menu>
