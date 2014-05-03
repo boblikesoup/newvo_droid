@@ -2,6 +2,7 @@
     package="com.soundcloud.android.crop">
 
     <application
+        android:theme="@android:style/Theme.Holo"
         android:allowBackup="true" />
 
 </manifest>

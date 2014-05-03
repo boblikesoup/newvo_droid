@@ -1,15 +1,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Crop.DoneCancelBar">
+    style="@style/Crop.DoneCancelBar"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
 
     <FrameLayout
         android:id="@+id/btn_cancel"
-        style="@style/Crop.ActionButton">
+        style="@style/Crop.ActionButton"
+        android:minHeight="45dp">
         <TextView style="@style/Crop.ActionButtonText.Cancel" />
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/btn_done"
-        style="@style/Crop.ActionButton">
+        style="@style/Crop.ActionButton"
+        android:minHeight="45dp">
         <TextView style="@style/Crop.ActionButtonText.Done" />
     </FrameLayout>
 

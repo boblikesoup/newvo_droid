@@ -1,8 +1,8 @@
 <resources>
 
-    <color name="crop__button_bar">#f3f3f3</color>
-    <color name="crop__button_text">#666666</color>
-    <color name="crop__selector_pressed">#1a000000</color>
-    <color name="crop__selector_focused">#77000000</color>
+    <color name="crop__button_bar">#000000</color>
+    <color name="crop__button_text">#ffffff</color>
+    <color name="crop__selector_pressed">#46c5c1ff</color>
+    <color name="crop__selector_focused">#2699cc00</color>
 
 </resources>
