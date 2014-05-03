@@ -70,6 +70,7 @@ public class CreatePostPhotoViewHolder {
         this.photo = photo;
         parseFile = ParseFileUtils.getParseFile(fragment.getActivity(), ImageFileUtils.getPhotoPath(photo));
         photoView.setParseFile(parseFile);
+        photoView.loadInBackground();
         photoView.setVisibility(View.VISIBLE);
         folderCameraLayout.setVisibility(View.GONE);
     }

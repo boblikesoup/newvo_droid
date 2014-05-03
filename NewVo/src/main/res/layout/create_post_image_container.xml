@@ -11,6 +11,14 @@
     android:layout_marginBottom="2dp"
     android:weightSum="2">
 
+    <com.parse.ParseImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/photo" android:layout_margin="2dp" android:scaleType="centerInside"
+        android:layout_gravity="center"
+        android:contentDescription="@string/first_image_description"
+        android:visibility="gone"/>
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:orientation="vertical"
                   android:layout_width="match_parent"
@@ -67,11 +75,4 @@
 
     </LinearLayout>
 
-    <com.parse.ParseImageView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/photo" android:layout_margin="2dp" android:scaleType="centerInside"
-        android:layout_gravity="center"
-        android:contentDescription="@string/first_image_description"
-        android:visibility="gone"/>
 </FrameLayout>
