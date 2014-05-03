@@ -176,23 +176,7 @@ public class CropImageActivity extends MonitoredActivity {
 
             Rect imageRect = new Rect(0, 0, width, height);
 
-            // Make the default size about 4/5 of the width or height
-            int cropWidth = Math.min(width, height) * 4 / 5;
-            @SuppressWarnings("SuspiciousNameCombination")
-            int cropHeight = cropWidth;
-
-            if (mAspectX != 0 && mAspectY != 0) {
-                if (mAspectX > mAspectY) {
-                    cropHeight = cropWidth * mAspectY / mAspectX;
-                } else {
-                    cropWidth = cropHeight * mAspectX / mAspectY;
-                }
-            }
-
-            int x = (width - cropWidth) / 2;
-            int y = (height - cropHeight) / 2;
-
-            RectF cropRect = new RectF(x, y, x + cropWidth, y + cropHeight);
+            RectF cropRect = new RectF(0, 0, width, height);
             hv.setup(mImageView.getUnrotatedMatrix(), imageRect, cropRect, mAspectX != 0 && mAspectY != 0);
             mImageView.add(hv);
         }
