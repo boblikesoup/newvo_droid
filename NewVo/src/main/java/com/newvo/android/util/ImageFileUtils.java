@@ -103,19 +103,19 @@ public class ImageFileUtils {
         }
     }
 
-    public static void resizeFile(Context context, String path, File output){
+    public static void resizeFile(Context context, String path, Uri output){
         resizeBitmap(getBitmap(context.getContentResolver(), path), output);
     }
 
-    public static void resizeBitmap(Bitmap bitmap, File file) {
+    public static void resizeBitmap(Bitmap bitmap, Uri uri) {
         if (bitmap == null) {
             return;
         }
         FileOutputStream out;
         try {
-            out = new FileOutputStream(file);
+            out = new FileOutputStream(new File(uri.getPath()));
         } catch (FileNotFoundException e) {
-            Log.e("NewVo", "file not found exception" + file);
+            Log.e("NewVo", "file not found exception" + uri.toString());
             return;
         }
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);

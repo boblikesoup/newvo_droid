@@ -18,14 +18,11 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import com.newvo.android.remote.CreatePostRequest;
-import com.newvo.android.util.ImageFileUtils;
 import com.newvo.android.util.IntentUtils;
 import com.soundcloud.android.crop.Crop;
 
-import java.io.File;
-import java.io.IOException;
-
-import static com.newvo.android.util.IntentUtils.*;
+import static com.newvo.android.util.IntentUtils.IMAGE_CAPTURE;
+import static com.newvo.android.util.IntentUtils.IMAGE_PICK;
 
 /**
  * Created by David on 4/16/2014.
@@ -64,7 +61,7 @@ public class CreatePostFragment extends Fragment {
     }
 
     @OnClick(R.id.main_button)
-    public void createPost(){
+    public void createPost() {
         CharSequence text = caption.getText();
         String caption;
         if (text == null) {
@@ -89,31 +86,27 @@ public class CreatePostFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, final Intent data) {
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode ==  Crop.REQUEST_CROP) {
+            if (requestCode == Crop.REQUEST_CROP) {
                 new AsyncTask() {
                     @Override
                     protected Object doInBackground(Object[] params) {
                         Uri uri = (Uri) data.getExtras().get(MediaStore.EXTRA_OUTPUT);
-                        getSelectedImage().setPhoto(new File(uri.getPath()));
+                        getSelectedImage().setPhoto(uri);
                         return null;
                     }
                 }.doInBackground(null);
 
             } else if (requestCode == IMAGE_CAPTURE || requestCode == IMAGE_PICK) {
-                String photoPath;
-                if(requestCode == IMAGE_CAPTURE) {
-                    photoPath = ImageFileUtils.getPhotoPath(IntentUtils.photoFile);
+                Uri uri;
+                if (requestCode == IMAGE_CAPTURE) {
+                    uri = IntentUtils.photoFile;
                 } else {
-                    photoPath = data.getData().toString();
+                    uri = data.getData();
+
                 }
-                try {
-                    File file = createImageFile();
-                    ImageFileUtils.resizeFile(getActivity(), photoPath, file);
-                    String resizedPhotoPath = ImageFileUtils.getPhotoPath(file);
-                    new Crop(Uri.parse(resizedPhotoPath)).output(Uri.parse(resizedPhotoPath)).start(getActivity(), this);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                getSelectedImage().setUncroppedPhoto(uri);
+
+                IntentUtils.startImageCropIntent(this, uri.toString());
 
             }
 
@@ -128,11 +121,11 @@ public class CreatePostFragment extends Fragment {
         secondChoice.setImageResource(R.drawable.check_button);
     }
 
-    private ViewHolder getSelectedImage(){
-        if(imageNumber == 1){
+    private ViewHolder getSelectedImage() {
+        if (imageNumber == 1) {
             return image1;
         }
-        if(imageNumber == 2){
+        if (imageNumber == 2) {
             return image2;
         }
         return null;
@@ -145,7 +138,7 @@ public class CreatePostFragment extends Fragment {
         }
 
         @Override
-        public void setPhoto(File photo) {
+        public void setPhoto(Uri photo) {
             super.setPhoto(photo);
             loadSecondOption();
         }
