@@ -11,13 +11,55 @@
     android:layout_marginBottom="2dp"
     android:weightSum="2">
 
-    <com.parse.ParseImageView
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/photo" android:layout_margin="2dp" android:scaleType="centerInside"
-        android:layout_gravity="center"
-        android:contentDescription="@string/first_image_description"
-        android:visibility="gone"/>
+        android:id="@+id/photo_layout"
+        android:visibility="gone">
+
+        <com.parse.ParseImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/photo" android:layout_margin="2dp" android:scaleType="centerInside"
+            android:layout_gravity="center"
+            android:contentDescription="@string/first_image_description"
+            android:visibility="visible"
+            />
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="26dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right">
+
+            <ImageButton
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:id="@+id/delete_photo"
+                android:src="@drawable/delete_photo_x"
+                android:background="@null"
+                android:scaleType="fitStart"
+                android:layout_weight="1"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"/>
+
+            <ImageButton
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:id="@+id/swap_photo"
+                android:src="@drawable/swap_photo"
+                android:background="@null"
+                android:scaleType="fitStart"
+                android:layout_weight="1"
+                android:layout_below="@+id/delete_photo"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="100dp"
+                android:visibility="gone"/>
+        </RelativeLayout>
+
+    </FrameLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:orientation="vertical"

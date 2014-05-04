@@ -3,6 +3,7 @@ package com.newvo.android;
 import android.app.Fragment;
 import android.net.Uri;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import butterknife.ButterKnife;
@@ -29,6 +30,12 @@ public class CreatePostPhotoViewHolder {
 
     @InjectView(R.id.folder_camera_layout)
     LinearLayout folderCameraLayout;
+
+    @InjectView(R.id.photo_layout)
+    FrameLayout photoLayout;
+
+    @InjectView(R.id.swap_photo)
+    protected ImageButton swapButton;
 
     View createPostImageContainer;
 
@@ -60,6 +67,7 @@ public class CreatePostPhotoViewHolder {
         IntentUtils.startImageCropIntent(fragment, uncroppedPhoto.toString());
     }
 
+
     public void onDestroyView() {
         parseFile = null;
         photoView.setParseFile(null);
@@ -72,10 +80,46 @@ public class CreatePostPhotoViewHolder {
     public void setPhoto(Uri photo) {
         this.photo = photo;
         parseFile = ParseFileUtils.getParseFile(fragment.getActivity(), photo.toString());
-        photoView.setParseFile(parseFile);
-        photoView.loadInBackground();
-        photoView.setVisibility(View.VISIBLE);
-        folderCameraLayout.setVisibility(View.GONE);
+        updateImageView();
+
+    }
+
+    private void updateImageView(){
+        if(parseFile != null) {
+            photoView.setParseFile(parseFile);
+            photoView.loadInBackground();
+            photoLayout.setVisibility(View.VISIBLE);
+            folderCameraLayout.setVisibility(View.GONE);
+        } else {
+            photoView.setParseFile(null);
+            photoLayout.setVisibility(View.GONE);
+            folderCameraLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @OnClick(R.id.delete_photo)
+    public void deletePhoto(){
+        this.uncroppedPhoto = null;
+        this.photo = null;
+        parseFile = null;
+        updateImageView();
+    }
+
+    public void swapPhoto(CreatePostPhotoViewHolder holder){
+        ParseFile parseFile = this.parseFile;
+        Uri uncroppedPhoto = this.uncroppedPhoto;
+        Uri photo = this.photo;
+
+        this.parseFile = holder.parseFile;
+        this.uncroppedPhoto = holder.uncroppedPhoto;
+        this.photo = holder.photo;
+
+        holder.parseFile = parseFile;
+        holder.uncroppedPhoto = uncroppedPhoto;
+        holder.photo = photo;
+
+        holder.updateImageView();
+        updateImageView();
     }
 
     public ParseFile getParseFile() {

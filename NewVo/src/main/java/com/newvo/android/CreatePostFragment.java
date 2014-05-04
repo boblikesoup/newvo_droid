@@ -55,7 +55,7 @@ public class CreatePostFragment extends Fragment {
         ButterKnife.inject(this, rootView);
 
         image1 = new FirstViewHolder(this, rootView.findViewById(R.id.image_container_1), 1);
-        image2 = new ViewHolder(this, rootView.findViewById(R.id.image_container_2), 2);
+        image2 = new SecondViewHolder(this, rootView.findViewById(R.id.image_container_2), 2);
 
         return rootView;
     }
@@ -121,6 +121,13 @@ public class CreatePostFragment extends Fragment {
         secondChoice.setImageResource(R.drawable.check_button);
     }
 
+    private void removeSecondOption() {
+        buffer1.setVisibility(View.VISIBLE);
+        buffer2.setVisibility(View.VISIBLE);
+        image2.setVisibility(View.GONE);
+        secondChoice.setImageResource(R.drawable.x_button);
+    }
+
     private ViewHolder getSelectedImage() {
         if (imageNumber == 1) {
             return image1;
@@ -129,6 +136,32 @@ public class CreatePostFragment extends Fragment {
             return image2;
         }
         return null;
+    }
+
+    private class SecondViewHolder extends ViewHolder {
+
+        private SecondViewHolder(Fragment fragment, View view, int imageNumber) {
+            super(fragment, view, imageNumber);
+            this.swapButton.setVisibility(View.VISIBLE);
+            this.swapButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    swapPhoto(image1);
+                }
+            });
+        }
+
+        @Override
+        public void setPhoto(Uri photo) {
+            super.setPhoto(photo);
+            secondChoice.setImageResource(R.drawable.check_button);
+        }
+
+        @Override
+        public void deletePhoto() {
+            super.deletePhoto();
+            secondChoice.setImageResource(R.drawable.x_button);
+        }
     }
 
     private class FirstViewHolder extends ViewHolder {
@@ -141,6 +174,16 @@ public class CreatePostFragment extends Fragment {
         public void setPhoto(Uri photo) {
             super.setPhoto(photo);
             loadSecondOption();
+        }
+
+        @Override
+        public void deletePhoto() {
+            super.deletePhoto();
+            if(image2.getParseFile() != null){
+                swapPhoto(image2);
+            } else {
+                removeSecondOption();
+            }
         }
     }
 
