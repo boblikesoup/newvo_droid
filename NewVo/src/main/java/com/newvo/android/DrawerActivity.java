@@ -1,9 +1,6 @@
 package com.newvo.android;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.app.*;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -60,14 +57,14 @@ public class DrawerActivity extends Activity {
             @Override
             public void onDrawerClosed(View view) {
 
-                getActionBar().setTitle(getTitle());
+                setActionBarTitle(getTitle());
                 // calling onPrepareOptionsMenu() to show action bar icons
                 invalidateOptionsMenu();
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
-                getActionBar().setTitle(getTitle());
+                setActionBarTitle(getTitle());
                 // calling onPrepareOptionsMenu() to hide action bar icons
                 invalidateOptionsMenu();
             }
@@ -173,16 +170,24 @@ public class DrawerActivity extends Activity {
     @Override
     public void setTitle(CharSequence title) {
         super.setTitle(title);
-        getActionBar().setTitle(title);
+        setActionBarTitle(title);
         int resId = fragmentRetriever.retrieveIcon(title.toString());
         if(resId > -1){
-            getActionBar().setIcon(resId);
+            setActionBarIcon(resId);
         }
         int position = fragmentRetriever.retrievePosition(title.toString());
         if(position > -1){
             drawerList.setItemChecked(position, true);
             drawerList.setSelection(position);
         }
+    }
+
+    private void setActionBarIcon(int resId) {
+        getActionBar().setIcon(resId);
+    }
+
+    private void setActionBarTitle(CharSequence title) {
+        getActionBar().setTitle(title);
     }
 
     //region Toggle Support
