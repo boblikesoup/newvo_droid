@@ -73,12 +73,15 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.profile, container, false);
         ButterKnife.inject(this, rootView);
-
-        for(Post post : activePosts){
-            changeLists(post);
+        if(activePosts != null) {
+            for (Post post : activePosts) {
+                changeLists(post);
+            }
         }
-        for(Post post : inactivePosts){
-            changeLists(post);
+        if(inactivePosts != null) {
+            for (Post post : inactivePosts) {
+                changeLists(post);
+            }
         }
 
         activeList.setAdapter(getAdapter(getActivity(), Post.ACTIVE));
