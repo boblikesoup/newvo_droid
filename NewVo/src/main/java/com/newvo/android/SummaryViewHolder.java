@@ -13,9 +13,7 @@ import com.newvo.android.parse.Post;
 import com.newvo.android.parse.User;
 import com.newvo.android.remote.RemovePostRequest;
 import com.newvo.android.remote.SetPostActiveRequest;
-import com.parse.DeleteCallback;
-import com.parse.ParseFile;
-import com.parse.ParseImageView;
+import com.parse.*;
 
 /**
  * Created by David on 4/21/2014.
@@ -142,11 +140,25 @@ public class SummaryViewHolder {
 
     private void checkAndSetActive(final Post post, final MenuItem menuItem){
         if(menuItem.getTitle().equals("Set Inactive")){
-            new SetPostActiveRequest(post, Post.INACTIVE).request();
-            menuItem.setTitle("Set Active");
+            SaveCallback saveCallback = new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if(e == null){
+                        menuItem.setTitle("Set Active");
+                    }
+                }
+            };
+            new SetPostActiveRequest(post, Post.INACTIVE).request(saveCallback);
         } else if(menuItem.getTitle().equals("Set Active")){
-            new SetPostActiveRequest(post, Post.ACTIVE).request();
-            menuItem.setTitle("Set Inactive");
+            SaveCallback saveCallback = new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if(e == null){
+                        menuItem.setTitle("Set Active");
+                    }
+                }
+            };
+            new SetPostActiveRequest(post, Post.ACTIVE).request(saveCallback);
         }
     }
 

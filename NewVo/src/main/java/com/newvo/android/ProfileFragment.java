@@ -74,6 +74,13 @@ public class ProfileFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.profile, container, false);
         ButterKnife.inject(this, rootView);
 
+        for(Post post : activePosts){
+            changeLists(post);
+        }
+        for(Post post : inactivePosts){
+            changeLists(post);
+        }
+
         activeList.setAdapter(getAdapter(getActivity(), Post.ACTIVE));
         inactiveList.setAdapter(getAdapter(getActivity(), Post.INACTIVE));
 
@@ -104,6 +111,26 @@ public class ProfileFragment extends Fragment {
         selectedPost = null;
 
         return rootView;
+    }
+
+    private void changeLists(Post post){
+        if(post != null){
+            if(post.getStatus().equals(Post.INACTIVE) &&
+                    activePosts.contains(post)){
+                activePosts.remove(post);
+                inactivePosts.add(post);
+                if(pager != null && pager.getCurrentItem() == 0){
+                    pager.setCurrentItem(1);
+                }
+            } else if(post.getStatus().equals(Post.INACTIVE) &&
+                    activePosts.contains(post)){
+                activePosts.remove(post);
+                inactivePosts.add(post);
+                if(pager != null && pager.getCurrentItem() == 0){
+                    pager.setCurrentItem(1);
+                }
+            }
+        }
     }
 
     private SummaryAdapter getAdapter(Context context, String active){
