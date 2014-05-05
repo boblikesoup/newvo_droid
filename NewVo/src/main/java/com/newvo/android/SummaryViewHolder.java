@@ -10,6 +10,7 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.newvo.android.parse.Post;
+import com.newvo.android.parse.User;
 import com.newvo.android.remote.RemovePostRequest;
 import com.parse.DeleteCallback;
 import com.parse.ParseFile;
@@ -104,7 +105,10 @@ public class SummaryViewHolder {
         }
 
         final PopupMenu popupMenu = new PopupMenu(context, settingsIcon);
-        popupMenu.getMenu().add("Delete");
+        boolean writeAccess = item.getACL().getWriteAccess(User.getCurrentUser());
+        if(writeAccess) {
+            popupMenu.getMenu().add("Delete");
+        }
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {

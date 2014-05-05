@@ -23,7 +23,7 @@ public class SummaryAdapter extends ArrayAdapter<Post> {
     public View getView(int position, View convertView, ViewGroup parent) {
         SummaryViewHolder holder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.summary, null);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.summary, parent, false);
             holder = new SummaryViewHolder(getContext(), convertView);
             convertView.setTag(holder);
         } else {
