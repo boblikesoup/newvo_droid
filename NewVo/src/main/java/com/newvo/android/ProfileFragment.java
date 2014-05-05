@@ -55,7 +55,7 @@ public class ProfileFragment extends Fragment {
         pager.setAdapter(pagerAdapter);
 
         tabs.setTextColor(getResources().getColor(android.R.color.white));
-        tabs.setIndicatorColor(getResources().getColor(android.R.color.white));
+        tabs.setIndicatorColor(getResources().getColor(R.color.light_semi_transparent));
         tabs.setShouldExpand(true);
         tabs.setAllCaps(false);
         tabs.setTypeface(Typeface.SERIF, 0);
