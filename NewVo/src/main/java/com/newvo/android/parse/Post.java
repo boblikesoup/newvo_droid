@@ -110,17 +110,21 @@ public class Post extends ParseObject {
     }
 
     public void setStatus(String status) {
-        int statusInt = -1;
-        if (status.equals(ACTIVE)) {
-            statusInt = 0;
-        } else if (status.equals(INACTIVE)) {
-            statusInt = 1;
-        } else if (status.equals(DELETED)) {
-            statusInt = 2;
-        }
+        int statusInt = getStatusValue(status);
         if (statusInt > -1) {
             put(STATUS, statusInt);
         }
+    }
+
+    public static int getStatusValue(String status){
+        if (status.equals(ACTIVE)) {
+            return 0;
+        } else if (status.equals(INACTIVE)) {
+            return 1;
+        } else if (status.equals(DELETED)) {
+            return 2;
+        }
+        return -1;
     }
 
     public String getViewableBy() {

@@ -12,6 +12,7 @@ import butterknife.InjectView;
 import com.newvo.android.parse.Post;
 import com.newvo.android.parse.User;
 import com.newvo.android.remote.RemovePostRequest;
+import com.newvo.android.remote.SetPostActiveRequest;
 import com.parse.DeleteCallback;
 import com.parse.ParseFile;
 import com.parse.ParseImageView;
@@ -106,26 +107,48 @@ public class SummaryViewHolder {
 
         final PopupMenu popupMenu = new PopupMenu(context, settingsIcon);
         boolean writeAccess = item.getACL().getWriteAccess(User.getCurrentUser());
+        //Populate popup with available choices
         if(writeAccess) {
+            if(item.getStatus().equals(Post.ACTIVE)){
+                popupMenu.getMenu().add("Set Inactive");
+            } else {
+                popupMenu.getMenu().add("Set Active");
+            }
             popupMenu.getMenu().add("Delete");
-        }
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                if (menuItem.getTitle().equals("Delete")) {
-                    new RemovePostRequest(item).request(deleteCallback);
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    if (menuItem.getTitle().equals("Delete")) {
+                        new RemovePostRequest(item).request(deleteCallback);
+                    } else {
+                        checkAndSetActive(item, menuItem);
+                    }
+                    return false;
                 }
-                return false;
-            }
-        });
-        settingsIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupMenu.show();
-            }
-        });
+            });
+
+
+            settingsIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    popupMenu.show();
+                }
+            });
+        }
 
     }
+
+
+    private void checkAndSetActive(final Post post, final MenuItem menuItem){
+        if(menuItem.getTitle().equals("Set Inactive")){
+            new SetPostActiveRequest(post, Post.INACTIVE).request();
+            menuItem.setTitle("Set Active");
+        } else if(menuItem.getTitle().equals("Set Active")){
+            new SetPostActiveRequest(post, Post.ACTIVE).request();
+            menuItem.setTitle("Set Inactive");
+        }
+    }
+
 
 
     class SideViewHolder {

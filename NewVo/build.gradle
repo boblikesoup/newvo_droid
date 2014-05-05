@@ -39,4 +39,5 @@ dependencies {
     compile 'com.facebook:facebook-android-sdk:+@aar'
     compile files('libs/parse/Parse-1.4.3.jar')
     compile project(':libraries:AndroidCrop')
+    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
 }

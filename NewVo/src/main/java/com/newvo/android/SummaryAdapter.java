@@ -15,6 +15,8 @@ import com.parse.ParseException;
  */
 public class SummaryAdapter extends ArrayAdapter<Post> {
 
+    private String active;
+
     public SummaryAdapter(Context context, int resource) {
         super(context, resource);
     }
@@ -45,4 +47,11 @@ public class SummaryAdapter extends ArrayAdapter<Post> {
         return convertView;
     }
 
+    public void setActive(String active) {
+        this.active = active;
+    }
+
+    public String getActive() {
+        return active;
+    }
 }

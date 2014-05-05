@@ -35,6 +35,8 @@
     <string name="post_created">Post Created Successfully!</string>
     <string name="title_image"><![CDATA[Home > Image]]></string>
     <string name="title_summary_image"><![CDATA[Home > Image]]></string>
+    <string name="active">Active</string>
+    <string name="inactive">Inactive</string>
 
     <string-array name="nav_drawer_items">
         <item >@string/title_home</item>
