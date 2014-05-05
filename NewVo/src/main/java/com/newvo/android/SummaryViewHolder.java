@@ -101,6 +101,7 @@ public class SummaryViewHolder {
                 @Override
                 public void onClick(View v) {
                     ((DrawerActivity) context).displayFragment(new SuggestionsFragment(item), "Profile > Suggestions");
+                    ProfileFragment.selectedPost = item;
                 }
             });
         }

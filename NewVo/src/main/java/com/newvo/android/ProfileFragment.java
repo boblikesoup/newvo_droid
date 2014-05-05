@@ -17,7 +17,6 @@ import butterknife.InjectView;
 import com.astuetz.PagerSlidingTabStrip;
 import com.newvo.android.parse.Post;
 import com.newvo.android.remote.CurrentUserProfileRequest;
-import com.newvo.android.util.ZoomOutPageTransformer;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 
@@ -42,6 +41,8 @@ public class ProfileFragment extends Fragment {
 
     private List<Post> activePosts;
     private List<Post> inactivePosts;
+
+    public static Post selectedPost;
 
     public ProfileFragment() {
         new CurrentUserProfileRequest().request(Post.ACTIVE, new FindCallback<Post>() {
@@ -83,7 +84,6 @@ public class ProfileFragment extends Fragment {
             populateListView(activeList, inactivePosts);
         }
 
-        pager.setPageTransformer(true, new ZoomOutPageTransformer());
         pager.setAdapter(pagerAdapter);
 
         tabs.setTextColor(getResources().getColor(android.R.color.white));
@@ -94,6 +94,14 @@ public class ProfileFragment extends Fragment {
         tabs.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 22, getResources().getDisplayMetrics()));
 
         tabs.setViewPager(pager);
+
+        //When tabbing back, select the tab the post was on.
+        if(selectedPost != null){
+            if(inactivePosts.contains(selectedPost)){
+                pager.setCurrentItem(1);
+            }
+        }
+        selectedPost = null;
 
         return rootView;
     }
