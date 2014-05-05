@@ -79,7 +79,7 @@ public class ComparisonViewHolder {
             firstImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((DrawerActivity) context).displayFragment(new ImageFragment(photo1), context.getString(R.string.title_image));
+                    ((DrawerActivity) context).displayChildFragment(new ImageFragment(photo1), context.getString(R.string.title_home), "Image1");
                 }
             });
         }
@@ -89,7 +89,7 @@ public class ComparisonViewHolder {
             secondImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((DrawerActivity) context).displayFragment(new ImageFragment(photo2), context.getString(R.string.title_image));
+                    ((DrawerActivity) context).displayChildFragment(new ImageFragment(photo2), context.getString(R.string.title_image), "Image2");
                 }
             });
             secondImageContainer.setVisibility(View.VISIBLE);

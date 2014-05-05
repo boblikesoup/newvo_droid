@@ -53,7 +53,7 @@ public class DrawerActivity extends Activity {
                 R.drawable.ic_drawer, //nav menu toggle icon
                 R.string.app_name, // nav drawer open - description for accessibility
                 R.string.app_name // nav drawer close - description for accessibility
-        ){
+        ) {
             @Override
             public void onDrawerClosed(View view) {
 
@@ -80,12 +80,16 @@ public class DrawerActivity extends Activity {
 
     }
 
-    protected void displayView(String name) {
+    protected void displayView(String name){
+        displayView(name, null);
+    }
+
+    protected void displayView(String name, String tag) {
         // update the main content by replacing fragments
         Fragment fragment = fragmentRetriever.retrieveFragment(name);
 
         if (fragment != null) {
-            displayFragment(fragment, name);
+            displayFragment(fragment, name, tag, null);
 
             // update selected item and title, then close the drawer
             drawerLayout.closeDrawer(drawerList);
@@ -108,24 +112,38 @@ public class DrawerActivity extends Activity {
         }
     };
 
-    public void displayFragment(Fragment fragment, String name){
+    public void displayFragment(Fragment fragment, String name, String tag, String parentTag) {
         FragmentManager fragmentManager = getFragmentManager();
-        if(name.equals(getString(R.string.title_home))){
+        if(tag == null) {
+            tag = name;
+        }
+        if (tag.equals(getString(R.string.title_home))) {
             fragmentManager.removeOnBackStackChangedListener(backStackChangedListener);
             fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             fragmentManager.addOnBackStackChangedListener(backStackChangedListener);
         }
-        if(name.equals(getTitle().toString())){
+        if (tag.equals(getTitle().toString())) {
             refreshFragment();
         } else {
+            //Reset the back stack to only home if there is no parent tag.
+            fragmentManager.removeOnBackStackChangedListener(backStackChangedListener);
+            fragmentManager.popBackStackImmediate((parentTag != null) ? parentTag : getString(R.string.title_home), 0);
+            fragmentManager.addOnBackStackChangedListener(backStackChangedListener);
             FragmentTransaction transaction = fragmentManager.beginTransaction()
-                    .replace(R.id.frame_container, fragment, name).setBreadCrumbTitle(name).addToBackStack(name);
+                    .replace(R.id.frame_container, fragment, tag).setBreadCrumbTitle(name).addToBackStack(tag);
             transaction.commit();
         }
-
     }
 
-    public void refreshFragment(){
+    //Finds a parent tag to keep parent on back stack.
+    public void displayChildFragment(Fragment fragment, String name, String tag) {
+        FragmentManager fragmentManager = getFragmentManager();
+        String parentName = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1).getName();
+
+        displayFragment(fragment, name, tag, parentName);
+    }
+
+    public void refreshFragment() {
         String name = getTitle().toString();
         Fragment fragment = fragmentRetriever.retrieveFragment(name);
 
@@ -158,7 +176,7 @@ public class DrawerActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    /***
+    /**
      * Called when invalidateOptionsMenu() is triggered
      */
     @Override
@@ -172,11 +190,11 @@ public class DrawerActivity extends Activity {
         super.setTitle(title);
         setActionBarTitle(title);
         int resId = fragmentRetriever.retrieveIcon(title.toString());
-        if(resId > -1){
+        if (resId > -1) {
             setActionBarIcon(resId);
         }
         int position = fragmentRetriever.retrievePosition(title.toString());
-        if(position > -1){
+        if (position > -1) {
             drawerList.setItemChecked(position, true);
             drawerList.setSelection(position);
         }
@@ -191,6 +209,7 @@ public class DrawerActivity extends Activity {
     }
 
     //region Toggle Support
+
     /**
      * When using the ActionBarDrawerToggle, you must call it during
      * onPostCreate() and onConfigurationChanged()...

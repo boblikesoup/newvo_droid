@@ -60,7 +60,7 @@ public class SummaryViewHolder {
             firstImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((DrawerActivity) context).displayFragment(new ImageFragment(photo1), context.getString(R.string.title_summary_image));
+                    ((DrawerActivity) context).displayChildFragment(new ImageFragment(photo1), context.getString(R.string.title_home), "SummaryImage");
                 }
             });
         }
@@ -72,7 +72,7 @@ public class SummaryViewHolder {
             secondImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((DrawerActivity) context).displayFragment(new ImageFragment(photo2), context.getString(R.string.title_summary_image));
+                    ((DrawerActivity) context).displayChildFragment(new ImageFragment(photo2), context.getString(R.string.title_home), "SummaryImage");
                 }
             });
         }
@@ -98,7 +98,7 @@ public class SummaryViewHolder {
             suggestionsIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((DrawerActivity) context).displayFragment(new SuggestionsFragment(item), "Profile > Suggestions");
+                    ((DrawerActivity) context).displayChildFragment(new SuggestionsFragment(item), context.getString(R.string.title_suggestions), "SummaryImage");
                     ProfileFragment.selectedPost = item;
                 }
             });
