@@ -16,6 +16,7 @@ public class ParseReference {
         ParseObject.registerSubclass(Vote.class);
         ParseACL acl = new ParseACL();
         acl.setPublicReadAccess(true);
+        //Public read access. Current user write access.
         ParseACL.setDefaultACL(acl, true);
     }
 

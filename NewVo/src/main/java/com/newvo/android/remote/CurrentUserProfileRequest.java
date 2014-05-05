@@ -20,7 +20,8 @@ public class CurrentUserProfileRequest {
         query.orderByDescending("createdAt");
     }
 
-    public void request(FindCallback<Post> callback){
+    public void request(String status, FindCallback<Post> callback){
+        query.whereEqualTo("status", Post.getStatusValue(status));
         query.findInBackground(callback);
     }
 
