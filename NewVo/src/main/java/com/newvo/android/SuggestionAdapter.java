@@ -11,6 +11,7 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.newvo.android.parse.Suggestion;
+import com.newvo.android.parse.User;
 import com.newvo.android.remote.RemoveSuggestionRequest;
 import com.parse.DeleteCallback;
 import com.parse.ParseException;
@@ -29,7 +30,7 @@ public class SuggestionAdapter extends ArrayAdapter<Suggestion> {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.suggestion_single, null);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.suggestion_single, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
@@ -55,6 +56,8 @@ public class SuggestionAdapter extends ArrayAdapter<Suggestion> {
 
         public void setItem(final Suggestion suggestion){
             suggestionText.setText(suggestion.getBody());
+            boolean writeAccess = suggestion.getACL().getWriteAccess(User.getCurrentUser());
+            suggestionX.setVisibility(writeAccess ? View.VISIBLE : View.GONE);
             suggestionX.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
