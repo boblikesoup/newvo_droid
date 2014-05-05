@@ -10,6 +10,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -39,7 +40,31 @@ public class ProfileFragment extends Fragment {
     @InjectView(R.id.pager)
     ViewPager pager;
 
+    private List<Post> activePosts;
+    private List<Post> inactivePosts;
+
     public ProfileFragment() {
+        new CurrentUserProfileRequest().request(Post.ACTIVE, new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                activePosts = posts;
+                populateListView(activeList, posts);
+            }
+        });
+
+        new CurrentUserProfileRequest().request(Post.INACTIVE, new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                inactivePosts = posts;
+                populateListView(inactiveList, posts);
+            }
+        });
+    }
+
+    private void populateListView(ListView listView, List<Post> posts){
+        if(listView != null && listView.getAdapter() != null && listView.getAdapter() instanceof ArrayAdapter) {
+            ((ArrayAdapter) listView.getAdapter()).addAll(posts);
+        }
     }
 
     @Override
@@ -50,6 +75,13 @@ public class ProfileFragment extends Fragment {
 
         activeList.setAdapter(getAdapter(getActivity(), Post.ACTIVE));
         inactiveList.setAdapter(getAdapter(getActivity(), Post.INACTIVE));
+
+        if(activePosts != null){
+            populateListView(activeList, activePosts);
+        }
+        if(inactivePosts != null){
+            populateListView(activeList, inactivePosts);
+        }
 
         pager.setPageTransformer(true, new ZoomOutPageTransformer());
         pager.setAdapter(pagerAdapter);
@@ -71,12 +103,6 @@ public class ProfileFragment extends Fragment {
         activeList.setAdapter(adapter);
         adapter.setActive(active);
 
-        new CurrentUserProfileRequest().request(active, new FindCallback<Post>() {
-            @Override
-            public void done(List<Post> posts, ParseException e) {
-                adapter.addAll(posts);
-            }
-        });
         return adapter;
     }
 
