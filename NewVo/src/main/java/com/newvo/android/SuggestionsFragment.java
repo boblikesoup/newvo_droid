@@ -12,6 +12,7 @@ import butterknife.InjectView;
 import com.newvo.android.parse.Post;
 import com.newvo.android.parse.Suggestion;
 import com.newvo.android.remote.PostSuggestionsRequest;
+import com.newvo.android.util.ChildFragment;
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -21,7 +22,7 @@ import java.util.List;
 /**
  * Created by David on 4/21/2014.
  */
-public class SuggestionsFragment extends Fragment {
+public class SuggestionsFragment extends Fragment implements ChildFragment {
 
     @InjectView(R.id.summary)
     LinearLayout summary;

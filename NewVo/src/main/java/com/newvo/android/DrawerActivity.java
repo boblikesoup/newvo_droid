@@ -1,19 +1,19 @@
 package com.newvo.android;
 
-import android.app.*;
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
 import com.newvo.android.slidingmenu.NavigationDrawerListAdapter;
+import com.newvo.android.util.DrawerToggle;
 
 /**
  * Created by David on 4/11/2014.
@@ -21,7 +21,8 @@ import com.newvo.android.slidingmenu.NavigationDrawerListAdapter;
 public class DrawerActivity extends Activity {
 
     private DrawerLayout drawerLayout;
-    private ActionBarDrawerToggle drawerToggle;
+
+    private DrawerToggle drawerToggle;
 
     // nav drawer title
     private FragmentRetriever fragmentRetriever;
@@ -45,33 +46,14 @@ public class DrawerActivity extends Activity {
                 fragmentRetriever.getNavigationDrawerItems());
         drawerList.setAdapter(adapter);
 
-
-        getActionBar().setIcon(R.drawable.ic_drawer);
-        //Set up the drawer toggle
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
-                R.drawable.ic_drawer, //nav menu toggle icon
-                R.string.app_name, // nav drawer open - description for accessibility
-                R.string.app_name // nav drawer close - description for accessibility
-        ) {
-            @Override
-            public void onDrawerClosed(View view) {
-
-                setActionBarTitle(getTitle());
-                // calling onPrepareOptionsMenu() to show action bar icons
-                invalidateOptionsMenu();
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                setActionBarTitle(getTitle());
-                // calling onPrepareOptionsMenu() to hide action bar icons
-                invalidateOptionsMenu();
-            }
-        };
-        drawerLayout.setDrawerListener(drawerToggle);
-
         getActionBar().setCustomView(R.layout.action_bar);
-        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP);
+        getActionBar().setDisplayShowCustomEnabled(true);
+        getActionBar().setDisplayShowHomeEnabled(false);
+        getActionBar().setDisplayShowTitleEnabled(false);
+
+        drawerToggle = new DrawerToggle(this, drawerLayout);
+        getActionBar().getCustomView().setOnClickListener(drawerToggle);
+        drawerLayout.setDrawerListener(drawerToggle);
 
         if (savedInstanceState == null) {
             // on first time display view for first nav item
@@ -79,6 +61,7 @@ public class DrawerActivity extends Activity {
             displayView(navMenuTitles[0]);
         }
 
+        getFragmentManager().addOnBackStackChangedListener(drawerToggle);
 
     }
 
@@ -220,15 +203,16 @@ public class DrawerActivity extends Activity {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
-        drawerToggle.syncState();
+        drawerToggle.onPostCreate(savedInstanceState);
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        // Pass any configuration change to the drawer toggls
+        // Pass any configuration change to the drawer toggles
         drawerToggle.onConfigurationChanged(newConfig);
     }
+
     //endregion
 
     private class SlideMenuClickListener implements
@@ -239,5 +223,13 @@ public class DrawerActivity extends Activity {
             // display view for selected nav drawer item
             displayView(fragmentRetriever.retrieveName(position));
         }
+    }
+
+    public Fragment getActiveFragment() {
+        if (getFragmentManager().getBackStackEntryCount() == 0) {
+            return null;
+        }
+        String tag = getFragmentManager().getBackStackEntryAt(getFragmentManager().getBackStackEntryCount() - 1).getName();
+        return getFragmentManager().findFragmentByTag(tag);
     }
 }

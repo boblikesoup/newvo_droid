@@ -5,6 +5,20 @@
               android:layout_gravity="center"
               android:orientation="horizontal">
 
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="match_parent"
+        android:id="@+id/navigation_button"
+        android:background="@null"
+        android:src="@drawable/ic_drawer"
+        android:layout_gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:scaleType="fitCenter"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="8dp"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,5 +40,5 @@
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="8dp"/>
+        android:layout_marginRight="4dp"/>
 </RelativeLayout>

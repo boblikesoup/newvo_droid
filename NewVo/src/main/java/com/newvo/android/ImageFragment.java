@@ -5,13 +5,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.newvo.android.util.ChildFragment;
 import com.newvo.android.util.ParseTouchImageView;
 import com.parse.ParseFile;
 
 /**
  * Created by David on 5/1/2014.
  */
-public class ImageFragment extends Fragment {
+public class ImageFragment extends Fragment implements ChildFragment {
 
     private final ParseFile imageSource;
 
