@@ -5,6 +5,7 @@
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:actionBarStyle">@style/actionBarTabStyle</item>
         <item name="android:typeface">serif</item>
+        <item name="android:actionBarSize">64dp</item>
     </style>
 
     <style name="actionBarTabStyle" parent="@android:style/Widget.Holo.ActionBar">

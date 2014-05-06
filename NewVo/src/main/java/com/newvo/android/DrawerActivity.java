@@ -10,7 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import com.newvo.android.slidingmenu.NavigationDrawerListAdapter;
 
 /**
@@ -32,10 +34,6 @@ public class DrawerActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_main);
 
-        // enabling action bar app icon and behaving it as toggle button
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
-
         fragmentRetriever = new FragmentRetriever(this);
 
         drawerList = (ListView) findViewById(R.id.list_slidermenu);
@@ -48,6 +46,7 @@ public class DrawerActivity extends Activity {
         drawerList.setAdapter(adapter);
 
 
+        getActionBar().setIcon(R.drawable.ic_drawer);
         //Set up the drawer toggle
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
                 R.drawable.ic_drawer, //nav menu toggle icon
@@ -70,6 +69,9 @@ public class DrawerActivity extends Activity {
             }
         };
         drawerLayout.setDrawerListener(drawerToggle);
+
+        getActionBar().setCustomView(R.layout.action_bar);
+        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP);
 
         if (savedInstanceState == null) {
             // on first time display view for first nav item
@@ -201,11 +203,11 @@ public class DrawerActivity extends Activity {
     }
 
     private void setActionBarIcon(int resId) {
-        getActionBar().setIcon(resId);
+        ((ImageView)getActionBar().getCustomView().findViewById(R.id.icon)).setImageResource(resId);
     }
 
     private void setActionBarTitle(CharSequence title) {
-        getActionBar().setTitle(title);
+        ((TextView)getActionBar().getCustomView().findViewById(R.id.title)).setText(title);
     }
 
     //region Toggle Support
