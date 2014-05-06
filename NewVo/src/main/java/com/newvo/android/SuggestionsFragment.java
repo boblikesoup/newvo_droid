@@ -48,7 +48,7 @@ public class SuggestionsFragment extends Fragment implements ChildFragment {
             public void done(ParseException e) {
                 getActivity().onBackPressed();
             }
-        });
+        }, null);
 
         new PostSuggestionsRequest(post).request(new FindCallback<Suggestion>() {
             @Override

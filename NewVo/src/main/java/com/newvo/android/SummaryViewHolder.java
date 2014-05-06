@@ -52,7 +52,7 @@ public class SummaryViewHolder {
         secondVotes = new SideViewHolder(secondVotesView);
     }
 
-    public void setItem(final Post item, final DeleteCallback deleteCallback) {
+    public void setItem(final Post item, final DeleteCallback deleteCallback, final SaveCallback saveCallback) {
         final ParseFile photo1 = item.getPhoto1();
         if (photo1 != null) {
             firstImage.setParseFile(photo1);
@@ -120,7 +120,7 @@ public class SummaryViewHolder {
                     if (menuItem.getTitle().equals("Delete")) {
                         new RemovePostRequest(item).request(deleteCallback);
                     } else {
-                        checkAndSetActive(item, menuItem);
+                        checkAndSetActive(item, menuItem, saveCallback);
                     }
                     return false;
                 }
@@ -138,27 +138,33 @@ public class SummaryViewHolder {
     }
 
 
-    private void checkAndSetActive(final Post post, final MenuItem menuItem){
+    private void checkAndSetActive(final Post post, final MenuItem menuItem, final SaveCallback saveCallback){
         if(menuItem.getTitle().equals("Set Inactive")){
-            SaveCallback saveCallback = new SaveCallback() {
+            SaveCallback saveCallback2 = new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
                     if(e == null){
                         menuItem.setTitle("Set Active");
                     }
+                    if(saveCallback != null) {
+                        saveCallback.done(e);
+                    }
                 }
             };
-            new SetPostActiveRequest(post, Post.INACTIVE).request(saveCallback);
+            new SetPostActiveRequest(post, Post.INACTIVE).request(saveCallback2);
         } else if(menuItem.getTitle().equals("Set Active")){
-            SaveCallback saveCallback = new SaveCallback() {
+            SaveCallback saveCallback2 = new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
                     if(e == null){
-                        menuItem.setTitle("Set Active");
+                        menuItem.setTitle("Set Inactive");
+                    }
+                    if(saveCallback != null) {
+                        saveCallback.done(e);
                     }
                 }
             };
-            new SetPostActiveRequest(post, Post.ACTIVE).request(saveCallback);
+            new SetPostActiveRequest(post, Post.ACTIVE).request(saveCallback2);
         }
     }
 

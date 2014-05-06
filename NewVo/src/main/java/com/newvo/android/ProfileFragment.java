@@ -122,23 +122,29 @@ public class ProfileFragment extends Fragment {
                     activePosts.contains(post)){
                 activePosts.remove(post);
                 inactivePosts.add(post);
-                if(pager != null && pager.getCurrentItem() == 0){
-                    pager.setCurrentItem(1);
+                if(inactiveList != null && activeList != null && pager != null && pager.getCurrentItem() == 0){
+                    ((ArrayAdapter)activeList.getAdapter()).remove(post);
+                    ((ArrayAdapter)inactiveList.getAdapter()).add(post);
                 }
-            } else if(post.getStatus().equals(Post.INACTIVE) &&
-                    activePosts.contains(post)){
-                activePosts.remove(post);
-                inactivePosts.add(post);
-                if(pager != null && pager.getCurrentItem() == 0){
-                    pager.setCurrentItem(1);
+            } else if(post.getStatus().equals(Post.ACTIVE) &&
+                    inactivePosts.contains(post)){
+                inactivePosts.remove(post);
+                activePosts.add(post);
+                if(inactiveList != null && activeList != null && pager != null && pager.getCurrentItem() == 1){
+                    ((ArrayAdapter)inactiveList.getAdapter()).remove(post);
+                    ((ArrayAdapter)activeList.getAdapter()).add(post);
                 }
             }
         }
     }
 
     private SummaryAdapter getAdapter(Context context, String active){
-        final SummaryAdapter adapter = new SummaryAdapter(context, R.layout.summary);
-        activeList.setAdapter(adapter);
+        final SummaryAdapter adapter = new SummaryAdapter(context, R.layout.summary, new EditPostCallback() {
+            @Override
+            public void editPost(Post post) {
+                changeLists(post);
+            }
+        });
         adapter.setActive(active);
 
         return adapter;
@@ -176,4 +182,9 @@ public class ProfileFragment extends Fragment {
             return false;
         }
     };
+
+    public abstract class EditPostCallback {
+
+        public abstract void editPost(Post post);
+    }
 }

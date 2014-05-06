@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import com.newvo.android.parse.Post;
 import com.parse.DeleteCallback;
 import com.parse.ParseException;
+import com.parse.SaveCallback;
 
 /**
  * Created by David on 4/20/2014.
@@ -16,9 +17,11 @@ import com.parse.ParseException;
 public class SummaryAdapter extends ArrayAdapter<Post> {
 
     private String active;
+    private final ProfileFragment.EditPostCallback editPostCallback;
 
-    public SummaryAdapter(Context context, int resource) {
+    public SummaryAdapter(Context context, int resource, ProfileFragment.EditPostCallback editPostCallback) {
         super(context, resource);
+        this.editPostCallback = editPostCallback;
     }
 
     @Override
@@ -41,6 +44,11 @@ public class SummaryAdapter extends ArrayAdapter<Post> {
                 } else {
                     Log.e("NewVo", "Failed to remove suggestion.");
                 }
+            }
+        }, new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                editPostCallback.editPost(item);
             }
         });
 

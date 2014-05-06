@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import com.newvo.android.remote.CreatePostRequest;
+import com.newvo.android.util.ImageFileUtils;
 import com.newvo.android.util.IntentUtils;
 import com.soundcloud.android.crop.Crop;
 
@@ -91,6 +92,7 @@ public class CreatePostFragment extends Fragment {
                     @Override
                     protected Object doInBackground(Object[] params) {
                         Uri uri = (Uri) data.getExtras().get(MediaStore.EXTRA_OUTPUT);
+                        ImageFileUtils.resizeFile(getActivity(), uri.toString(), uri);
                         getSelectedImage().setPhoto(uri);
                         return null;
                     }
