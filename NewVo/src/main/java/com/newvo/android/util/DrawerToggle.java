@@ -22,6 +22,9 @@ public class DrawerToggle implements View.OnClickListener, DrawerLayout.DrawerLi
     private DrawerLayout layout;
     private DrawerActivity activity;
 
+    private static final float TRANSLATE_MIN = 0.0f;
+    private static final float TRANSLATE_MAX = -32.0f;
+
     public DrawerToggle(DrawerActivity activity, DrawerLayout layout) {
         this.activity = activity;
         this.layout = layout;
@@ -54,7 +57,6 @@ public class DrawerToggle implements View.OnClickListener, DrawerLayout.DrawerLi
 
     @Override
     public void onDrawerSlide(View drawerView, float slideOffset) {
-
     }
 
     @Override
@@ -69,7 +71,19 @@ public class DrawerToggle implements View.OnClickListener, DrawerLayout.DrawerLi
 
     @Override
     public void onDrawerStateChanged(int newState) {
-        (activity.getActionBar().getCustomView().findViewById(R.id.navigation_button)).startAnimation(new TranslateAnimation(0, 1.0f, 0, 0));
+        if(newState == DrawerLayout.STATE_SETTLING) {
+            animateDrawerState();
+        }
+    }
+
+    public void animateDrawerState(){
+        TranslateAnimation animation = new TranslateAnimation(TRANSLATE_MIN, TRANSLATE_MAX, 0.0f, 0.0f);
+        animation.setDuration(300);
+        animation.setFillAfter(true);
+        if (layout.isDrawerVisible(GravityCompat.START)) {
+            animation.setInterpolator(new ReverseInterpolator());
+        }
+        (activity.getActionBar().getCustomView().findViewById(R.id.navigation_button)).startAnimation(animation);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {

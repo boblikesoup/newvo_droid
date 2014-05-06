@@ -89,7 +89,7 @@ public class ComparisonViewHolder {
             secondImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((DrawerActivity) context).displayChildFragment(new ImageFragment(photo2), context.getString(R.string.title_image), "Image2");
+                    ((DrawerActivity) context).displayChildFragment(new ImageFragment(photo2), context.getString(R.string.title_home), "Image2");
                 }
             });
             secondImageContainer.setVisibility(View.VISIBLE);
