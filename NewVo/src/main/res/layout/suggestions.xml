@@ -8,7 +8,7 @@
     <include
         layout="@layout/comparison_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="75dp"
         android:id="@+id/include"/>
 
     <include
@@ -19,6 +19,41 @@
 
     <ListView
         android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/suggestions_list"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/suggestions_list"/>
+        >
+
+        <EditText
+            android:id="@+id/text"
+            android:layout_width="0dp"
+            android:layout_height="75dp"
+            android:singleLine="false"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:textSize="26sp"
+            android:background="@color/light_transparent_background"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:inputType="textMultiLine"
+            android:hint="Suggestion..."
+            android:visibility="visible"
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:text="Post"
+            android:id="@+id/post_text"
+            android:background="@color/light_transparent_background"
+            android:layout_marginLeft="2dp"
+            android:gravity="center"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
 </LinearLayout>

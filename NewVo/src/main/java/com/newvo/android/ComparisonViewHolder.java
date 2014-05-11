@@ -1,9 +1,7 @@
 package com.newvo.android;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -11,7 +9,6 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.newvo.android.parse.Post;
-import com.newvo.android.remote.CreateSuggestionRequest;
 import com.newvo.android.remote.VoteOnPostRequest;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -48,8 +45,6 @@ public class ComparisonViewHolder {
     private boolean voted = false;
 
     private Fragment container;
-
-    private String suggestionText;
 
     public ComparisonViewHolder(View view, Fragment container) {
         setView(view);
@@ -109,13 +104,7 @@ public class ComparisonViewHolder {
         mainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context,TextEntryActivity.class);
-                i.putExtra(TextEntryActivity.HINT, "Suggestion...");
-                if(suggestionText != null){
-                    i.putExtra(TextEntryActivity.TEXT, suggestionText);
-                }
-                container.startActivityForResult(i, TextEntryActivity.TEXT_REQUEST_CODE);
-                ((Activity)context).overridePendingTransition(R.anim.appear, R.anim.disappear);
+                ((DrawerActivity) context).displayChildFragment(new SuggestionsFragment(post), context.getString(R.string.title_suggestions), "AddSuggestion");
             }
         });
 
@@ -125,22 +114,6 @@ public class ComparisonViewHolder {
 
     public Post getPost() {
         return post;
-    }
-
-    public HomeFragment.OnActivityResult getOnActivityResult() {
-        return new HomeFragment.OnActivityResult() {
-            @Override
-            public void onActivityResult(int requestCode, int resultCode, Intent data) {
-                if(resultCode == Activity.RESULT_OK && requestCode == TextEntryActivity.TEXT_REQUEST_CODE){
-                    Object o = data.getExtras().get(TextEntryActivity.TEXT);
-                    if(o != null) {
-                        suggestionText = o.toString();
-                    } else {
-                        suggestionText = null;
-                    }
-                }
-            }
-        };
     }
 
     private class ChoiceClickListener implements View.OnClickListener {
@@ -169,9 +142,6 @@ public class ComparisonViewHolder {
                         }
                     }
                 });
-                if(suggestionText != null && !suggestionText.equals("")){
-                    new CreateSuggestionRequest(post, suggestionText).request();
-                }
             }
 
         }

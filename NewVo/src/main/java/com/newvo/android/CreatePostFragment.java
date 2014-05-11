@@ -61,6 +61,8 @@ public class CreatePostFragment extends Fragment {
         return rootView;
     }
 
+
+
     @OnClick(R.id.main_button)
     public void createPost() {
         CharSequence text = caption.getText();

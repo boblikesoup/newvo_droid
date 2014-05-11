@@ -28,8 +28,6 @@ public class HomeFragment extends Fragment {
         requestMorePosts();
     }
 
-    private OnActivityResult onActivityResult;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -37,7 +35,6 @@ public class HomeFragment extends Fragment {
         ButterKnife.inject(this, rootView);
         if(holder == null){
             holder = new ComparisonViewHolder(rootView, this);
-            onActivityResult = holder.getOnActivityResult();
 
         } else {
             holder.setView(rootView);
@@ -50,18 +47,6 @@ public class HomeFragment extends Fragment {
             }
         }
         return rootView;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(onActivityResult != null){
-            onActivityResult.onActivityResult(requestCode, resultCode, data);
-        }
-    }
-
-    public void setOnActivityResult(OnActivityResult onActivityResult) {
-        this.onActivityResult = onActivityResult;
     }
 
     private void loadNextPost(){
