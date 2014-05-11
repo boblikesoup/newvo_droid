@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -14,8 +13,10 @@ import butterknife.InjectView;
 import com.newvo.android.parse.Post;
 import com.newvo.android.remote.CreateSuggestionRequest;
 import com.newvo.android.remote.VoteOnPostRequest;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseImageView;
+import com.parse.SaveCallback;
 
 /**
  * Created by David on 4/15/2014.
@@ -158,16 +159,19 @@ public class ComparisonViewHolder {
         public void onClick(View v) {
             if(!voted) {
                 voted = true;
-                new VoteOnPostRequest(post, vote).request();
+                new VoteOnPostRequest(post, vote).request(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if(e == null){
+                            ((DrawerActivity) context).refreshFragment();
+                        } else {
+                            voted = false;
+                        }
+                    }
+                });
                 if(suggestionText != null && !suggestionText.equals("")){
                     new CreateSuggestionRequest(post, suggestionText).request();
                 }
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        ((DrawerActivity) context).refreshFragment();
-                    }
-                }, 250);
             }
 
         }

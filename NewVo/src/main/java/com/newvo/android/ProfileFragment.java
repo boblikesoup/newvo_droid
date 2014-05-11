@@ -91,7 +91,7 @@ public class ProfileFragment extends Fragment {
             populateListView(activeList, activePosts);
         }
         if(inactivePosts != null){
-            populateListView(activeList, inactivePosts);
+            populateListView(inactiveList, inactivePosts);
         }
 
         pager.setAdapter(pagerAdapter);
@@ -122,7 +122,7 @@ public class ProfileFragment extends Fragment {
                     activePosts.contains(post)){
                 activePosts.remove(post);
                 inactivePosts.add(post);
-                if(inactiveList != null && activeList != null && pager != null && pager.getCurrentItem() == 0){
+                if(inactiveList != null && activeList != null){
                     ((ArrayAdapter)activeList.getAdapter()).remove(post);
                     ((ArrayAdapter)inactiveList.getAdapter()).add(post);
                 }
@@ -130,7 +130,7 @@ public class ProfileFragment extends Fragment {
                     inactivePosts.contains(post)){
                 inactivePosts.remove(post);
                 activePosts.add(post);
-                if(inactiveList != null && activeList != null && pager != null && pager.getCurrentItem() == 1){
+                if(inactiveList != null && activeList != null){
                     ((ArrayAdapter)inactiveList.getAdapter()).remove(post);
                     ((ArrayAdapter)activeList.getAdapter()).add(post);
                 }
