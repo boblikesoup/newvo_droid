@@ -108,7 +108,7 @@ public class DrawerActivity extends Activity {
             fragmentManager.addOnBackStackChangedListener(backStackChangedListener);
         }
         if (tag.equals(getTitle().toString())) {
-            refreshFragment();
+            restartFragment();
         } else {
             //Reset the back stack to only home if there is no parent tag.
             fragmentManager.removeOnBackStackChangedListener(backStackChangedListener);
@@ -128,7 +128,15 @@ public class DrawerActivity extends Activity {
         displayFragment(fragment, name, tag, parentName);
     }
 
-    public void refreshFragment() {
+    public void attachDetachFragment() {
+        String name = getTitle().toString();
+        Fragment fragment = fragmentRetriever.retrieveFragment(name);
+
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().detach(fragment).attach(fragment).commit();
+    }
+
+    public void restartFragment(){
         String name = getTitle().toString();
         Fragment fragment = fragmentRetriever.retrieveFragment(name);
 

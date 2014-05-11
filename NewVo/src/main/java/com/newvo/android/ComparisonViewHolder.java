@@ -136,7 +136,7 @@ public class ComparisonViewHolder {
                     @Override
                     public void done(ParseException e) {
                         if(e == null){
-                            ((DrawerActivity) context).refreshFragment();
+                            ((DrawerActivity) context).restartFragment();
                         } else {
                             voted = false;
                         }

@@ -138,7 +138,7 @@ public class SuggestionsFragment extends Fragment implements ChildFragment {
 
     protected void initSuggestions(List<Suggestion> suggestions) {
         SuggestionAdapter adapter = new SuggestionAdapter(getActivity(), R.layout.suggestion_single);
-        if (post != null && post.getNumberOfSuggestions() > 0) {
+        if (post != null && suggestions.size() > 0) {
             adapter.addAll(suggestions);
         }
         suggestionsList.setAdapter(adapter);
