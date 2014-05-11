@@ -42,6 +42,12 @@
     <string name="active">Active</string>
     <string name="inactive">Inactive</string>
     <string name="title_suggestions">Suggestions</string>
+    <string name="set_active">Set Active Successfully</string>
+    <string name="set_inactive">Set Inactive Successfully</string>
+    <string name="could_not_set_inactive">Could Not Set Inactive</string>
+    <string name="could_not_set_active">Could Not Set Active</string>
+    <string name="post_deleted">Post Deleted Successfully</string>
+    <string name="could_not_delete_post">Could Not Delete Post</string>
 
     <string-array name="nav_drawer_items">
         <item >@string/title_home</item>

@@ -3,10 +3,7 @@ package com.newvo.android;
 import android.content.Context;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.PopupMenu;
-import android.widget.TextView;
+import android.widget.*;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.newvo.android.parse.Post;
@@ -118,7 +115,19 @@ public class SummaryViewHolder {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
                     if (menuItem.getTitle().equals("Delete")) {
-                        new RemovePostRequest(item).request(deleteCallback);
+                        new RemovePostRequest(item).request(new DeleteCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if(e == null) {
+                                    Toast.makeText(context, context.getString(R.string.post_deleted), Toast.LENGTH_LONG).show();
+                                } else {
+                                    Toast.makeText(context, context.getString(R.string.could_not_delete_post), Toast.LENGTH_LONG).show();
+                                }
+                                if(deleteCallback != null){
+                                    deleteCallback.done(e);
+                                }
+                            }
+                        });
                     } else {
                         checkAndSetActive(item, menuItem, saveCallback);
                     }
@@ -145,6 +154,9 @@ public class SummaryViewHolder {
                 public void done(ParseException e) {
                     if(e == null){
                         menuItem.setTitle("Set Active");
+                        Toast.makeText(context, context.getString(R.string.set_inactive), Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(context, context.getString(R.string.could_not_set_inactive), Toast.LENGTH_LONG).show();
                     }
                     if(saveCallback != null) {
                         saveCallback.done(e);
@@ -158,6 +170,9 @@ public class SummaryViewHolder {
                 public void done(ParseException e) {
                     if(e == null){
                         menuItem.setTitle("Set Inactive");
+                        Toast.makeText(context, context.getString(R.string.set_active), Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(context, context.getString(R.string.could_not_set_active), Toast.LENGTH_LONG).show();
                     }
                     if(saveCallback != null) {
                         saveCallback.done(e);
