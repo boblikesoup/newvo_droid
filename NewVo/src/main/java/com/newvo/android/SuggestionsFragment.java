@@ -14,6 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.newvo.android.parse.Post;
 import com.newvo.android.parse.Suggestion;
+import com.newvo.android.parse.User;
 import com.newvo.android.remote.CreateSuggestionRequest;
 import com.newvo.android.remote.PostSuggestionsRequest;
 import com.newvo.android.util.ChildFragment;
@@ -45,6 +46,9 @@ public class SuggestionsFragment extends Fragment implements ChildFragment {
     @InjectView(R.id.post_text)
     Button postText;
 
+    @InjectView(R.id.add_suggestion_layout)
+    LinearLayout addSuggestionLayout;
+
 
     private final Post post;
 
@@ -70,6 +74,15 @@ public class SuggestionsFragment extends Fragment implements ChildFragment {
             }
         }, null);
         caption.setText(post.getCaption());
+
+        boolean writeAccess = post.getACL().getWriteAccess(User.getCurrentUser());
+        if(!writeAccess){
+            summaryViewHolder.settingsIcon.setVisibility(View.INVISIBLE);
+        } else {
+            addSuggestionLayout.setVisibility(View.GONE);
+        }
+        summaryViewHolder.suggestionsIcon.setOnClickListener(null);
+
         postText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

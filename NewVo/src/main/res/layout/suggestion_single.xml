@@ -22,7 +22,8 @@
             android:layout_gravity="left"
             android:layout_toLeftOf="@+id/suggestion_x"
             android:singleLine="false"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_margin="4dp"/>
 
         <ImageButton
             android:id="@+id/suggestion_x"

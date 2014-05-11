@@ -27,7 +27,7 @@
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        >
+        android:id="@+id/add_suggestion_layout">
 
         <EditText
             android:id="@+id/text"

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.newvo.android.parse.Suggestion;
@@ -66,6 +67,7 @@ public class SuggestionAdapter extends ArrayAdapter<Suggestion> {
                         public void done(ParseException e) {
                             if(e == null){
                                 SuggestionAdapter.this.remove(suggestion);
+                                Toast.makeText(getContext(), getContext().getString(R.string.suggestion_removed), Toast.LENGTH_LONG).show();
                             } else {
                                 Log.e("NewVo", "Failed to remove suggestion.");
                             }
