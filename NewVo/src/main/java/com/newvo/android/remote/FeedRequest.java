@@ -12,13 +12,14 @@ import java.util.Arrays;
  */
 public class FeedRequest {
 
+    public static final int NUMBER_OF_POSTS = 6;
     private ParseQuery<Post> query;
 
     public FeedRequest() {
         User user = User.getCurrentUser();
 
         query = ParseQuery.getQuery(Post.class);
-        query.setLimit(6);
+        query.setLimit(NUMBER_OF_POSTS);
         query.whereEqualTo(Post.STATUS, 0);
         query.whereEqualTo(Post.VIEWABLE_BY, 0);
         String userId = user.getUserId();

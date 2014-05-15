@@ -29,6 +29,7 @@ public class DrawerActivity extends Activity {
 
     private ListView drawerList;
     private NavigationDrawerListAdapter adapter;
+    private String tag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +103,7 @@ public class DrawerActivity extends Activity {
         if(tag == null) {
             tag = name;
         }
+        this.tag = tag;
         if (tag.equals(getString(R.string.title_home))) {
             fragmentManager.removeOnBackStackChangedListener(backStackChangedListener);
             fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -129,11 +131,14 @@ public class DrawerActivity extends Activity {
     }
 
     public void attachDetachFragment() {
-        String name = getTitle().toString();
-        Fragment fragment = fragmentRetriever.retrieveFragment(name);
 
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().detach(fragment).attach(fragment).commit();
+        Fragment fragment = fragmentManager.findFragmentByTag(tag);
+        if(fragment != null) {
+            fragmentManager.removeOnBackStackChangedListener(backStackChangedListener);
+            fragmentManager.beginTransaction().detach(fragment).attach(fragment).commit();
+            fragmentManager.addOnBackStackChangedListener(backStackChangedListener);
+        }
     }
 
     public void restartFragment(){

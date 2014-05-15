@@ -15,6 +15,9 @@ import com.parse.ParseFile;
 import com.parse.ParseImageView;
 import com.parse.SaveCallback;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 /**
  * Created by David on 4/15/2014.
  */
@@ -42,34 +45,32 @@ public class ComparisonViewHolder {
 
     private Post post;
     private Context context;
-    private boolean voted = false;
-
-    private Fragment container;
+    private Post lastVotedPost;
+    private Set<Post> votedPosts = new LinkedHashSet<Post>();
 
     public ComparisonViewHolder(View view, Fragment container) {
         setView(view);
-        this.container = container;
     }
 
-    public void setView(View view){
+    public void setView(View view) {
         ButterKnife.inject(this, view);
         context = view.getContext();
     }
 
-    public void setItem(Post item){
+    public void setItem(Post item) {
         this.post = item;
 
         question.setText(item.getCaption());
 
         final ParseFile photo2 = item.getPhoto2();
-        if(photo2 == null){
+        if (photo2 == null) {
             secondChoice.setImageResource(R.drawable.x_button);
         } else {
             secondChoice.setImageResource(R.drawable.check_button);
         }
 
         final ParseFile photo1 = item.getPhoto1();
-        if(photo1 != null){
+        if (photo1 != null) {
             firstImage.setParseFile(photo1);
             firstImage.loadInBackground();
             firstImage.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +80,7 @@ public class ComparisonViewHolder {
                 }
             });
         }
-        if(photo2 != null){
+        if (photo2 != null) {
             secondImage.setParseFile(photo2);
             secondImage.loadInBackground();
             secondImage.setOnClickListener(new View.OnClickListener() {
@@ -108,8 +109,7 @@ public class ComparisonViewHolder {
             }
         });
 
-        voted = false;
-
+        lastVotedPost = null;
     }
 
     public Post getPost() {
@@ -122,32 +122,33 @@ public class ComparisonViewHolder {
         private int vote;
 
 
-
-        public ChoiceClickListener(Context context, int vote){
+        public ChoiceClickListener(Context context, int vote) {
             this.context = context;
             this.vote = vote;
         }
 
         @Override
         public void onClick(View v) {
-            if(!voted) {
-                voted = true;
-                new VoteOnPostRequest(post, vote).request(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if(e == null){
-                            ((DrawerActivity) context).restartFragment();
-                        } else {
-                            voted = false;
-                        }
+            lastVotedPost = post;
+            votedPosts.add(post);
+            new VoteOnPostRequest(post, vote).request(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e == null) {
+                        //Success!
                     }
-                });
-            }
+                }
+            });
+            ((DrawerActivity) context).attachDetachFragment();
 
         }
     }
 
-    public boolean hasVoted() {
-        return voted;
+    public Set<Post> getVotedPosts(){
+        return votedPosts;
+    }
+
+    public Post getLastVotedPost() {
+        return lastVotedPost;
     }
 }

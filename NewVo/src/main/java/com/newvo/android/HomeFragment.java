@@ -1,7 +1,6 @@
 package com.newvo.android;
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,14 +12,14 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 
 import java.util.List;
+import java.util.TreeSet;
 
 /**
  * Created by David on 4/13/2014.
  */
 public class HomeFragment extends Fragment {
 
-    private List<Post> posts;
-    private int location = -1;
+    private TreeSet<Post> posts = new TreeSet<Post>();
 
     private ComparisonViewHolder holder;
 
@@ -40,7 +39,7 @@ public class HomeFragment extends Fragment {
             holder.setView(rootView);
         }
         if (posts != null) {
-            if ((holder.hasVoted() || location == -1)) {
+            if ((holder.getLastVotedPost() != null)) {
                 loadNextPost();
             } else {
                 loadPost();
@@ -50,16 +49,18 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadNextPost(){
-        location++;
-        if(location > 2){
+        if(posts.size() > 0 && holder != null && holder.getLastVotedPost() != null) {
+            posts.remove(holder.getLastVotedPost());
+        }
+        if(posts.size() < 5){
             requestMorePosts();
         }
         loadPost();
     }
 
     private void loadPost(){
-        if(!posts.isEmpty() && location < posts.size()){
-                holder.setItem(posts.get(location));
+        if(!posts.isEmpty()){
+                holder.setItem(posts.first());
         } else {
             //TODO: You have read all of the posts, you wizard.
         }
@@ -69,9 +70,20 @@ public class HomeFragment extends Fragment {
         new FeedRequest().request(new FindCallback<Post>() {
             @Override
             public void done(List<Post> posts, ParseException e) {
+                //Remove already voted on posts.
+                if(holder != null){
+                    int size = posts.size();
+                    for(Post post : holder.getVotedPosts()){
+                        if(posts.contains(post)){
+                            posts.remove(post);
+                        }
+                    }
+                    if(posts.size() == 0 && size == FeedRequest.NUMBER_OF_POSTS){
+                        requestMorePosts();
+                    }
+                }
                 if(posts != null){
-                    HomeFragment.this.posts = posts;
-                    location = 0;
+                    HomeFragment.this.posts.addAll(posts);
                     if(holder != null && holder.getPost() == null){
                         loadPost();
                     }
@@ -79,10 +91,6 @@ public class HomeFragment extends Fragment {
 
             }
         });
-    }
-
-    public static abstract class OnActivityResult {
-        public abstract void onActivityResult(int requestCode, int resultCode, Intent data);
     }
 
 }

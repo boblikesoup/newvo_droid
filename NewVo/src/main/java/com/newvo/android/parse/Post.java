@@ -8,7 +8,7 @@ import com.parse.ParseObject;
  * Created by David on 4/26/2014.
  */
 @ParseClassName("Post")
-public class Post extends ParseObject {
+public class Post extends ParseObject implements Comparable<Post> {
 
     public static final String USER_ID = User.USER_ID;
     public static final String POST_ID = "post_id";
@@ -157,5 +157,10 @@ public class Post extends ParseObject {
             return false;
         }
         return objectId.equals(otherObjectId);
+    }
+
+    @Override
+    public int compareTo(Post another) {
+        return -this.getCreatedAt().compareTo(another.getCreatedAt());
     }
 }
