@@ -5,10 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.newvo.android.parse.Suggestion;
@@ -44,12 +41,13 @@ public class SuggestionAdapter extends ArrayAdapter<Suggestion> {
         return convertView;
     }
 
-
     class ViewHolder {
         @InjectView(R.id.suggestion_text)
         TextView suggestionText;
         @InjectView(R.id.suggestion_x)
         ImageButton suggestionX;
+        @InjectView(R.id.in_progress)
+        ProgressBar inProgressBar;
 
         public ViewHolder(View view) {
             ButterKnife.inject(this, view);
@@ -62,6 +60,7 @@ public class SuggestionAdapter extends ArrayAdapter<Suggestion> {
             suggestionX.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    setInProgress(true);
                     new RemoveSuggestionRequest(suggestion).request(new DeleteCallback() {
                         @Override
                         public void done(ParseException e) {
@@ -69,12 +68,22 @@ public class SuggestionAdapter extends ArrayAdapter<Suggestion> {
                                 SuggestionAdapter.this.remove(suggestion);
                                 Toast.makeText(getContext(), getContext().getString(R.string.suggestion_removed), Toast.LENGTH_LONG).show();
                             } else {
-                                Log.e("NewVo", "Failed to remove suggestion.");
+                                Toast.makeText(getContext(), getContext().getString(R.string.could_not_delete_suggestion), Toast.LENGTH_LONG).show();
+                                setInProgress(false);
+                                Log.e("NewVo", "Could not delete suggestion.");
                             }
                         }
                     });
                 }
             });
+            if(writeAccess){
+                setInProgress(suggestion.isLoading());
+            }
+        }
+
+        private void setInProgress(boolean inProgress){
+            suggestionX.setVisibility(inProgress ? View.INVISIBLE : View.VISIBLE);
+            inProgressBar.setVisibility(inProgress ? View.VISIBLE : View.INVISIBLE);
         }
 
     }

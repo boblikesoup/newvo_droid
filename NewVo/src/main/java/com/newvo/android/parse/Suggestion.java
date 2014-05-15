@@ -41,4 +41,13 @@ public class Suggestion extends ParseObject {
     public void setStatus(int status) {
         put(STATUS, status);
     }
+
+
+    private boolean loading = false;
+    public void setLoading(boolean loading) {
+        this.loading = loading;
+    }
+    public boolean isLoading() {
+        return loading;
+    }
 }

@@ -48,6 +48,7 @@
     <string name="could_not_set_active">Could Not Set Active</string>
     <string name="post_deleted">Post Deleted Successfully</string>
     <string name="could_not_delete_post">Could Not Delete Post</string>
+    <string name="could_not_delete_suggestion">Could Not Delete Suggestion</string>
 
     <string-array name="nav_drawer_items">
         <item >@string/title_home</item>

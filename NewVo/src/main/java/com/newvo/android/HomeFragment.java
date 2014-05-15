@@ -71,18 +71,18 @@ public class HomeFragment extends Fragment {
             @Override
             public void done(List<Post> posts, ParseException e) {
                 //Remove already voted on posts.
-                if(holder != null){
-                    int size = posts.size();
-                    for(Post post : holder.getVotedPosts()){
-                        if(posts.contains(post)){
-                            posts.remove(post);
+                if(posts != null){
+                    if(holder != null){
+                        int size = posts.size();
+                        for(Post post : holder.getVotedPosts()){
+                            if(posts.contains(post)){
+                                posts.remove(post);
+                            }
+                        }
+                        if(posts.size() == 0 && size == FeedRequest.NUMBER_OF_POSTS){
+                            requestMorePosts();
                         }
                     }
-                    if(posts.size() == 0 && size == FeedRequest.NUMBER_OF_POSTS){
-                        requestMorePosts();
-                    }
-                }
-                if(posts != null){
                     HomeFragment.this.posts.addAll(posts);
                     if(holder != null && holder.getPost() == null){
                         loadPost();

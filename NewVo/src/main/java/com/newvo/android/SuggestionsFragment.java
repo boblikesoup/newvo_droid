@@ -64,7 +64,9 @@ public class SuggestionsFragment extends Fragment implements ChildFragment {
         ButterKnife.inject(this, rootView);
 
         //Request the suggestions
+        SuggestionAdapter adapter = new SuggestionAdapter(getActivity(), R.layout.suggestion_single);
         updateSuggestions();
+        suggestionsList.setAdapter(adapter);
 
         SummaryViewHolder summaryViewHolder = new SummaryViewHolder(getActivity(), summary);
         summaryViewHolder.setItem(post, new DeleteCallback() {
@@ -91,15 +93,19 @@ public class SuggestionsFragment extends Fragment implements ChildFragment {
                     hideKeyboard();
                     CreateSuggestionRequest createSuggestionRequest = new CreateSuggestionRequest(post, text.toString());
                     final Suggestion suggestion = createSuggestionRequest.getSuggestion();
-                    ((SuggestionAdapter) suggestionsList.getAdapter()).add(suggestion);
+                    suggestion.setLoading(true);
+                    final SuggestionAdapter adapter = (SuggestionAdapter) suggestionsList.getAdapter();
+                    adapter.add(suggestion);
                     SuggestionsFragment.this.text.setText(null);
                     createSuggestionRequest.request(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
                             if (e == null) {
                                 Toast.makeText(getActivity(), getActivity().getString(R.string.suggestion_added), Toast.LENGTH_LONG).show();
+                                suggestion.setLoading(false);
+                                adapter.notifyDataSetChanged();
                             } else {
-                                ((SuggestionAdapter) suggestionsList.getAdapter()).remove(suggestion);
+                                adapter.remove(suggestion);
                                 SuggestionsFragment.this.text.setText(suggestion.getBody());
                                 Toast.makeText(getActivity(), getActivity().getString(R.string.suggestion_could_not_be_posted), Toast.LENGTH_LONG).show();
                             }
@@ -139,10 +145,9 @@ public class SuggestionsFragment extends Fragment implements ChildFragment {
     }
 
     protected void initSuggestions(List<Suggestion> suggestions) {
-        SuggestionAdapter adapter = new SuggestionAdapter(getActivity(), R.layout.suggestion_single);
+        final SuggestionAdapter adapter = (SuggestionAdapter) suggestionsList.getAdapter();
         if (post != null && suggestions.size() > 0) {
             adapter.addAll(suggestions);
         }
-        suggestionsList.setAdapter(adapter);
     }
 }

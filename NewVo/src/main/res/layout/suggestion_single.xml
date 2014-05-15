@@ -40,6 +40,19 @@
             android:contentDescription="@string/remove_comment"
             android:scaleType="centerInside"
             android:src="@drawable/x_simple"/>
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:indeterminateOnly="true"
+            android:indeterminate="true"
+            android:layout_centerVertical="true"
+            android:layout_alignRight="@+id/suggestion_x"
+            android:layout_alignEnd="@+id/suggestion_x"
+            android:layout_alignLeft="@+id/suggestion_x"
+            android:layout_alignStart="@+id/suggestion_x"
+            android:layout_margin="10dp"
+            android:id="@+id/in_progress"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 </LinearLayout>
