@@ -23,6 +23,9 @@ public class CreateSuggestionRequest {
     }
 
 
+    public Suggestion getSuggestion(){
+        return suggestion;
+    }
 
     public void request(){
         request(null);

@@ -87,18 +87,20 @@ public class SuggestionsFragment extends Fragment implements ChildFragment {
             @Override
             public void onClick(View v) {
                 CharSequence text = SuggestionsFragment.this.text.getText();
-                if(text != null && !text.equals("")){
-
-                    new CreateSuggestionRequest(post, text.toString()).request(new SaveCallback() {
+                if(text != null && text.toString().replaceAll("\\s+","").length() > 1){
+                    hideKeyboard();
+                    CreateSuggestionRequest createSuggestionRequest = new CreateSuggestionRequest(post, text.toString());
+                    final Suggestion suggestion = createSuggestionRequest.getSuggestion();
+                    ((SuggestionAdapter) suggestionsList.getAdapter()).add(suggestion);
+                    SuggestionsFragment.this.text.setText(null);
+                    createSuggestionRequest.request(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
-                            if(e == null) {
-                                //Hide the keyboard
-                                hideKeyboard();
-                                SuggestionsFragment.this.text.setText(null);
+                            if (e == null) {
                                 Toast.makeText(getActivity(), getActivity().getString(R.string.suggestion_added), Toast.LENGTH_LONG).show();
-                                updateSuggestions();
                             } else {
+                                ((SuggestionAdapter) suggestionsList.getAdapter()).remove(suggestion);
+                                SuggestionsFragment.this.text.setText(suggestion.getBody());
                                 Toast.makeText(getActivity(), getActivity().getString(R.string.suggestion_could_not_be_posted), Toast.LENGTH_LONG).show();
                             }
                         }
