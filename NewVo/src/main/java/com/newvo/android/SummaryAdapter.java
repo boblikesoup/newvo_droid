@@ -16,7 +16,6 @@ import com.parse.SaveCallback;
  */
 public class SummaryAdapter extends ArrayAdapter<Post> {
 
-    private String active;
     private final EditPostCallback editPostCallback;
 
     public SummaryAdapter(Context context, int resource, EditPostCallback editPostCallback) {
@@ -53,14 +52,6 @@ public class SummaryAdapter extends ArrayAdapter<Post> {
         });
 
         return convertView;
-    }
-
-    public void setActive(String active) {
-        this.active = active;
-    }
-
-    public String getActive() {
-        return active;
     }
 
     public static abstract class EditPostCallback {

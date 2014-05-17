@@ -1,21 +1,12 @@
 package com.newvo.android;
 
+import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-import com.astuetz.PagerSlidingTabStrip;
 import com.newvo.android.parse.Post;
 import com.newvo.android.remote.CurrentUserProfileRequest;
 import com.parse.FindCallback;
@@ -47,7 +38,14 @@ public class ProfileFragment extends Fragment {
                 public void done(List<Post> posts, ParseException e) {
                     if(e == null) {
                         activePosts = posts;
-                        populateListView(Post.ACTIVE, posts);
+                        if(holder != null){
+                            holder.populateListView(Post.ACTIVE, posts);
+                        } else {
+                            Activity activity = getActivity();
+                            if (activity != null) {
+                                ((DrawerActivity)getActivity()).attachDetachFragment();
+                            }
+                        }
                     } else {
                         requestPosts(Post.ACTIVE);
                     }
@@ -59,7 +57,14 @@ public class ProfileFragment extends Fragment {
                 public void done(List<Post> posts, ParseException e) {
                     if(e == null) {
                         inactivePosts = posts;
-                        populateListView(Post.INACTIVE, posts);
+                        if(holder != null){
+                            holder.populateListView(Post.INACTIVE, posts);
+                        } else {
+                            Activity activity = getActivity();
+                            if (activity != null) {
+                                ((DrawerActivity)getActivity()).attachDetachFragment();
+                            }
+                        }
                     } else {
                         requestPosts(Post.INACTIVE);
                     }
@@ -72,10 +77,9 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView;
-        if(activePosts == null && inactivePosts == null){
+        if(activePosts == null || inactivePosts == null){
             rootView = inflater.inflate(R.layout.text, container, false);
-        } else if((activePosts == null || activePosts.size() == 0) &&
-                (inactivePosts == null || inactivePosts.size() == 0)){
+        } else if(activePosts.size() == 0 && inactivePosts.size() == 0){
             rootView = inflater.inflate(R.layout.text, container, false);
             final TextView text = (TextView) rootView.findViewById(R.id.text);
             text.setText("There seem to be no posts here. Go create one...");
@@ -90,27 +94,9 @@ public class ProfileFragment extends Fragment {
         } else {
             rootView = inflater.inflate(R.layout.profile, container, false);
             if (holder == null) {
-                holder = new ProfileViewHolder(rootView);
+                holder = new ProfileViewHolder(rootView, activePosts, inactivePosts);
             } else {
                 holder.setView(rootView);
-            }
-
-            if (activePosts != null) {
-                for (Post post : activePosts) {
-                    changeLists(post);
-                }
-            }
-            if (inactivePosts != null) {
-                for (Post post : inactivePosts) {
-                    changeLists(post);
-                }
-            }
-
-            if (activePosts != null) {
-                holder.populateListView(Post.ACTIVE, activePosts);
-            }
-            if (inactivePosts != null) {
-                holder.populateListView(Post.INACTIVE, inactivePosts);
             }
 
             //When tabbing back, select the tab the post was on.
@@ -124,28 +110,5 @@ public class ProfileFragment extends Fragment {
             return rootView;
         }
         return rootView;
-    }
-
-
-    private void changeLists(Post post){
-        if(post != null){
-            if(post.getStatus().equals(Post.INACTIVE) &&
-                    activePosts.contains(post)){
-                activePosts.remove(post);
-                inactivePosts.add(post);
-                if(inactiveList != null && activeList != null){
-                    ((ArrayAdapter)activeList.getAdapter()).remove(post);
-                    ((ArrayAdapter)inactiveList.getAdapter()).add(post);
-                }
-            } else if(post.getStatus().equals(Post.ACTIVE) &&
-                    inactivePosts.contains(post)){
-                inactivePosts.remove(post);
-                activePosts.add(post);
-                if(inactiveList != null && activeList != null){
-                    ((ArrayAdapter)inactiveList.getAdapter()).remove(post);
-                    ((ArrayAdapter)activeList.getAdapter()).add(post);
-                }
-            }
-        }
     }
 }

@@ -80,8 +80,6 @@ public class HomeFragment extends Fragment {
     private void loadPost() {
         if (!posts.isEmpty()) {
             holder.setItem(posts.first());
-        } else {
-            //TODO: You have read all of the posts, you wizard.
         }
     }
 
