@@ -230,6 +230,12 @@ public class CreatePostFragment extends Fragment {
             CreatePostFragment.this.imageNumber = imageNumber;
             super.startImagePickIntent();
         }
+
+        @Override
+        public void startImageCropIntent() {
+            CreatePostFragment.this.imageNumber = imageNumber;
+            super.startImageCropIntent();
+        }
     }
 
     @Override
