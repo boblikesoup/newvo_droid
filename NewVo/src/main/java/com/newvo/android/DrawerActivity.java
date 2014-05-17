@@ -116,6 +116,7 @@ public class DrawerActivity extends Activity {
             fragmentManager.popBackStackImmediate((parentTag != null) ? parentTag : getString(R.string.title_home), 0);
             fragmentManager.addOnBackStackChangedListener(backStackChangedListener);
             FragmentTransaction transaction = fragmentManager.beginTransaction()
+                    .setCustomAnimations(R.animator.fade_in, R.animator.fade_out)
                     .replace(R.id.frame_container, fragment, tag).setBreadCrumbTitle(name).addToBackStack(tag);
             transaction.commit();
         }
