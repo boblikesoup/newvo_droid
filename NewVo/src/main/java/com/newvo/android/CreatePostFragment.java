@@ -10,16 +10,15 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import com.newvo.android.remote.CreatePostRequest;
 import com.newvo.android.util.ImageFileUtils;
 import com.newvo.android.util.IntentUtils;
+import com.parse.ParseException;
+import com.parse.SaveCallback;
 import com.soundcloud.android.crop.Crop;
 
 import static com.newvo.android.util.IntentUtils.IMAGE_CAPTURE;
@@ -43,11 +42,15 @@ public class CreatePostFragment extends Fragment {
     @InjectView(R.id.buffer2)
     LinearLayout buffer2;
 
+    @InjectView(R.id.progress_bar)
+    ProgressBar progressBar;
+
     ViewHolder image1;
     ViewHolder image2;
 
     private int imageNumber = -1;
 
+    private boolean posted;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,16 +58,19 @@ public class CreatePostFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.create_post, container, false);
         ButterKnife.inject(this, rootView);
 
+        posted = false;
+
         image1 = new FirstViewHolder(this, rootView.findViewById(R.id.image_container_1), 1);
         image2 = new SecondViewHolder(this, rootView.findViewById(R.id.image_container_2), 2);
 
         return rootView;
     }
 
-
-
     @OnClick(R.id.main_button)
     public void createPost() {
+        if(posted){
+            return;
+        }
         CharSequence text = caption.getText();
         String caption;
         if (text == null) {
@@ -72,12 +78,25 @@ public class CreatePostFragment extends Fragment {
         } else {
             caption = text.toString();
         }
-        Activity activity = getActivity();
+        final Activity activity = getActivity();
         if (activity != null) {
             try {
-                new CreatePostRequest(activity, caption, image1.getParseFile(), image2.getParseFile()).request();
-                ((DrawerActivity) activity).restartFragment();
-                Toast.makeText(activity, activity.getString(R.string.post_created), Toast.LENGTH_LONG).show();
+                new CreatePostRequest(activity, caption, image1.getParseFile(), image2.getParseFile()).request(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if(e == null) {
+                            Toast.makeText(activity, activity.getString(R.string.post_created), Toast.LENGTH_LONG).show();
+                            ((DrawerActivity) activity).restartFragment();
+                        } else {
+                            Toast.makeText(activity, activity.getString(R.string.could_not_create_post), Toast.LENGTH_LONG).show();
+                            progressBar.setVisibility(View.GONE);
+                            posted = false;
+                        }
+                    }
+                });
+                progressBar.setVisibility(View.VISIBLE);
+                posted = true;
+
             } catch (CreatePostRequest.MissingCaptionError createPostError) {
                 Toast.makeText(activity, activity.getString(R.string.missing_caption), Toast.LENGTH_LONG).show();
             } catch (CreatePostRequest.MissingImageError createPostError) {

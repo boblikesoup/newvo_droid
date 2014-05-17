@@ -29,16 +29,38 @@
                      android:layout_marginLeft="10dp"
                      android:contentDescription="@string/first_selection_description"/>
 
-        <ImageButton
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/main_button"
-            android:background="@null"
-            android:layout_weight="1"
-            android:scaleType="fitCenter"
-            android:layout_margin="10dp"
-            android:contentDescription="@string/comment_description"
-            android:src="@drawable/post_button"/>
+            android:layout_weight="1">
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/main_button"
+                android:background="@null"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:layout_margin="10dp"
+                android:contentDescription="@string/comment_description"
+                android:src="@drawable/post_button"
+                android:visibility="visible"/>
+
+            <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/progress_bar"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_alignBottom="@+id/main_button"
+                android:layout_alignTop="@+id/main_button"
+                android:visibility="gone"
+                android:background="@null"
+                android:indeterminate="true"
+                />
+
+        </RelativeLayout>
 
         <ImageButton
             android:layout_width="match_parent"
