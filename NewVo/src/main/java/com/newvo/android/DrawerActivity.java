@@ -103,13 +103,12 @@ public class DrawerActivity extends Activity {
         if(tag == null) {
             tag = name;
         }
-        this.tag = tag;
         if (tag.equals(getString(R.string.title_home))) {
             fragmentManager.removeOnBackStackChangedListener(backStackChangedListener);
             fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             fragmentManager.addOnBackStackChangedListener(backStackChangedListener);
         }
-        if (tag.equals(getTitle().toString())) {
+        if (tag.equals(this.tag)) {
             restartFragment();
         } else {
             //Reset the back stack to only home if there is no parent tag.
@@ -120,6 +119,7 @@ public class DrawerActivity extends Activity {
                     .replace(R.id.frame_container, fragment, tag).setBreadCrumbTitle(name).addToBackStack(tag);
             transaction.commit();
         }
+        this.tag = tag;
     }
 
     //Finds a parent tag to keep parent on back stack.
