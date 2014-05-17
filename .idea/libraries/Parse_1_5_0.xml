@@ -2,12 +2,8 @@
   <library name="Parse-1.5.0">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/NewVo/libs/parse/Parse-1.5.0.jar!/" />
-      <root url="file://$PROJECT_DIR$/NewVo/libs/parse" />
     </CLASSES>
-    <JAVADOC>
-      <root url="file://$PROJECT_DIR$/NewVo/libs/parse/Parse-1.5.0-javadoc" />
-    </JAVADOC>
+    <JAVADOC />
     <SOURCES />
-    <jarDirectory url="file://$PROJECT_DIR$/NewVo/libs/parse" recursive="false" />
   </library>
 </component>

@@ -56,10 +56,13 @@ public class DrawerActivity extends Activity {
         getActionBar().getCustomView().setOnClickListener(drawerToggle);
         drawerLayout.setDrawerListener(drawerToggle);
 
+        getFragmentManager().addOnBackStackChangedListener(backStackChangedListener);
+
         if (savedInstanceState == null) {
             // on first time display view for first nav item
             String[] navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
             displayView(navMenuTitles[0]);
+            setTitle(navMenuTitles[0]);
         }
 
         getFragmentManager().addOnBackStackChangedListener(drawerToggle);
@@ -91,12 +94,21 @@ public class DrawerActivity extends Activity {
             int backStackEntryCount = getFragmentManager().getBackStackEntryCount();
             if (backStackEntryCount > 0) {
                 FragmentManager.BackStackEntry backStackEntryAt = getFragmentManager().getBackStackEntryAt(backStackEntryCount - 1);
+                DrawerActivity.this.tag = backStackEntryAt.getName();
                 setTitle(backStackEntryAt.getBreadCrumbTitle());
-            } else {
-                onBackPressed();
             }
         }
     };
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        int backStackEntryCount = getFragmentManager().getBackStackEntryCount();
+        if (backStackEntryCount == 0) {
+            super.onBackPressed();
+        }
+
+    }
 
     public void displayFragment(Fragment fragment, String name, String tag, String parentTag) {
         FragmentManager fragmentManager = getFragmentManager();
@@ -104,23 +116,18 @@ public class DrawerActivity extends Activity {
             tag = name;
         }
         if (tag.equals(getString(R.string.title_home))) {
-            fragmentManager.removeOnBackStackChangedListener(backStackChangedListener);
-            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            fragmentManager.addOnBackStackChangedListener(backStackChangedListener);
+            fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
         if (tag.equals(this.tag)) {
             restartFragment();
         } else {
             //Reset the back stack to only home if there is no parent tag.
-            fragmentManager.removeOnBackStackChangedListener(backStackChangedListener);
-            fragmentManager.popBackStackImmediate((parentTag != null) ? parentTag : getString(R.string.title_home), 0);
-            fragmentManager.addOnBackStackChangedListener(backStackChangedListener);
+            fragmentManager.popBackStack((parentTag != null) ? parentTag : getString(R.string.title_home), 0);
             FragmentTransaction transaction = fragmentManager.beginTransaction()
                     .setCustomAnimations(R.animator.fade_in, R.animator.fade_out)
                     .replace(R.id.frame_container, fragment, tag).setBreadCrumbTitle(name).addToBackStack(tag);
             transaction.commit();
         }
-        this.tag = tag;
     }
 
     //Finds a parent tag to keep parent on back stack.
@@ -136,9 +143,7 @@ public class DrawerActivity extends Activity {
         FragmentManager fragmentManager = getFragmentManager();
         Fragment fragment = fragmentManager.findFragmentByTag(tag);
         if(fragment != null) {
-            fragmentManager.removeOnBackStackChangedListener(backStackChangedListener);
             fragmentManager.beginTransaction().detach(fragment).attach(fragment).commit();
-            fragmentManager.addOnBackStackChangedListener(backStackChangedListener);
         }
     }
 
@@ -147,12 +152,10 @@ public class DrawerActivity extends Activity {
         Fragment fragment = fragmentRetriever.retrieveFragment(name);
 
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.removeOnBackStackChangedListener(backStackChangedListener);
-        fragmentManager.popBackStackImmediate();
-        fragmentManager.addOnBackStackChangedListener(backStackChangedListener);
+        fragmentManager.popBackStack();
 
         FragmentTransaction transaction = fragmentManager.beginTransaction()
-                .replace(R.id.frame_container, fragment, name).setBreadCrumbTitle(name).addToBackStack(name);
+                .replace(R.id.frame_container, fragment, tag).setBreadCrumbTitle(name).addToBackStack(tag);
         transaction.commit();
     }
 
