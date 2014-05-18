@@ -2,14 +2,17 @@ package com.newvo.android;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.newvo.android.parse.Post;
 import com.newvo.android.remote.VoteOnPostRequest;
+import com.newvo.android.util.ToastUtils;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseImageView;
@@ -139,12 +142,26 @@ public class ComparisonViewHolder {
                     }
                 }
             });
-            ((DrawerActivity) context).attachDetachFragment();
 
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
+                    ((DrawerActivity) context).attachDetachFragment();
+                }
+            }, 2500);
+
+            int votes1 = post.getVotes1();
+            int votes2 = post.getVotes2();
+            int totalVotes = votes1 + votes2;
+            if (totalVotes == 0) {
+                ToastUtils.makeText(context, "First vote! Congrats!", Toast.LENGTH_SHORT, true).show();
+            } else {
+                int votes = ((vote == 0) ? votes1 : votes2) * 100 / totalVotes;
+                ToastUtils.makeText(context, votes + "% agreed with you.", Toast.LENGTH_SHORT, true).show();
+            }
         }
     }
 
-    public Set<Post> getVotedPosts(){
+    public Set<Post> getVotedPosts() {
         return votedPosts;
     }
 
