@@ -191,12 +191,13 @@ public class DrawerActivity extends Activity {
     public void setTitle(CharSequence title) {
         super.setTitle(title);
         setActionBarTitle(title);
-        int resId = fragmentRetriever.retrieveIcon(title.toString());
-        if (resId > -1) {
-            setActionBarIcon(resId);
-        }
-        int position = fragmentRetriever.retrievePosition(title.toString());
+        int position = fragmentRetriever.retrievePosition(tag);
         if (position > -1) {
+            //Icon and position depend on top-level.
+            int resId = fragmentRetriever.retrieveIcon(title.toString());
+            if (resId > -1) {
+                setActionBarIcon(resId);
+            }
             drawerList.setItemChecked(position, true);
             drawerList.setSelection(position);
         }
