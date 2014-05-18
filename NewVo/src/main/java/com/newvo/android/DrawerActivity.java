@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.*;
 import com.newvo.android.slidingmenu.NavigationDrawerListAdapter;
 import com.newvo.android.util.DrawerToggle;
+import com.newvo.android.util.LoadingFragment;
 
 /**
  * Created by David on 4/11/2014.
@@ -189,6 +190,8 @@ public class DrawerActivity extends Activity {
 
     @Override
     public void setTitle(CharSequence title) {
+        Fragment activeFragment = getActiveFragment();
+        setActionBarLoading(activeFragment != null && activeFragment instanceof LoadingFragment);
         super.setTitle(title);
         setActionBarTitle(title);
         int position = fragmentRetriever.retrievePosition(tag);
@@ -205,6 +208,11 @@ public class DrawerActivity extends Activity {
 
     private void setActionBarIcon(int resId) {
         ((ImageView)getActionBar().getCustomView().findViewById(R.id.icon)).setImageResource(resId);
+    }
+
+    public void setActionBarLoading(boolean loading){
+        getActionBar().getCustomView().findViewById(R.id.progress_bar).setVisibility(loading ? View.VISIBLE : View.GONE);
+        getActionBar().getCustomView().findViewById(R.id.icon).setVisibility(loading ? View.GONE : View.VISIBLE);
     }
 
     private void setActionBarTitle(CharSequence title) {

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import com.newvo.android.parse.Post;
 import com.newvo.android.remote.FeedRequest;
+import com.newvo.android.util.LoadingFragment;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 
@@ -19,7 +20,7 @@ import java.util.TreeSet;
 /**
  * Created by David on 4/13/2014.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements LoadingFragment {
 
     private TreeSet<Post> posts = new TreeSet<Post>();
 
@@ -63,6 +64,8 @@ public class HomeFragment extends Fragment {
                     requestMorePosts();
                 }
             });
+        } else {
+            ((DrawerActivity)getActivity()).setActionBarLoading(true);
         }
         return rootView;
     }

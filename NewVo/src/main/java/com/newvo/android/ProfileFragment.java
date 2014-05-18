@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.newvo.android.parse.Post;
 import com.newvo.android.remote.CurrentUserProfileRequest;
+import com.newvo.android.util.LoadingFragment;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 
@@ -17,7 +18,7 @@ import java.util.List;
 /**
  * Created by David on 4/20/2014.
  */
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements LoadingFragment {
 
     private ProfileViewHolder holder;
 
@@ -92,6 +93,7 @@ public class ProfileFragment extends Fragment {
                 }
             });
         } else {
+            ((DrawerActivity)getActivity()).setActionBarLoading(false);
             rootView = inflater.inflate(R.layout.profile, container, false);
             if (holder == null) {
                 holder = new ProfileViewHolder(rootView, activePosts, inactivePosts);
