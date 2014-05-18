@@ -30,6 +30,7 @@ import static com.newvo.android.util.IntentUtils.IMAGE_PICK;
  */
 public class CreatePostFragment extends Fragment {
 
+    public static final int DP_OFFSET = 40;
     @InjectView(R.id.caption)
     TextView caption;
     @InjectView(R.id.main_button)
@@ -86,10 +87,10 @@ public class CreatePostFragment extends Fragment {
                     @Override
                     public void done(ParseException e) {
                         if(e == null) {
-                            ToastUtils.makeText(activity, activity.getString(R.string.post_created), Toast.LENGTH_LONG).show();
+                            ToastUtils.makeText(activity, activity.getString(R.string.post_created), Toast.LENGTH_LONG, DP_OFFSET).show();
                             ((DrawerActivity) activity).restartFragment();
                         } else {
-                            ToastUtils.makeText(activity, activity.getString(R.string.could_not_create_post), Toast.LENGTH_LONG).show();
+                            ToastUtils.makeText(activity, activity.getString(R.string.could_not_create_post), Toast.LENGTH_LONG, DP_OFFSET).show();
                             progressBar.setVisibility(View.GONE);
                             posted = false;
                         }
@@ -99,9 +100,9 @@ public class CreatePostFragment extends Fragment {
                 posted = true;
 
             } catch (CreatePostRequest.MissingCaptionError createPostError) {
-                ToastUtils.makeText(activity, activity.getString(R.string.missing_caption), Toast.LENGTH_LONG).show();
+                ToastUtils.makeText(activity, activity.getString(R.string.missing_caption), Toast.LENGTH_LONG, DP_OFFSET).show();
             } catch (CreatePostRequest.MissingImageError createPostError) {
-                ToastUtils.makeText(activity, activity.getString(R.string.needs_image), Toast.LENGTH_LONG).show();
+                ToastUtils.makeText(activity, activity.getString(R.string.needs_image), Toast.LENGTH_LONG, DP_OFFSET).show();
             }
         }
     }
@@ -142,14 +143,12 @@ public class CreatePostFragment extends Fragment {
         buffer1.setVisibility(View.GONE);
         buffer2.setVisibility(View.GONE);
         image2.setVisibility(View.VISIBLE);
-        secondChoice.setImageResource(R.drawable.check_button);
     }
 
     private void removeSecondOption() {
         buffer1.setVisibility(View.VISIBLE);
         buffer2.setVisibility(View.VISIBLE);
         image2.setVisibility(View.GONE);
-        secondChoice.setImageResource(R.drawable.x_button);
     }
 
     private ViewHolder getSelectedImage() {

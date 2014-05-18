@@ -153,10 +153,10 @@ public class ComparisonViewHolder {
             int votes2 = post.getVotes2();
             int totalVotes = votes1 + votes2;
             if (totalVotes == 0) {
-                ToastUtils.makeText(context, "First vote! Congrats!", Toast.LENGTH_SHORT, true).show();
+                ToastUtils.makeText(context, "First vote! Congrats!", Toast.LENGTH_SHORT, -1).show();
             } else {
                 int votes = ((vote == 0) ? votes1 : votes2) * 100 / totalVotes;
-                ToastUtils.makeText(context, votes + "% agreed with you.", Toast.LENGTH_SHORT, true).show();
+                ToastUtils.makeText(context, votes + "% agreed with you.", Toast.LENGTH_SHORT, -1).show();
             }
         }
     }
