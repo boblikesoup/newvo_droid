@@ -18,6 +18,7 @@ import com.newvo.android.parse.User;
 import com.newvo.android.remote.CreateSuggestionRequest;
 import com.newvo.android.remote.PostSuggestionsRequest;
 import com.newvo.android.util.ChildFragment;
+import com.newvo.android.util.ToastUtils;
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -101,18 +102,18 @@ public class SuggestionsFragment extends Fragment implements ChildFragment {
                         @Override
                         public void done(ParseException e) {
                             if (e == null) {
-                                Toast.makeText(getActivity(), getActivity().getString(R.string.suggestion_added), Toast.LENGTH_LONG).show();
+                                ToastUtils.makeText(getActivity(), getActivity().getString(R.string.suggestion_added), Toast.LENGTH_LONG).show();
                                 suggestion.setLoading(false);
                                 adapter.notifyDataSetChanged();
                             } else {
                                 adapter.remove(suggestion);
                                 SuggestionsFragment.this.text.setText(suggestion.getBody());
-                                Toast.makeText(getActivity(), getActivity().getString(R.string.suggestion_could_not_be_posted), Toast.LENGTH_LONG).show();
+                                ToastUtils.makeText(getActivity(), getActivity().getString(R.string.suggestion_could_not_be_posted), Toast.LENGTH_LONG).show();
                             }
                         }
                     });
                 } else {
-                    Toast.makeText(getActivity(), getActivity().getString(R.string.missing_suggestion), Toast.LENGTH_LONG).show();
+                    ToastUtils.makeText(getActivity(), getActivity().getString(R.string.missing_suggestion), Toast.LENGTH_LONG).show();
                 }
             }
         });

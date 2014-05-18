@@ -17,6 +17,7 @@ import butterknife.OnClick;
 import com.newvo.android.remote.CreatePostRequest;
 import com.newvo.android.util.ImageFileUtils;
 import com.newvo.android.util.IntentUtils;
+import com.newvo.android.util.ToastUtils;
 import com.parse.ParseException;
 import com.parse.SaveCallback;
 import com.soundcloud.android.crop.Crop;
@@ -85,10 +86,10 @@ public class CreatePostFragment extends Fragment {
                     @Override
                     public void done(ParseException e) {
                         if(e == null) {
-                            Toast.makeText(activity, activity.getString(R.string.post_created), Toast.LENGTH_LONG).show();
+                            ToastUtils.makeText(activity, activity.getString(R.string.post_created), Toast.LENGTH_LONG).show();
                             ((DrawerActivity) activity).restartFragment();
                         } else {
-                            Toast.makeText(activity, activity.getString(R.string.could_not_create_post), Toast.LENGTH_LONG).show();
+                            ToastUtils.makeText(activity, activity.getString(R.string.could_not_create_post), Toast.LENGTH_LONG).show();
                             progressBar.setVisibility(View.GONE);
                             posted = false;
                         }
@@ -98,9 +99,9 @@ public class CreatePostFragment extends Fragment {
                 posted = true;
 
             } catch (CreatePostRequest.MissingCaptionError createPostError) {
-                Toast.makeText(activity, activity.getString(R.string.missing_caption), Toast.LENGTH_LONG).show();
+                ToastUtils.makeText(activity, activity.getString(R.string.missing_caption), Toast.LENGTH_LONG).show();
             } catch (CreatePostRequest.MissingImageError createPostError) {
-                Toast.makeText(activity, activity.getString(R.string.needs_image), Toast.LENGTH_LONG).show();
+                ToastUtils.makeText(activity, activity.getString(R.string.needs_image), Toast.LENGTH_LONG).show();
             }
         }
     }

@@ -10,6 +10,7 @@ import com.newvo.android.parse.Post;
 import com.newvo.android.parse.User;
 import com.newvo.android.remote.RemovePostRequest;
 import com.newvo.android.remote.SetPostActiveRequest;
+import com.newvo.android.util.ToastUtils;
 import com.parse.*;
 
 /**
@@ -119,9 +120,9 @@ public class SummaryViewHolder {
                             @Override
                             public void done(ParseException e) {
                                 if(e == null) {
-                                    Toast.makeText(context, context.getString(R.string.post_deleted), Toast.LENGTH_LONG).show();
+                                    ToastUtils.makeText(context, context.getString(R.string.post_deleted), Toast.LENGTH_LONG).show();
                                 } else {
-                                    Toast.makeText(context, context.getString(R.string.could_not_delete_post), Toast.LENGTH_LONG).show();
+                                    ToastUtils.makeText(context, context.getString(R.string.could_not_delete_post), Toast.LENGTH_LONG).show();
                                 }
                                 if(deleteCallback != null){
                                     deleteCallback.done(e);
@@ -154,9 +155,9 @@ public class SummaryViewHolder {
                 public void done(ParseException e) {
                     if(e == null){
                         menuItem.setTitle("Set Active");
-                        Toast.makeText(context, context.getString(R.string.set_inactive), Toast.LENGTH_LONG).show();
+                        ToastUtils.makeText(context, context.getString(R.string.set_inactive), Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(context, context.getString(R.string.could_not_set_inactive), Toast.LENGTH_LONG).show();
+                        ToastUtils.makeText(context, context.getString(R.string.could_not_set_inactive), Toast.LENGTH_LONG).show();
                     }
                     if(saveCallback != null) {
                         saveCallback.done(e);
@@ -170,9 +171,9 @@ public class SummaryViewHolder {
                 public void done(ParseException e) {
                     if(e == null){
                         menuItem.setTitle("Set Inactive");
-                        Toast.makeText(context, context.getString(R.string.set_active), Toast.LENGTH_LONG).show();
+                        ToastUtils.makeText(context, context.getString(R.string.set_active), Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(context, context.getString(R.string.could_not_set_active), Toast.LENGTH_LONG).show();
+                        ToastUtils.makeText(context, context.getString(R.string.could_not_set_active), Toast.LENGTH_LONG).show();
                     }
                     if(saveCallback != null) {
                         saveCallback.done(e);

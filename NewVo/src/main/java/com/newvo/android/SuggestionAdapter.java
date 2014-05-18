@@ -11,6 +11,7 @@ import butterknife.InjectView;
 import com.newvo.android.parse.Suggestion;
 import com.newvo.android.parse.User;
 import com.newvo.android.remote.RemoveSuggestionRequest;
+import com.newvo.android.util.ToastUtils;
 import com.parse.DeleteCallback;
 import com.parse.ParseException;
 
@@ -66,9 +67,9 @@ public class SuggestionAdapter extends ArrayAdapter<Suggestion> {
                         public void done(ParseException e) {
                             if(e == null){
                                 SuggestionAdapter.this.remove(suggestion);
-                                Toast.makeText(getContext(), getContext().getString(R.string.suggestion_removed), Toast.LENGTH_LONG).show();
+                                ToastUtils.makeText(getContext(), getContext().getString(R.string.suggestion_removed), Toast.LENGTH_LONG).show();
                             } else {
-                                Toast.makeText(getContext(), getContext().getString(R.string.could_not_delete_suggestion), Toast.LENGTH_LONG).show();
+                                ToastUtils.makeText(getContext(), getContext().getString(R.string.could_not_delete_suggestion), Toast.LENGTH_LONG).show();
                                 setInProgress(false);
                                 Log.e("NewVo", "Could not delete suggestion.");
                             }
