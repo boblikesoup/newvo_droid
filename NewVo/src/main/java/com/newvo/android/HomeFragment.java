@@ -49,6 +49,7 @@ public class HomeFragment extends Fragment implements LoadingFragment {
                 loadPost();
             }
             if(posts.size() != 0) {
+                ((DrawerActivity)getActivity()).setActionBarLoading(false);
                 return rootView;
             }
         }
@@ -64,8 +65,6 @@ public class HomeFragment extends Fragment implements LoadingFragment {
                     requestMorePosts();
                 }
             });
-        } else {
-            ((DrawerActivity)getActivity()).setActionBarLoading(true);
         }
         return rootView;
     }
