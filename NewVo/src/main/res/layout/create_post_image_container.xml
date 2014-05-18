@@ -21,7 +21,7 @@
         <com.parse.ParseImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/photo" android:layout_margin="2dp" android:scaleType="centerInside"
+            android:id="@+id/photo" android:layout_margin="2dp" android:scaleType="fitCenter"
             android:layout_gravity="center"
             android:contentDescription="@string/first_image_description"
             android:visibility="visible"
