@@ -84,7 +84,7 @@ public class ProfileFragment extends Fragment implements LoadingFragment {
             ((DrawerActivity)getActivity()).setActionBarLoading(false);
             rootView = inflater.inflate(R.layout.text, container, false);
             final TextView text = (TextView) rootView.findViewById(R.id.text);
-            text.setText("There seem to be no posts here. Go create one...");
+            text.setText("There don't appear to be any posts here. Go create one...");
             rootView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
