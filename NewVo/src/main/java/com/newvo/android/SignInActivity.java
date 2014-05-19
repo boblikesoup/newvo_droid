@@ -24,6 +24,8 @@ import java.net.URL;
  */
 public class SignInActivity extends Activity {
 
+    private Intent intent;
+
     public SignInActivity() {
         super();
     }
@@ -61,9 +63,11 @@ public class SignInActivity extends Activity {
     private void assignUser(ParseUser user) {
         if (user != null) {
             updateFacebookInfo();
-            Intent intent = new Intent(this, NewVo.class);
-            startActivity(intent);
-            finish();
+            if(intent == null) {
+                intent = new Intent(this, NewVo.class);
+                startActivity(intent);
+                finish();
+            }
         }
     }
 
