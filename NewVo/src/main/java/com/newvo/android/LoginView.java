@@ -9,6 +9,9 @@ import butterknife.OnClick;
 import com.parse.LogInCallback;
 import com.parse.ParseFacebookUtils;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by David on 4/25/2014.
  */
@@ -31,6 +34,7 @@ public class LoginView extends LinearLayout {
 
     @OnClick (R.id.facebook_button)
     public void submit(){
-        ParseFacebookUtils.logIn(activity, callback);
+        List<String> permissions = Arrays.asList("basic_info", "user_about_me", "user_relationships", "user_birthday", "user_location");
+        ParseFacebookUtils.logIn(permissions, activity, callback);
     }
 }
