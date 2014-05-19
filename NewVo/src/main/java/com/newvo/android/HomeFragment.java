@@ -131,4 +131,8 @@ public class HomeFragment extends Fragment implements LoadingFragment {
         });
     }
 
+    @Override
+    public boolean hasLoaded() {
+        return loadingPosts;
+    }
 }

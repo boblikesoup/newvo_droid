@@ -81,6 +81,7 @@ public class ProfileFragment extends Fragment implements LoadingFragment {
         if(activePosts == null || inactivePosts == null){
             rootView = inflater.inflate(R.layout.text, container, false);
         } else if(activePosts.size() == 0 && inactivePosts.size() == 0){
+            ((DrawerActivity)getActivity()).setActionBarLoading(false);
             rootView = inflater.inflate(R.layout.text, container, false);
             final TextView text = (TextView) rootView.findViewById(R.id.text);
             text.setText("There seem to be no posts here. Go create one...");
@@ -112,5 +113,10 @@ public class ProfileFragment extends Fragment implements LoadingFragment {
             return rootView;
         }
         return rootView;
+    }
+
+    @Override
+    public boolean hasLoaded() {
+        return activePosts != null && inactivePosts != null;
     }
 }

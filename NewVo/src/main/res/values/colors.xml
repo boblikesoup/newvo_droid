@@ -9,4 +9,5 @@
     <color name="light_semi_transparent">#CCFFFFFF</color>
     <color name="light_transparent_background">#66FFFFFF</color>
     <color name="dark_transparent_background">#99000000</color>
+    <color name="semi_dark_transparent_background">#22000000</color>
 </resources>
