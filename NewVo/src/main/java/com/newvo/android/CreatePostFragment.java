@@ -57,6 +57,7 @@ public class CreatePostFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        IntentUtils.resetIntentLoading();
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.create_post, container, false);
         ButterKnife.inject(this, rootView);
 
@@ -109,6 +110,7 @@ public class CreatePostFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, final Intent data) {
+        IntentUtils.resetIntentLoading();
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == Crop.REQUEST_CROP) {
                 new AsyncTask() {
@@ -169,6 +171,9 @@ public class CreatePostFragment extends Fragment {
             this.swapButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(IntentUtils.loadingEitherIntent()){
+                        return;
+                    }
                     swapPhoto(image1);
                 }
             });
@@ -182,6 +187,9 @@ public class CreatePostFragment extends Fragment {
 
         @Override
         public void deletePhoto() {
+            if(IntentUtils.loadingEitherIntent()){
+                return;
+            }
             super.deletePhoto();
             secondChoice.setImageResource(R.drawable.x_button);
         }
@@ -201,6 +209,9 @@ public class CreatePostFragment extends Fragment {
 
         @Override
         public void deletePhoto() {
+            if(IntentUtils.loadingEitherIntent()){
+                return;
+            }
             super.deletePhoto();
             if(image2.getParseFile() != null){
                 swapPhoto(image2);

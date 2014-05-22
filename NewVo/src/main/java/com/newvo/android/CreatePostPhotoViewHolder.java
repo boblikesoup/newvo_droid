@@ -64,7 +64,9 @@ public class CreatePostPhotoViewHolder {
 
     @OnClick(R.id.photo)
     public void startImageCropIntent(){
-        IntentUtils.startImageCropIntent(fragment, uncroppedPhoto.toString());
+        if(uncroppedPhoto != null && uncroppedPhoto.toString() != null) {
+            IntentUtils.startImageCropIntent(fragment, uncroppedPhoto.toString());
+        }
     }
 
 

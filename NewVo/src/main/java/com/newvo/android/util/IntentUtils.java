@@ -24,11 +24,18 @@ public class IntentUtils {
 
     public static Uri photoFile;
 
+    public static boolean loadingIntent;
+    public static boolean loadingCropIntent;
+
     private IntentUtils() {
 
     }
 
     public static void startImageCaptureIntent(Fragment fragment) {
+        if(loadingIntent){
+            return;
+        }
+        loadingIntent = true;
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //PhotoFile has to be stored by me because intents/extras don't pass from ACTION_IMAGE_CAPTURE.
         photoFile = null;
@@ -42,12 +49,20 @@ public class IntentUtils {
     }
 
     public static void startImagePickIntent(Fragment fragment) {
+        if(loadingCropIntent){
+            return;
+        }
+        loadingCropIntent = true;
         Intent intent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         fragment.startActivityForResult(intent, IMAGE_PICK);
     }
 
     public static void startImageCropIntent(Fragment fragment, String photoPath) {
+        if(loadingIntent){
+            return;
+        }
+        loadingIntent = true;
         Context context = fragment.getActivity();
         Uri croppedFile = createImageFile();
         ImageFileUtils.resizeFile(context, photoPath, croppedFile);
@@ -74,5 +89,14 @@ public class IntentUtils {
             Log.e("newvo", "Failed to create image file.");
             return null;
         }
+    }
+
+    public static void resetIntentLoading(){
+        IntentUtils.loadingCropIntent = false;
+        IntentUtils.loadingIntent = false;
+    }
+
+    public static boolean loadingEitherIntent(){
+        return loadingCropIntent || loadingIntent;
     }
 }

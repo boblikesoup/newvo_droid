@@ -61,6 +61,7 @@ public class HomeFragment extends Fragment implements LoadingFragment {
                 @Override
                 public void onClick(View v) {
                     loadingPosts = true;
+                    ((DrawerActivity)getActivity()).setActionBarLoading(true);
                     text.setText("Loading...");
                     requestMorePosts();
                 }
