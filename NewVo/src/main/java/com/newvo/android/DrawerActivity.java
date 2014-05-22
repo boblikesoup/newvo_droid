@@ -191,7 +191,7 @@ public class DrawerActivity extends Activity {
     @Override
     public void setTitle(CharSequence title) {
         Fragment activeFragment = getActiveFragment();
-        setActionBarLoading(activeFragment != null && activeFragment instanceof LoadingFragment && ((LoadingFragment) activeFragment).hasLoaded());
+        setActionBarLoading(activeFragment != null && activeFragment instanceof LoadingFragment && !((LoadingFragment) activeFragment).hasLoaded());
         super.setTitle(title);
         setActionBarTitle(title);
         int position = fragmentRetriever.retrievePosition(tag);
