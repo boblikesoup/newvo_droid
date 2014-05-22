@@ -61,6 +61,8 @@ public class SummaryViewHolder {
                     ((DrawerActivity) context).displayChildFragment(new ImageFragment(photo1), context.getString(R.string.title_home), "SummaryImage");
                 }
             });
+        } else {
+            firstImage.setParseFile(null);
         }
 
         final ParseFile photo2 = item.getPhoto2();
@@ -73,6 +75,8 @@ public class SummaryViewHolder {
                     ((DrawerActivity) context).displayChildFragment(new ImageFragment(photo2), context.getString(R.string.title_home), "SummaryImage");
                 }
             });
+        } else {
+            secondImage.setParseFile(null);
         }
         int votes1 = item.getVotes1();
         int votes2 = item.getVotes2();

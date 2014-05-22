@@ -69,12 +69,6 @@ public class HomeFragment extends Fragment implements LoadingFragment {
         return rootView;
     }
 
-    @Override
-    public void onDestroyView() {
-        holder = null;
-        super.onDestroyView();
-    }
-
     private void loadNextPost() {
         if (posts.size() > 0 && holder != null && holder.getLastVotedPost() != null) {
             posts.remove(holder.getLastVotedPost());

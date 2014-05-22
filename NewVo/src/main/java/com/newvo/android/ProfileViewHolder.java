@@ -76,6 +76,8 @@ public class ProfileViewHolder {
 
     }
 
+
+
     public void populateListView(String type, List<Post> posts) {
         ListView listView = type.equals(Post.ACTIVE) ? activeList : inactiveList;
         if (listView != null && listView.getAdapter() != null && listView.getAdapter() instanceof ArrayAdapter) {
@@ -149,5 +151,12 @@ public class ProfileViewHolder {
                 }
             }
         }
+    }
+
+    public void onDestroyView() {
+        activeList = null;
+        inactiveList = null;
+        tabs = null;
+        pager = null;
     }
 }

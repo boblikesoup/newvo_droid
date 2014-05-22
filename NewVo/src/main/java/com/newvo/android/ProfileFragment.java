@@ -117,7 +117,9 @@ public class ProfileFragment extends Fragment implements LoadingFragment {
 
     @Override
     public void onDestroyView() {
-        holder = null;
+        if(holder != null){
+            holder.onDestroyView();
+        }
         super.onDestroyView();
     }
 
