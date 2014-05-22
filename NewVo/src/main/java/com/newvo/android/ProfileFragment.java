@@ -116,6 +116,12 @@ public class ProfileFragment extends Fragment implements LoadingFragment {
     }
 
     @Override
+    public void onDestroyView() {
+        holder = null;
+        super.onDestroyView();
+    }
+
+    @Override
     public boolean hasLoaded() {
         return activePosts != null && inactivePosts != null;
     }

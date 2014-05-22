@@ -1288,4 +1288,11 @@ public class ParseTouchImageView extends ParseImageView {
         matrix.getValues(n);
         Log.d(DEBUG, "Scale: " + n[Matrix.MSCALE_X] + " TransX: " + n[Matrix.MTRANS_X] + " TransY: " + n[Matrix.MTRANS_Y]);
     }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        setParseFile(null);
+
+    }
 }
