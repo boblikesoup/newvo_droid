@@ -57,6 +57,7 @@ public class HomeFragment extends Fragment implements LoadingFragment {
         final TextView text = (TextView) rootView.findViewById(R.id.text);
         if(!loadingPosts){
             text.setText("You wizard! You have voted on every post!");
+            ((DrawerActivity)getActivity()).setActionBarLoading(false);
             rootView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
