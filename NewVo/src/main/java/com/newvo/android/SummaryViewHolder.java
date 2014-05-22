@@ -96,7 +96,7 @@ public class SummaryViewHolder {
             suggestionsIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((DrawerActivity) context).displayChildFragment(new SuggestionsFragment(item), context.getString(R.string.title_suggestions), "SummaryImage");
+                    ((DrawerActivity) context).displayChildFragment(new SuggestionsFragment(item), context.getString(R.string.title_suggestions), "SuggestionsList");
                     ProfileFragment.selectedPost = item;
                 }
             });
