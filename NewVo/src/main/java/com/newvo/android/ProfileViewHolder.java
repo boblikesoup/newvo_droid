@@ -154,6 +154,8 @@ public class ProfileViewHolder {
     }
 
     public void onDestroyView() {
+        activeList.setAdapter(null);
+        inactiveList.setAdapter(null);
         activeList = null;
         inactiveList = null;
         tabs = null;
