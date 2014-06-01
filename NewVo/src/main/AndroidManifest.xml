@@ -16,7 +16,11 @@
         android:name=".NewVoApplication"
         android:allowBackup="true"
         android:icon="@drawable/newvo_icon"
-        android:label="@string/app_name">
+        android:label="@string/app_name"
+        >
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/app_id"/>
         <activity
             android:name="com.newvo.android.SignInActivity"
             android:theme="@style/NoActionBar">
@@ -37,9 +41,6 @@
             android:name="com.facebook.LoginActivity"
             android:label="@string/title_facebook_login"
             android:theme="@style/NoActionBar">
-            <meta-data
-                android:name="com.facebook.sdk.ApplicationId"
-                android:value="@string/app_id"/>
         </activity>
         <activity android:name="com.newvo.android.TextEntryActivity"
                   android:label="My Activity"
