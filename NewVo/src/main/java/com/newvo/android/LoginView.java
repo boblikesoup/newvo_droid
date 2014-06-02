@@ -34,7 +34,7 @@ public class LoginView extends LinearLayout {
 
     @OnClick (R.id.facebook_button)
     public void submit(){
-        List<String> permissions = Arrays.asList("basic_info", "user_about_me", "user_relationships", "user_birthday", "user_location");
+        List<String> permissions = Arrays.asList("public_profile","user_friends", "user_about_me", "user_relationships", "user_birthday", "user_location");
         ParseFacebookUtils.logIn(permissions, activity, callback);
     }
 }
