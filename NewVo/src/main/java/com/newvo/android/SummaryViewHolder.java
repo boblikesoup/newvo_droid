@@ -85,12 +85,23 @@ public class SummaryViewHolder {
             totalVotes = 1;
         }
 
-        int votes = votes1 * 100 / totalVotes;
-        firstVotes.percent.setText(votes + "%");
+        int percent1 = votes1 * 100 / totalVotes;
+        int percent2 = votes2 * 100 / totalVotes;
+
+        //Start with the one with the larger remainder.
+        boolean addToFirst = (votes1 * 100.0 / totalVotes) - percent1 >= (votes2 * 100.0 / totalVotes) - percent2;
+        while(percent1 + percent2 < 100){
+            if(addToFirst){
+                percent1++;
+            } else {
+                percent2++;
+            }
+            addToFirst = !addToFirst;
+        }
+        firstVotes.percent.setText(percent1 + "%");
         firstVotes.votes.setText(votes1 + "");
 
-        votes = votes2 * 100 / totalVotes;
-        secondVotes.percent.setText(votes + "%");
+        secondVotes.percent.setText(percent2 + "%");
         secondVotes.votes.setText(votes2 + "");
 
         int numberOfSuggestions1 = item.getNumberOfSuggestions();
