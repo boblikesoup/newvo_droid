@@ -164,39 +164,24 @@ public class SummaryViewHolder {
 
 
     private void checkAndSetActive(final Post post, final MenuItem menuItem, final SaveCallback saveCallback){
-        if(menuItem.getTitle().equals("Set Inactive")){
-            SaveCallback saveCallback2 = new SaveCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if(e == null){
-                        menuItem.setTitle("Set Active");
-                        ToastUtils.makeText(context, context.getString(R.string.set_inactive), Toast.LENGTH_LONG).show();
-                    } else {
-                        ToastUtils.makeText(context, context.getString(R.string.could_not_set_inactive), Toast.LENGTH_LONG).show();
-                    }
-                    if(saveCallback != null) {
-                        saveCallback.done(e);
-                    }
+        final String primary = menuItem.getTitle().toString().contains("Inactive") ? "Inactive" : "Active";
+        final String secondary = primary.equals("Active") ? "Inactive" : "Active";
+
+        SaveCallback saveCallback2 = new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e == null){
+                    menuItem.setTitle("Set " + secondary);
+                    ToastUtils.makeText(context, "Set " + primary + " Successfully!", Toast.LENGTH_LONG).show();
+                } else {
+                    ToastUtils.makeText(context, "Could Not Be Set " + primary, Toast.LENGTH_LONG).show();
                 }
-            };
-            new SetPostActiveRequest(post, Post.INACTIVE).request(saveCallback2);
-        } else if(menuItem.getTitle().equals("Set Active")){
-            SaveCallback saveCallback2 = new SaveCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if(e == null){
-                        menuItem.setTitle("Set Inactive");
-                        ToastUtils.makeText(context, context.getString(R.string.set_active), Toast.LENGTH_LONG).show();
-                    } else {
-                        ToastUtils.makeText(context, context.getString(R.string.could_not_set_active), Toast.LENGTH_LONG).show();
-                    }
-                    if(saveCallback != null) {
-                        saveCallback.done(e);
-                    }
+                if(saveCallback != null) {
+                    saveCallback.done(e);
                 }
-            };
-            new SetPostActiveRequest(post, Post.ACTIVE).request(saveCallback2);
-        }
+            }
+        };
+        new SetPostActiveRequest(post, primary.toLowerCase()).request(saveCallback2);
     }
 
 
