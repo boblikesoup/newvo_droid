@@ -89,7 +89,7 @@ public class CreatePostFragment extends Fragment {
                     public void done(ParseException e) {
                         if(e == null) {
                             ToastUtils.makeText(activity, activity.getString(R.string.post_created), Toast.LENGTH_LONG, DP_OFFSET).show();
-                            ((DrawerActivity) activity).restartFragment();
+                            ((NewVoActivity) activity).restartFragment();
                         } else {
                             ToastUtils.makeText(activity, activity.getString(R.string.could_not_create_post), Toast.LENGTH_LONG, DP_OFFSET).show();
                             progressBar.setVisibility(View.GONE);

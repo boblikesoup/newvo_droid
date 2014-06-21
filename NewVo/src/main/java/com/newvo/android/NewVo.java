@@ -3,7 +3,7 @@ package com.newvo.android;
 import android.os.Bundle;
 
 
-public class NewVo extends DrawerActivity {
+public class NewVo extends NewVoActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

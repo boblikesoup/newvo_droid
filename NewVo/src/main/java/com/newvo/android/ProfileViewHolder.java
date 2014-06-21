@@ -103,7 +103,7 @@ public class ProfileViewHolder {
             public void editPost(Post post) {
                 changeLists(post);
                 if (context != null) {
-                    ((DrawerActivity) context).attachDetachFragment();
+                    ((NewVoActivity) context).attachDetachFragment();
                 }
             }
         });

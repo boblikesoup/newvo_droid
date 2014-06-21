@@ -108,7 +108,7 @@ public class HomeFragment extends Fragment implements LoadingFragment {
                                 } else {
                                     Activity activity = getActivity();
                                     if (activity != null) {
-                                        ((DrawerActivity)getActivity()).attachDetachFragment();
+                                        ((NewVoActivity)getActivity()).attachDetachFragment();
                                     }
                                 }
                                 return;
@@ -123,7 +123,7 @@ public class HomeFragment extends Fragment implements LoadingFragment {
                         loadingPosts = false;
                         Activity activity = getActivity();
                         if (activity != null) {
-                            ((DrawerActivity)getActivity()).attachDetachFragment();
+                            ((NewVoActivity)getActivity()).attachDetachFragment();
                         }
                     }
                 } else {

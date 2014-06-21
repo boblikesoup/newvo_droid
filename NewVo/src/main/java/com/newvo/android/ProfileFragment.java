@@ -40,7 +40,7 @@ public class ProfileFragment extends Fragment implements LoadingFragment {
                     } else {
                         Activity activity = getActivity();
                         if (activity != null) {
-                            ((DrawerActivity)getActivity()).attachDetachFragment();
+                            ((NewVoActivity)getActivity()).attachDetachFragment();
                         }
                     }
                 } else {
@@ -67,7 +67,7 @@ public class ProfileFragment extends Fragment implements LoadingFragment {
                 @Override
                 public void onClick(View v) {
                     if (getActivity() != null) {
-                        ((DrawerActivity)getActivity()).displayView(getString(R.string.title_create_post));
+                        ((NewVoActivity)getActivity()).displayView(getString(R.string.title_create_post));
                     }
                 }
             });

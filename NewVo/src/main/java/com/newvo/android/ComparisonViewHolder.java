@@ -79,7 +79,7 @@ public class ComparisonViewHolder {
             firstImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((DrawerActivity) context).displayChildFragment(new ImageFragment(photo1), context.getString(R.string.title_home), "Image1");
+                    ((NewVoActivity) context).displayChildFragment(new ImageFragment(photo1), context.getString(R.string.title_home), "Image1");
                 }
             });
         }
@@ -89,7 +89,7 @@ public class ComparisonViewHolder {
             secondImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((DrawerActivity) context).displayChildFragment(new ImageFragment(photo2), context.getString(R.string.title_home), "Image2");
+                    ((NewVoActivity) context).displayChildFragment(new ImageFragment(photo2), context.getString(R.string.title_home), "Image2");
                 }
             });
             secondImageContainer.setVisibility(View.VISIBLE);
@@ -108,7 +108,7 @@ public class ComparisonViewHolder {
         mainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((DrawerActivity) context).displayChildFragment(new SuggestionsFragment(post), context.getString(R.string.title_suggestions), "AddSuggestion");
+                ((NewVoActivity) context).displayChildFragment(new SuggestionsFragment(post), context.getString(R.string.title_suggestions), "AddSuggestion");
             }
         });
 
@@ -145,7 +145,7 @@ public class ComparisonViewHolder {
 
             new Handler().postDelayed(new Runnable() {
                 public void run() {
-                    ((DrawerActivity) context).attachDetachFragment();
+                    ((NewVoActivity) context).attachDetachFragment();
                 }
             }, 2500);
 
