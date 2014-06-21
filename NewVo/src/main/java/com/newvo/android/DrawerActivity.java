@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import com.newvo.android.slidingmenu.NavigationDrawerListAdapter;
+import com.newvo.android.util.ChildFragment;
 import com.newvo.android.util.DrawerToggle;
 import com.newvo.android.util.LoadingFragment;
 
@@ -65,8 +66,14 @@ public class DrawerActivity extends Activity {
             displayView(navMenuTitles[0]);
             setTitle(navMenuTitles[0]);
         }
-
-        getFragmentManager().addOnBackStackChangedListener(drawerToggle);
+        FragmentManager.OnBackStackChangedListener backStackChangedListener = new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                Fragment activeFragment = getActiveFragment();
+                drawerToggle.setBackButton(activeFragment != null && activeFragment instanceof ChildFragment);
+            }
+        };
+        getFragmentManager().addOnBackStackChangedListener(backStackChangedListener);
 
     }
 

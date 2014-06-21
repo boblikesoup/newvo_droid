@@ -1,7 +1,7 @@
 package com.newvo.android;
 
-import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.res.TypedArray;
 import com.newvo.android.slidingmenu.NavigationDrawerItem;
 
@@ -13,17 +13,17 @@ import java.util.ArrayList;
 public class FragmentRetriever {
 
     private ArrayList<NavigationDrawerItem> navDrawerItems;
-    private Activity activity;
+    private Context context;
 
-    public FragmentRetriever(Activity activity){
-        this.activity = activity;
+    public FragmentRetriever(Context context){
+        this.context = context;
         navDrawerItems = new ArrayList<NavigationDrawerItem>();
 
         // load slide menu items
-        String[] navMenuTitles = activity.getResources().getStringArray(R.array.nav_drawer_items);
+        String[] navMenuTitles = this.context.getResources().getStringArray(R.array.nav_drawer_items);
 
         // nav drawer icons from resources
-        TypedArray navMenuIcons = activity.getResources()
+        TypedArray navMenuIcons = this.context.getResources()
                 .obtainTypedArray(R.array.nav_drawer_icons);
 
         // adding nav drawer items to array
@@ -53,7 +53,7 @@ public class FragmentRetriever {
         if(name == null){
             return false;
         } else {
-            return name.equals(activity.getString(resId));
+            return name.equals(context.getString(resId));
         }
 
     }

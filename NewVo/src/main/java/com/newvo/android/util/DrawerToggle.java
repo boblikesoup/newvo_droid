@@ -1,7 +1,6 @@
 package com.newvo.android.util;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -12,22 +11,21 @@ import android.view.View;
 import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
-import com.newvo.android.DrawerActivity;
 import com.newvo.android.R;
 
 /**
  * Created by David on 5/5/2014.
  */
-public class DrawerToggle implements View.OnClickListener, DrawerLayout.DrawerListener, FragmentManager.OnBackStackChangedListener {
+public class DrawerToggle implements View.OnClickListener, DrawerLayout.DrawerListener {
 
     private boolean back;
     private DrawerLayout layout;
-    private DrawerActivity activity;
+    private Activity activity;
 
     private static final float TRANSLATE_MIN = 0.0f;
     private static final float TRANSLATE_MAX = -32.0f;
 
-    public DrawerToggle(DrawerActivity activity, DrawerLayout layout) {
+    public DrawerToggle(Activity activity, DrawerLayout layout) {
         this.activity = activity;
         this.layout = layout;
         setBackButton(false);
@@ -109,10 +107,5 @@ public class DrawerToggle implements View.OnClickListener, DrawerLayout.DrawerLi
         ((ImageView) activity.getActionBar().getCustomView().findViewById(R.id.navigation_button)).setImageResource(resId);
     }
 
-    @Override
-    public void onBackStackChanged() {
-        Fragment activeFragment = activity.getActiveFragment();
-        setBackButton(activeFragment != null && activeFragment instanceof ChildFragment);
-    }
 
 }
