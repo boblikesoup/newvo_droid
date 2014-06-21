@@ -35,9 +35,8 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.OverScroller;
 import android.widget.Scroller;
-import com.parse.ParseImageView;
 
-public class ParseTouchImageView extends ParseImageView {
+public class ParseTouchImageView extends NewVoImageView {
 
     private static final String DEBUG = "DEBUG";
 

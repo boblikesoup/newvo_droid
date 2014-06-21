@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,7 +74,11 @@ public class SuggestionsFragment extends Fragment implements ChildFragment {
         summaryViewHolder.setItem(post, new DeleteCallback() {
             @Override
             public void done(ParseException e) {
-                getActivity().onBackPressed();
+                if (e == null) {
+                    getActivity().onBackPressed();
+                } else {
+                    Log.e("NewVo", "Failed to remove suggestion.");
+                }
             }
         }, null);
         caption.setText(post.getCaption());

@@ -22,8 +22,7 @@ public class ProfileFragment extends Fragment implements LoadingFragment {
 
     private ProfileViewHolder holder;
 
-    private List<Post> activePosts;
-    private List<Post> inactivePosts;
+    private Profile profile = new Profile();
 
     public static Post selectedPost;
 
@@ -32,52 +31,33 @@ public class ProfileFragment extends Fragment implements LoadingFragment {
         requestPosts(Post.INACTIVE);
     }
 
-    private void requestPosts(String active){
-        if(active.equals(Post.ACTIVE)){
-            new CurrentUserProfileRequest().request(Post.ACTIVE, new FindCallback<Post>() {
-                @Override
-                public void done(List<Post> posts, ParseException e) {
-                    if(e == null) {
-                        activePosts = posts;
-                        if(holder != null){
-                            holder.populateListView(Post.ACTIVE, posts);
-                        } else {
-                            Activity activity = getActivity();
-                            if (activity != null) {
-                                ((DrawerActivity)getActivity()).attachDetachFragment();
-                            }
-                        }
+    private void requestPosts(final String active){
+        new CurrentUserProfileRequest().request(active, new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                if(e == null) {
+                    profile.populateList(active, posts);
+                    if(holder != null){
+                        holder.populateListView(active, posts);
                     } else {
-                        requestPosts(Post.ACTIVE);
-                    }
-                }
-            });
-        } else {
-            new CurrentUserProfileRequest().request(Post.INACTIVE, new FindCallback<Post>() {
-                @Override
-                public void done(List<Post> posts, ParseException e) {
-                    if(e == null) {
-                        inactivePosts = posts;
-                        if(holder != null){
-                            holder.populateListView(Post.INACTIVE, posts);
-                        } else {
-                            Activity activity = getActivity();
-                            if (activity != null) {
-                                ((DrawerActivity)getActivity()).attachDetachFragment();
-                            }
+                        Activity activity = getActivity();
+                        if (activity != null) {
+                            ((DrawerActivity)getActivity()).attachDetachFragment();
                         }
-                    } else {
-                        requestPosts(Post.INACTIVE);
                     }
+                } else {
+                    requestPosts(active);
                 }
-            });
-        }
+            }
+        });
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView;
+        List<Post> activePosts = profile.activePosts;
+        List<Post> inactivePosts = profile.inactivePosts;
         if(activePosts == null || inactivePosts == null){
             rootView = inflater.inflate(R.layout.text, container, false);
         } else if(activePosts.size() == 0 && inactivePosts.size() == 0){
@@ -125,6 +105,6 @@ public class ProfileFragment extends Fragment implements LoadingFragment {
 
     @Override
     public boolean hasLoaded() {
-        return activePosts != null && inactivePosts != null;
+        return profile != null && profile.loaded();
     }
 }
