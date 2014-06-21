@@ -45,8 +45,19 @@ public class SummaryAdapter extends ArrayAdapter<Post> {
             }
         });
         holder.setSaveCallback(saveCallback);
-        holder.setOpenSuggestionsCallback(openSuggestionsCallback);
         holder.setItem(item);
+
+        if (item != null && item.getNumberOfSuggestions() != 0 && getContext() instanceof DrawerActivity) {
+            holder.suggestionsIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((DrawerActivity) getContext()).displayChildFragment(new SuggestionsFragment(item), getContext().getString(R.string.title_suggestions), "SuggestionsList");
+                    if(openSuggestionsCallback != null) {
+                        openSuggestionsCallback.editPost(item);
+                    }
+                }
+            });
+        }
 
         return convertView;
     }

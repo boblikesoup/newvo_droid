@@ -90,7 +90,6 @@ public class SuggestionsFragment extends Fragment implements ChildFragment {
         } else {
             addSuggestionLayout.setVisibility(View.GONE);
         }
-        summaryViewHolder.suggestionsIcon.setOnClickListener(null);
 
         postText.setOnClickListener(new View.OnClickListener() {
             @Override

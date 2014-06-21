@@ -45,7 +45,6 @@ public class SummaryViewHolder {
 
     private EditPostCallback saveCallback;
     private DeleteCallback deleteCallback;
-    private EditPostCallback openSuggestionsCallback;
 
     public SummaryViewHolder(Context context, View view) {
         this.context = context;
@@ -110,18 +109,6 @@ public class SummaryViewHolder {
 
         int numberOfSuggestions1 = item.getNumberOfSuggestions();
         numberOfSuggestions.setText(numberOfSuggestions1 + "");
-
-        if (numberOfSuggestions1 != 0 && context instanceof DrawerActivity) {
-            suggestionsIcon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ((DrawerActivity) context).displayChildFragment(new SuggestionsFragment(item), context.getString(R.string.title_suggestions), "SuggestionsList");
-                    if(openSuggestionsCallback != null) {
-                        openSuggestionsCallback.editPost(item);
-                    }
-                }
-            });
-        }
 
         final PopupMenu popupMenu = new PopupMenu(context, settingsIcon);
         boolean writeAccess = item.getACL().getWriteAccess(User.getCurrentUser());
@@ -204,14 +191,6 @@ public class SummaryViewHolder {
 
     public void setSaveCallback(EditPostCallback saveCallback) {
         this.saveCallback = saveCallback;
-    }
-
-    public EditPostCallback getOpenSuggestionsCallback() {
-        return openSuggestionsCallback;
-    }
-
-    public void setOpenSuggestionsCallback(EditPostCallback openSuggestionsCallback) {
-        this.openSuggestionsCallback = openSuggestionsCallback;
     }
 
     class SideViewHolder {
