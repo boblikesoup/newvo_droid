@@ -24,8 +24,6 @@ public class ProfileFragment extends Fragment implements LoadingFragment {
 
     private Profile profile = new Profile();
 
-    public static Post selectedPost;
-
     public ProfileFragment() {
         requestPosts(Post.ACTIVE);
         requestPosts(Post.INACTIVE);
@@ -77,18 +75,10 @@ public class ProfileFragment extends Fragment implements LoadingFragment {
             ((DrawerActivity)getActivity()).setActionBarLoading(false);
             rootView = inflater.inflate(R.layout.profile, container, false);
             if (holder == null) {
-                holder = new ProfileViewHolder(rootView, activePosts, inactivePosts);
+                holder = new ProfileViewHolder(rootView, profile);
             } else {
                 holder.setView(rootView);
             }
-
-            //When tabbing back, select the tab the post was on.
-            if (selectedPost != null) {
-                if (inactivePosts.contains(selectedPost)) {
-                    holder.setCurrentItem(1);
-                }
-            }
-            selectedPost = null;
 
             return rootView;
         }

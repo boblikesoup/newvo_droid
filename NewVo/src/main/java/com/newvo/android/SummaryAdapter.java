@@ -9,14 +9,14 @@ import android.widget.ArrayAdapter;
 import com.newvo.android.parse.Post;
 import com.parse.DeleteCallback;
 import com.parse.ParseException;
-import com.parse.SaveCallback;
 
 /**
  * Created by David on 4/20/2014.
  */
 public class SummaryAdapter extends ArrayAdapter<Post> {
 
-    private EditPostCallback editPostCallback;
+    private EditPostCallback saveCallback;
+    private EditPostCallback openSuggestionsCallback;
 
     public SummaryAdapter(Context context, int resource) {
         super(context, resource);
@@ -44,29 +44,26 @@ public class SummaryAdapter extends ArrayAdapter<Post> {
                 }
             }
         });
-        holder.setSaveCallback(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if(editPostCallback != null){
-                    editPostCallback.editPost(item);
-                }
-            }
-        });
+        holder.setSaveCallback(saveCallback);
+        holder.setOpenSuggestionsCallback(openSuggestionsCallback);
         holder.setItem(item);
 
         return convertView;
     }
 
-    public EditPostCallback getEditPostCallback() {
-        return editPostCallback;
+    public EditPostCallback getSaveCallback() {
+        return saveCallback;
     }
 
-    public void setEditPostCallback(EditPostCallback editPostCallback) {
-        this.editPostCallback = editPostCallback;
+    public void setSaveCallback(EditPostCallback saveCallback) {
+        this.saveCallback = saveCallback;
     }
 
-    public static abstract class EditPostCallback {
+    public EditPostCallback getOpenSuggestionsCallback() {
+        return openSuggestionsCallback;
+    }
 
-        public abstract void editPost(Post post);
+    public void setOpenSuggestionsCallback(EditPostCallback openSuggestionsCallback) {
+        this.openSuggestionsCallback = openSuggestionsCallback;
     }
 }

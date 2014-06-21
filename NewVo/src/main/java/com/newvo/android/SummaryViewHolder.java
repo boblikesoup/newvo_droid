@@ -43,8 +43,9 @@ public class SummaryViewHolder {
     @InjectView(R.id.suggestions_notifications)
     TextView suggestionsNotification;
 
-    private SaveCallback saveCallback;
+    private EditPostCallback saveCallback;
     private DeleteCallback deleteCallback;
+    private EditPostCallback openSuggestionsCallback;
 
     public SummaryViewHolder(Context context, View view) {
         this.context = context;
@@ -115,7 +116,9 @@ public class SummaryViewHolder {
                 @Override
                 public void onClick(View v) {
                     ((DrawerActivity) context).displayChildFragment(new SuggestionsFragment(item), context.getString(R.string.title_suggestions), "SuggestionsList");
-                    ProfileFragment.selectedPost = item;
+                    if(openSuggestionsCallback != null) {
+                        openSuggestionsCallback.editPost(item);
+                    }
                 }
             });
         }
@@ -180,7 +183,7 @@ public class SummaryViewHolder {
                     ToastUtils.makeText(context, "Could Not Be Set " + primary, Toast.LENGTH_LONG).show();
                 }
                 if(saveCallback != null) {
-                    saveCallback.done(e);
+                    saveCallback.editPost(post);
                 }
             }
         };
@@ -195,12 +198,20 @@ public class SummaryViewHolder {
         this.deleteCallback = deleteCallback;
     }
 
-    public SaveCallback getSaveCallback() {
+    public EditPostCallback getSaveCallback() {
         return saveCallback;
     }
 
-    public void setSaveCallback(SaveCallback saveCallback) {
+    public void setSaveCallback(EditPostCallback saveCallback) {
         this.saveCallback = saveCallback;
+    }
+
+    public EditPostCallback getOpenSuggestionsCallback() {
+        return openSuggestionsCallback;
+    }
+
+    public void setOpenSuggestionsCallback(EditPostCallback openSuggestionsCallback) {
+        this.openSuggestionsCallback = openSuggestionsCallback;
     }
 
     class SideViewHolder {

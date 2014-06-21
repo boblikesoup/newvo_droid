@@ -33,19 +33,22 @@ public class ProfileViewHolder {
     @InjectView(R.id.pager)
     ViewPager pager;
 
+    private final Profile profile;
+
     private SummaryAdapter activeAdapter;
     private SummaryAdapter inactiveAdapter;
 
     private Context context;
 
 
-    public ProfileViewHolder(View view, List<Post> activePosts, List<Post> inactivePosts) {
+    public ProfileViewHolder(View view, Profile profile) {
+        this.profile = profile;
         setView(view);
-        if (activePosts != null) {
-            populateListView(Post.ACTIVE, activePosts);
+        if (profile.activePosts != null) {
+            populateListView(Post.ACTIVE, profile.activePosts);
         }
-        if (inactivePosts != null) {
-            populateListView(Post.INACTIVE, inactivePosts);
+        if (profile.inactivePosts != null) {
+            populateListView(Post.INACTIVE, profile.inactivePosts);
         }
     }
 
@@ -74,6 +77,14 @@ public class ProfileViewHolder {
 
         tabs.setViewPager(pager);
 
+
+        //When tabbing back, select the tab the post was on.
+        if (profile.selectedPost != null) {
+            if (profile.inactivePosts.contains(profile.selectedPost)) {
+                setCurrentItem(1);
+            }
+        }
+        profile.selectedPost = null;
     }
 
 
@@ -87,12 +98,20 @@ public class ProfileViewHolder {
 
     private SummaryAdapter generateAdapter(final Context context) {
         final SummaryAdapter adapter = new SummaryAdapter(context, R.layout.summary);
-        adapter.setEditPostCallback(new SummaryAdapter.EditPostCallback() {
+        adapter.setSaveCallback(new EditPostCallback() {
             @Override
             public void editPost(Post post) {
                 changeLists(post);
-                if(context != null) {
+                if (context != null) {
                     ((DrawerActivity) context).attachDetachFragment();
+                }
+            }
+        });
+        adapter.setOpenSuggestionsCallback(new EditPostCallback() {
+            @Override
+            public void editPost(Post post) {
+                if(profile != null){
+                    profile.selectedPost = post;
                 }
             }
         });
