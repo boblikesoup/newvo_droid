@@ -43,6 +43,9 @@ public class SummaryViewHolder {
     @InjectView(R.id.suggestions_notifications)
     TextView suggestionsNotification;
 
+    private SaveCallback saveCallback;
+    private DeleteCallback deleteCallback;
+
     public SummaryViewHolder(Context context, View view) {
         this.context = context;
         ButterKnife.inject(this, view);
@@ -50,7 +53,7 @@ public class SummaryViewHolder {
         secondVotes = new SideViewHolder(secondVotesView);
     }
 
-    public void setItem(final Post item, final DeleteCallback deleteCallback, final SaveCallback saveCallback) {
+    public void setItem(final Post item) {
         final ParseFile photo1 = item.getPhoto1();
         if (photo1 != null) {
             firstImage.setParseFile(photo1);
@@ -145,7 +148,7 @@ public class SummaryViewHolder {
                             }
                         });
                     } else {
-                        checkAndSetActive(item, menuItem, saveCallback);
+                        checkAndSetActive(item, menuItem);
                     }
                     return false;
                 }
@@ -163,7 +166,7 @@ public class SummaryViewHolder {
     }
 
 
-    private void checkAndSetActive(final Post post, final MenuItem menuItem, final SaveCallback saveCallback){
+    private void checkAndSetActive(final Post post, final MenuItem menuItem){
         final String primary = menuItem.getTitle().toString().contains("Inactive") ? "Inactive" : "Active";
         final String secondary = primary.equals("Active") ? "Inactive" : "Active";
 
@@ -184,7 +187,21 @@ public class SummaryViewHolder {
         new SetPostActiveRequest(post, primary.toLowerCase()).request(saveCallback2);
     }
 
+    public DeleteCallback getDeleteCallback() {
+        return deleteCallback;
+    }
 
+    public void setDeleteCallback(DeleteCallback deleteCallback) {
+        this.deleteCallback = deleteCallback;
+    }
+
+    public SaveCallback getSaveCallback() {
+        return saveCallback;
+    }
+
+    public void setSaveCallback(SaveCallback saveCallback) {
+        this.saveCallback = saveCallback;
+    }
 
     class SideViewHolder {
 

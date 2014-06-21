@@ -86,7 +86,8 @@ public class ProfileViewHolder {
     }
 
     private SummaryAdapter generateAdapter(final Context context) {
-        final SummaryAdapter adapter = new SummaryAdapter(context, R.layout.summary, new SummaryAdapter.EditPostCallback() {
+        final SummaryAdapter adapter = new SummaryAdapter(context, R.layout.summary);
+        adapter.setEditPostCallback(new SummaryAdapter.EditPostCallback() {
             @Override
             public void editPost(Post post) {
                 changeLists(post);

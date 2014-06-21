@@ -16,11 +16,10 @@ import com.parse.SaveCallback;
  */
 public class SummaryAdapter extends ArrayAdapter<Post> {
 
-    private final EditPostCallback editPostCallback;
+    private EditPostCallback editPostCallback;
 
-    public SummaryAdapter(Context context, int resource, EditPostCallback editPostCallback) {
+    public SummaryAdapter(Context context, int resource) {
         super(context, resource);
-        this.editPostCallback = editPostCallback;
     }
 
     @Override
@@ -35,7 +34,7 @@ public class SummaryAdapter extends ArrayAdapter<Post> {
         }
 
         final Post item = getItem(position);
-        holder.setItem(item, new DeleteCallback() {
+        holder.setDeleteCallback(new DeleteCallback() {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
@@ -44,14 +43,26 @@ public class SummaryAdapter extends ArrayAdapter<Post> {
                     Log.e("NewVo", "Failed to remove suggestion.");
                 }
             }
-        }, new SaveCallback() {
+        });
+        holder.setSaveCallback(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                editPostCallback.editPost(item);
+                if(editPostCallback != null){
+                    editPostCallback.editPost(item);
+                }
             }
         });
+        holder.setItem(item);
 
         return convertView;
+    }
+
+    public EditPostCallback getEditPostCallback() {
+        return editPostCallback;
+    }
+
+    public void setEditPostCallback(EditPostCallback editPostCallback) {
+        this.editPostCallback = editPostCallback;
     }
 
     public static abstract class EditPostCallback {

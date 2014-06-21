@@ -71,7 +71,7 @@ public class SuggestionsFragment extends Fragment implements ChildFragment {
         suggestionsList.setAdapter(adapter);
 
         SummaryViewHolder summaryViewHolder = new SummaryViewHolder(getActivity(), summary);
-        summaryViewHolder.setItem(post, new DeleteCallback() {
+        summaryViewHolder.setDeleteCallback(new DeleteCallback() {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
@@ -80,7 +80,8 @@ public class SuggestionsFragment extends Fragment implements ChildFragment {
                     Log.e("NewVo", "Failed to remove suggestion.");
                 }
             }
-        }, null);
+        });
+        summaryViewHolder.setItem(post);
         caption.setText(post.getCaption());
 
         boolean writeAccess = post.getACL().getWriteAccess(User.getCurrentUser());
