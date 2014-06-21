@@ -67,9 +67,9 @@ public class ComparisonViewHolder {
 
         final ParseFile photo2 = item.getPhoto2();
         if (photo2 == null) {
-            secondChoice.setImageResource(R.drawable.x_button);
+            secondChoice.setImageResource(R.drawable.x);
         } else {
-            secondChoice.setImageResource(R.drawable.check_button);
+            secondChoice.setImageResource(R.drawable.check);
         }
 
         final ParseFile photo1 = item.getPhoto1();

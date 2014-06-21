@@ -182,7 +182,7 @@ public class CreatePostFragment extends Fragment {
         @Override
         public void setPhoto(Uri photo) {
             super.setPhoto(photo);
-            secondChoice.setImageResource(R.drawable.check_button);
+            secondChoice.setImageResource(R.drawable.check);
         }
 
         @Override
@@ -191,7 +191,7 @@ public class CreatePostFragment extends Fragment {
                 return;
             }
             super.deletePhoto();
-            secondChoice.setImageResource(R.drawable.x_button);
+            secondChoice.setImageResource(R.drawable.x);
         }
     }
 

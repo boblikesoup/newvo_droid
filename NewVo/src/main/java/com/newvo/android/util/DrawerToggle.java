@@ -56,9 +56,9 @@ public class DrawerToggle implements View.OnClickListener, DrawerLayout.DrawerLi
     public void setBackButton(boolean back) {
         this.back = back;
         if (back) {
-            setNavigationIcon(R.drawable.ic_action_previous_item);
+            setNavigationIcon(R.drawable.back_arrow);
         } else {
-            setNavigationIcon(R.drawable.ic_drawer);
+            setNavigationIcon(R.drawable.drawer);
         }
     }
 

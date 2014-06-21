@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:id="@+id/navigation_button"
         android:background="@null"
-        android:src="@drawable/ic_drawer"
+        android:src="@drawable/drawer"
         android:layout_gravity="center"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"

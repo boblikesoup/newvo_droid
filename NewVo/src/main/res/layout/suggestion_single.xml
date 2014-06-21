@@ -39,7 +39,7 @@
             android:baselineAlignBottom="false"
             android:contentDescription="@string/remove_comment"
             android:scaleType="centerInside"
-            android:src="@drawable/x_simple"/>
+            android:src="@drawable/image_x_simple"/>
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="70dp"

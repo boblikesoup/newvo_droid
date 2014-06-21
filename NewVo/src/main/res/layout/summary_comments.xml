@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/suggestions_icon"
-        android:src="@drawable/comments"
+        android:src="@drawable/messages"
         android:background="@null"
         android:layout_weight="1"
         android:contentDescription="@string/comments"
@@ -45,7 +45,7 @@
         android:layout_height="match_parent"
         android:id="@+id/settings_icon"
         android:background="@null"
-        android:src="@drawable/options"
+        android:src="@drawable/image_options"
         android:layout_weight="1"
         android:scaleType="centerInside"
         android:layout_margin="8dp"/>

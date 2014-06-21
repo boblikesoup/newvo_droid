@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:contentDescription="@string/desc_list_item_icon"
-        android:src="@drawable/ic_drawer"
+        android:src="@drawable/drawer"
         android:layout_centerVertical="true"
         android:scaleType="centerCrop"
         android:padding="7dp"/>
