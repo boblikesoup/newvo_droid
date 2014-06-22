@@ -2,6 +2,7 @@ package com.newvo.android;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import com.newvo.android.groups.GroupsFragment;
 
 
 public class NewVo extends NewVoActivity {
@@ -27,6 +28,8 @@ public class NewVo extends NewVoActivity {
             return new CreatePostFragment();
         } else if(compareToString(name,R.string.title_profile)){
             return new ProfileFragment();
+        } else if(compareToString(name,R.string.title_groups)){
+            return new GroupsFragment();
         } else if(compareToString(name,R.string.action_settings)){
             return new SettingsFragment();
         }

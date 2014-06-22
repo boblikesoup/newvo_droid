@@ -50,11 +50,13 @@
     <string name="could_not_delete_post">Could Not Delete Post</string>
     <string name="could_not_delete_suggestion">Could Not Delete Suggestion</string>
     <string name="could_not_create_post">Could Not Create Post</string>
+    <string name="title_groups">Groups</string>
 
     <string-array name="nav_drawer_items">
         <item >@string/title_home</item>
         <item >@string/title_create_post</item>
         <item >@string/title_profile</item>
+        <item>@string/title_groups</item>
         <item >@string/action_settings</item>
     </string-array>
 
@@ -62,6 +64,7 @@
         <item>@drawable/home</item>
         <item>@drawable/hanger</item>
         <item>@drawable/profile</item>
+        <item>@drawable/groups</item>
         <item>@drawable/settings</item>
     </array>
 
