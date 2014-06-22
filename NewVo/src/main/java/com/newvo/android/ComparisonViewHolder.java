@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.ButterKnife;
@@ -38,13 +37,15 @@ public class ComparisonViewHolder {
     @InjectView(R.id.second_choice)
     ImageButton secondChoice;
     @InjectView(R.id.first_image_container)
-    LinearLayout firstImageContainer;
+    View firstImageContainer;
     @InjectView(R.id.second_image_container)
-    LinearLayout secondImageContainer;
+    View secondImageContainer;
     @InjectView(R.id.buffer1)
-    LinearLayout buffer1;
+    View buffer1;
     @InjectView(R.id.buffer2)
-    LinearLayout buffer2;
+    View buffer2;
+    @InjectView(R.id.flag)
+    ImageButton flag;
 
     private Post post;
     private Context context;
