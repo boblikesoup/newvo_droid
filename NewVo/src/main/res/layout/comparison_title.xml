@@ -24,6 +24,7 @@
         android:layout_marginRight="6dp"
         android:layout_marginBottom="6dp"
         android:layout_alignParentStart="false"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"/>
 
 </RelativeLayout>

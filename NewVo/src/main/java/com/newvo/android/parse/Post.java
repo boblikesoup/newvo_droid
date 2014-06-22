@@ -42,6 +42,10 @@ public class Post extends ParseObject implements Comparable<Post> {
         put(USER_ID, user);
     }
 
+    public String getPostId() {
+        return  getString(POST_ID);
+    }
+
     public String getCaption() {
         return getString(CAPTION);
     }

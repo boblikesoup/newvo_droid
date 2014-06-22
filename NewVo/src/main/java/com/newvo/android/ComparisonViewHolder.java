@@ -1,7 +1,9 @@
 package com.newvo.android;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ImageButton;
@@ -12,11 +14,9 @@ import butterknife.InjectView;
 import com.newvo.android.parse.Post;
 import com.newvo.android.remote.VoteOnPostRequest;
 import com.newvo.android.util.ToastUtils;
-import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseImageView;
-import com.parse.SaveCallback;
+import com.parse.*;
 
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -113,6 +113,48 @@ public class ComparisonViewHolder {
             }
         });
 
+        flag.setVisibility(View.VISIBLE);
+        flag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                CharSequence[] values = new CharSequence[]{
+                        "Unclear voting procedure",
+                        "Unrelated to look/style",
+                        "Inappropriate"
+                };
+                builder.setCustomTitle(View.inflate(context, R.layout.flag_dialog, null))
+                        .setItems(values, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                HashMap<String, Object> params = new HashMap<String, Object>();
+                                params.put("postId", post.getObjectId());
+                                params.put("reason", which);
+                                params.put("flaggedID", post.getUser().getObjectId());
+                                ParseCloud.callFunctionInBackground("flagPost", params, new FunctionCallback<Object>() {
+                                    @Override
+                                    public void done(Object o, ParseException e) {
+                                        if(e != null){
+                                            ToastUtils.makeText(context, "Could Not Flag Post", Toast.LENGTH_SHORT, -1).show();
+                                        } else {
+                                            ToastUtils.makeText(context, "Flagged Post", Toast.LENGTH_SHORT, -1).show();
+                                            nextPost();
+                                        }
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        })
+                        .create().show();
+            }
+        });
+
         lastVotedPost = null;
     }
 
@@ -133,8 +175,7 @@ public class ComparisonViewHolder {
 
         @Override
         public void onClick(View v) {
-            lastVotedPost = post;
-            votedPosts.add(post);
+            nextPost();
             new VoteOnPostRequest(post, vote).request(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
@@ -143,12 +184,6 @@ public class ComparisonViewHolder {
                     }
                 }
             });
-
-            new Handler().postDelayed(new Runnable() {
-                public void run() {
-                    ((NewVoActivity) context).attachDetachFragment();
-                }
-            }, 2500);
 
             int votes1 = post.getVotes1();
             int votes2 = post.getVotes2();
@@ -160,6 +195,17 @@ public class ComparisonViewHolder {
                 ToastUtils.makeText(context, votes + "% agreed with you.", Toast.LENGTH_SHORT, -1).show();
             }
         }
+    }
+
+    private void nextPost(){
+        lastVotedPost = post;
+        votedPosts.add(post);
+
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                ((NewVoActivity) context).attachDetachFragment();
+            }
+        }, 2500);
     }
 
     public Set<Post> getVotedPosts() {
