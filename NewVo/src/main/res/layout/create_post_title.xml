@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/light_transparent_background"
-              android:orientation="vertical">
+              android:orientation="horizontal">
 
     <EditText
         android:id="@+id/caption"
@@ -15,6 +15,21 @@
         android:inputType="textMultiLine"
         android:hint="Caption..."
         android:textColorHint="@android:color/white"
-        android:textSize="26sp"/>
+        android:textSize="26sp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"/>
 
-</LinearLayout>
+    <ImageButton
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:id="@+id/microphone"
+        android:src="@drawable/microphone"
+        android:scaleType="fitCenter"
+        android:background="@null"
+        android:layout_gravity="center_vertical"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="4dp"/>
+
+</RelativeLayout>

@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.speech.RecognizerIntent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +23,9 @@ import com.parse.ParseException;
 import com.parse.SaveCallback;
 import com.soundcloud.android.crop.Crop;
 
-import static com.newvo.android.util.IntentUtils.IMAGE_CAPTURE;
-import static com.newvo.android.util.IntentUtils.IMAGE_PICK;
+import java.util.ArrayList;
+
+import static com.newvo.android.util.IntentUtils.*;
 
 /**
  * Created by David on 4/16/2014.
@@ -33,6 +35,8 @@ public class CreatePostFragment extends Fragment {
     public static final int DP_OFFSET = 40;
     @InjectView(R.id.caption)
     TextView caption;
+    @InjectView(R.id.microphone)
+    ImageButton microphone;
     @InjectView(R.id.main_button)
     ImageButton mainButton;
     @InjectView(R.id.first_choice)
@@ -65,6 +69,13 @@ public class CreatePostFragment extends Fragment {
 
         image1 = new FirstViewHolder(this, rootView.findViewById(R.id.image_container_1), 1);
         image2 = new SecondViewHolder(this, rootView.findViewById(R.id.image_container_2), 2);
+
+        microphone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentUtils.startMicrophoneIntent(CreatePostFragment.this);
+            }
+        });
 
         return rootView;
     }
@@ -135,6 +146,11 @@ public class CreatePostFragment extends Fragment {
 
                 IntentUtils.startImageCropIntent(this, uri.toString());
 
+            } else if(requestCode == MICROPHONE_INTENT){
+                ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                if(text.size() > 0) {
+                    caption.setText(text.get(0));
+                }
             }
 
         }
