@@ -1,6 +1,5 @@
 package com.newvo.android;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.content.res.TypedArray;
 import com.newvo.android.slidingmenu.NavigationDrawerItem;
@@ -13,17 +12,15 @@ import java.util.ArrayList;
 public class FragmentRetriever {
 
     private ArrayList<NavigationDrawerItem> navDrawerItems;
-    private Context context;
 
     public FragmentRetriever(Context context){
-        this.context = context;
         navDrawerItems = new ArrayList<NavigationDrawerItem>();
 
         // load slide menu items
-        String[] navMenuTitles = this.context.getResources().getStringArray(R.array.nav_drawer_items);
+        String[] navMenuTitles = context.getResources().getStringArray(R.array.nav_drawer_items);
 
         // nav drawer icons from resources
-        TypedArray navMenuIcons = this.context.getResources()
+        TypedArray navMenuIcons = context.getResources()
                 .obtainTypedArray(R.array.nav_drawer_icons);
 
         // adding nav drawer items to array
@@ -32,30 +29,6 @@ public class FragmentRetriever {
 
             navMenuIcons.recycle();
         }
-    }
-
-
-    public Fragment retrieveFragment(String name) {
-        if(compareToString(name,R.string.title_home)){
-            return new HomeFragment();
-        } else if(compareToString(name,R.string.title_create_post)){
-            return new CreatePostFragment();
-        } else if(compareToString(name,R.string.title_profile)){
-            return new ProfileFragment();
-        } else if(compareToString(name,R.string.action_settings)){
-            return new SettingsFragment();
-        }
-        //Default to home.
-        return new HomeFragment();
-    }
-
-    private boolean compareToString(String name, int resId){
-        if(name == null){
-            return false;
-        } else {
-            return name.equals(context.getString(resId));
-        }
-
     }
 
     public void add(NavigationDrawerItem navigationDrawerItem) {

@@ -13,7 +13,7 @@ import com.newvo.android.slidingmenu.NavigationDrawerListAdapter;
 /**
  * Created by David on 4/11/2014.
  */
-public class NewVoActivity extends DrawerActivity {
+public abstract class NewVoActivity extends DrawerActivity {
 
     // nav drawer title
     private FragmentRetriever fragmentRetriever;
@@ -56,7 +56,7 @@ public class NewVoActivity extends DrawerActivity {
 
     protected void displayView(String name, String tag) {
         // update the main content by replacing fragments
-        Fragment fragment = fragmentRetriever.retrieveFragment(name);
+        Fragment fragment = retrieveFragment(name);
 
         if (fragment != null) {
             displayFragment(fragment, name, tag, null);
@@ -120,7 +120,7 @@ public class NewVoActivity extends DrawerActivity {
 
     public void restartFragment(){
         String name = getTitle().toString();
-        Fragment fragment = fragmentRetriever.retrieveFragment(name);
+        Fragment fragment = retrieveFragment(name);
 
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.popBackStack();
@@ -129,6 +129,8 @@ public class NewVoActivity extends DrawerActivity {
                 .replace(R.id.frame_container, fragment, tag).setBreadCrumbTitle(name).addToBackStack(tag);
         transaction.commit();
     }
+
+    protected abstract Fragment retrieveFragment(String name);
 
 
     //endregion
