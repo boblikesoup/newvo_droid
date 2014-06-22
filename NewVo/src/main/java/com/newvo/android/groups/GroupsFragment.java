@@ -10,8 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import com.newvo.android.DrawerActivity;
-import com.newvo.android.R;
+import com.newvo.android.*;
 import com.newvo.android.parse.Group;
 import com.newvo.android.remote.UserGroupsRequest;
 import com.newvo.android.util.LoadingFragment;
@@ -26,7 +25,7 @@ import java.util.List;
 public class GroupsFragment extends Fragment implements LoadingFragment {
 
     @InjectView(R.id.new_group)
-    LinearLayout summary;
+    LinearLayout newGroup;
 
     @InjectView(R.id.groups_list)
     ListView suggestionsList;
@@ -62,7 +61,15 @@ public class GroupsFragment extends Fragment implements LoadingFragment {
 
         if(groups != null){
             ((ArrayAdapter) suggestionsList.getAdapter()).addAll(groups);
+            ((DrawerActivity) getActivity()).setActionBarLoading(false);
         }
+
+        newGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NewVoActivity) getActivity()).displayChildFragment(new CreateGroupFragment(), getActivity().getString(R.string.title_groups), "CreateGroup");
+            }
+        });
 
         return rootView;
     }

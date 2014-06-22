@@ -9,7 +9,9 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/new_group">
+        android:id="@+id/new_group"
+        android:layout_margin="2dp"
+        android:background="@color/light_semi_transparent">
 
         <ImageView
             android:layout_width="76dp"
