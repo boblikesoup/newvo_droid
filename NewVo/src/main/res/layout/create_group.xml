@@ -6,7 +6,7 @@
               android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/group_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/light_semi_transparent"
@@ -20,7 +20,7 @@
         android:paddingBottom="15dp"/>
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/group_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/light_semi_transparent"
@@ -38,12 +38,12 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/dark_transparent_background">
+        android:background="@null">
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/imageButton"
+            android:id="@+id/add_more_friends"
             android:background="@color/dark_transparent_background"
             android:textSize="26sp"
             android:textColorHint="@android:color/white"
@@ -57,7 +57,7 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:id="@+id/listView"
+            android:id="@+id/friends_to_add"
             android:layout_weight="10"/>
     </LinearLayout>
 
