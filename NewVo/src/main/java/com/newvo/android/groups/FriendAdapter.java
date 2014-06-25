@@ -13,12 +13,15 @@ import com.facebook.model.GraphUser;
 import com.newvo.android.R;
 import com.newvo.android.friends.FriendPickerActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by David on 6/25/2014.
  */
-public class FriendGroupAdapter extends ArrayAdapter<GraphUser> {
+public class FriendAdapter extends ArrayAdapter<GraphUser> {
 
-    public FriendGroupAdapter(Context context, int resource) {
+    public FriendAdapter(Context context, int resource) {
         super(context, resource);
     }
 
@@ -37,6 +40,14 @@ public class FriendGroupAdapter extends ArrayAdapter<GraphUser> {
         holder.setItem(item);
 
         return convertView;
+    }
+
+    public List<GraphUser> getFriends() {
+        List<GraphUser> friends = new ArrayList<GraphUser>();
+        for(int i = 0; i < getCount(); i++){
+            friends.add(getItem(i));
+        }
+        return friends;
     }
 
     class ViewHolder {

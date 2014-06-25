@@ -37,14 +37,14 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@null">
+        android:layout_height="0dp"
+        android:background="@null"
+        android:layout_weight="1">
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/add_more_friends"
-            android:background="@color/dark_transparent_background"
             android:textSize="26sp"
             android:textColorHint="@android:color/white"
             android:hint="Add More Friends"
@@ -52,7 +52,8 @@
             android:paddingBottom="15dp"
             android:layout_marginRight="50dp"
             android:layout_marginLeft="50dp"
-            android:layout_marginBottom="4dp"/>
+            android:layout_marginBottom="4dp"
+            android:background="@null"/>
 
         <ListView
             android:layout_width="match_parent"
@@ -60,5 +61,16 @@
             android:id="@+id/friends_to_add"
             android:layout_weight="10"/>
     </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/create_group"
+        android:textSize="26sp"
+        android:textColorHint="@android:color/white"
+        android:hint="Create Group"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:background="@null"/>
 
 </LinearLayout>

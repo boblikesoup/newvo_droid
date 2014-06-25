@@ -18,8 +18,9 @@ public class UserGroupsRequest {
         User user = User.getCurrentUser();
 
         query = ParseQuery.getQuery(Group.class);
-        String userId = user.getUserId();
-        query.whereContainedIn(Group.MEMBER_IDS, Arrays.asList(userId));
+        String userId = user.getFacebookId();
+        query.whereContainsAll(Group.MEMBER_IDS, Arrays.asList(userId));
+        query.orderByDescending(Group.CREATED_AT);
     }
 
     public void request(FindCallback<Group> callback){

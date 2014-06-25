@@ -17,6 +17,8 @@ public class User extends ParseUser {
     public static final String GENDER = "gender";
     public static final String PUBLIC_NAME = "public_name";
 
+    public static final String FACEBOOK_ID = "facebook_id";
+
     public String getUserId(){
         return getObjectId();
     }
@@ -46,4 +48,7 @@ public class User extends ParseUser {
         return (User) ParseUser.getCurrentUser();
     }
 
+    public String getFacebookId() {
+        return getString(FACEBOOK_ID);
+    }
 }

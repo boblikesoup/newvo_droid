@@ -1,5 +1,6 @@
 package com.newvo.android.groups;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,7 +31,7 @@ public class GroupsFragment extends Fragment implements LoadingFragment {
     LinearLayout newGroup;
 
     @InjectView(R.id.groups_list)
-    ListView suggestionsList;
+    ListView groupsList;
 
     List<Group> groups;
 
@@ -42,12 +43,15 @@ public class GroupsFragment extends Fragment implements LoadingFragment {
         new UserGroupsRequest().request(new FindCallback<Group>() {
             @Override
             public void done(List<Group> groups, ParseException e) {
-                if(e != null) {
+                if(e == null) {
                     GroupsFragment.this.groups = groups;
-                    if (groups != null && groups.size() > 0 && suggestionsList != null && suggestionsList.getAdapter() != null && suggestionsList.getAdapter() instanceof ArrayAdapter) {
-                        ((ArrayAdapter) suggestionsList.getAdapter()).addAll(groups);
+                    if (groups != null && groups.size() > 0 && groupsList != null && groupsList.getAdapter() != null && groupsList.getAdapter() instanceof ArrayAdapter) {
+                        ((ArrayAdapter) groupsList.getAdapter()).addAll(groups);
                     }
-                    ((DrawerActivity) getActivity()).setActionBarLoading(false);
+                    Activity activity = getActivity();
+                    if(activity != null) {
+                        ((DrawerActivity) activity).setActionBarLoading(false);
+                    }
                 } else {
                     requestGroups();
                 }
@@ -56,13 +60,20 @@ public class GroupsFragment extends Fragment implements LoadingFragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.groups, container, false);
         ButterKnife.inject(this, rootView);
 
+        groupsList.setAdapter(new GroupAdapter(getActivity(), R.layout.text));
+
         if(groups != null){
-            ((ArrayAdapter) suggestionsList.getAdapter()).addAll(groups);
+            ((ArrayAdapter) groupsList.getAdapter()).addAll(groups);
             ((DrawerActivity) getActivity()).setActionBarLoading(false);
         }
 

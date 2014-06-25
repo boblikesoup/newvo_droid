@@ -11,6 +11,7 @@ public class ParseReference {
 
     public static void initialize() {
         ParseUser.registerSubclass(User.class);
+        ParseUser.registerSubclass(Group.class);
         ParseObject.registerSubclass(Post.class);
         ParseObject.registerSubclass(Suggestion.class);
         ParseObject.registerSubclass(Vote.class);
