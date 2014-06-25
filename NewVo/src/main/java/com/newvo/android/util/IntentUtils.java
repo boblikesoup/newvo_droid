@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.speech.RecognizerIntent;
 import android.util.Log;
+import com.newvo.android.friends.FriendPickerActivity;
 import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
@@ -23,6 +24,7 @@ public class IntentUtils {
     public static final int IMAGE_CAPTURE = 2;
     public static final int IMAGE_PICK = 4;
     public static final int MICROPHONE_INTENT = 25;
+    public static final int FRIEND_PICKER = 1500;
 
     public static Uri photoFile;
 
@@ -104,6 +106,12 @@ public class IntentUtils {
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         //... put other settings in the Intent
         fragment.startActivityForResult(intent, MICROPHONE_INTENT);
+    }
+
+    public static void startFriendPickerIntent(Fragment fragment) {
+        Intent intent = new Intent(fragment.getActivity(), FriendPickerActivity.class);
+        //... put other settings in the Intent
+        fragment.startActivityForResult(intent, 1500);
     }
 
     public static boolean loadingEitherIntent(){

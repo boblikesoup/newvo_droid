@@ -11,9 +11,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import com.facebook.model.GraphUser;
 import com.newvo.android.R;
 import com.newvo.android.friends.FriendPickerActivity;
 import com.newvo.android.util.ChildFragment;
+import com.newvo.android.util.IntentUtils;
+
+import java.util.List;
 
 /**
  * Created by David on 6/22/2014.
@@ -39,15 +43,26 @@ public class CreateGroupFragment extends Fragment implements ChildFragment {
         final View rootView = inflater.inflate(R.layout.create_group, container, false);
         ButterKnife.inject(this, rootView);
 
+        friendsToAdd.setAdapter(new FriendGroupAdapter(getActivity(), R.layout.suggestion_single));
+
         addMoreFriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), FriendPickerActivity.class);
-                //... put other settings in the Intent
-                CreateGroupFragment.this.startActivityForResult(intent, 1500);
+                IntentUtils.startFriendPickerIntent(CreateGroupFragment.this);
             }
         });
 
         return rootView;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == IntentUtils.FRIEND_PICKER){
+            List<GraphUser> selection = FriendPickerActivity.SELECTION;
+            if(selection != null){
+                ((FriendGroupAdapter)friendsToAdd.getAdapter()).addAll(selection);
+            }
+        }
     }
 }

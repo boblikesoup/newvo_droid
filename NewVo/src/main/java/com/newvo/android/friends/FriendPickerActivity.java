@@ -6,14 +6,20 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.widget.Toast;
 import com.facebook.FacebookException;
+import com.facebook.model.GraphUser;
 import com.facebook.widget.FriendPickerFragment;
 import com.facebook.widget.PickerFragment;
 import com.newvo.android.R;
+
+import java.util.List;
 
 /**
  * Created by David on 6/24/2014.
  */
 public class FriendPickerActivity extends FragmentActivity {
+
+    public static List<GraphUser> SELECTION;
+
     FriendPickerFragment friendPickerFragment;
 
     // A helper to simplify life for callers who want to populate a Bundle with the necessary
@@ -58,7 +64,7 @@ public class FriendPickerActivity extends FragmentActivity {
             @Override
             public void onDoneButtonClicked(PickerFragment<?> fragment) {
                 Intent resultData = new Intent();
-                //TODO: Return values for identifying selected friends. friendPickerFragment.getSelection()
+                SELECTION = friendPickerFragment.getSelection();
                 finish();
             }
         });
@@ -76,4 +82,5 @@ public class FriendPickerActivity extends FragmentActivity {
         friendPickerFragment.loadData(false);
 
     }
+
 }
