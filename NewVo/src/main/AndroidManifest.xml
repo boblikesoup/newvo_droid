@@ -30,7 +30,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.newvo.android.friends.FriendPickerActivity"/>
+            android:name="com.newvo.android.friends.FriendPickerActivity"
+            android:theme="@android:style/Theme.NoTitleBar"/>
         <activity
             android:name="com.newvo.android.NewVo"
             android:screenOrientation="portrait"

@@ -23,8 +23,8 @@ public class FriendPickerActivity extends FragmentActivity {
     FriendPickerFragment friendPickerFragment;
 
     // A helper to simplify life for callers who want to populate a Bundle with the necessary
-// parameters. A more sophisticated Activity might define its own set of parameters; our needs
-// are simple, so we just populate what we want to pass to the FriendPickerFragment.
+    // parameters. A more sophisticated Activity might define its own set of parameters; our needs
+    // are simple, so we just populate what we want to pass to the FriendPickerFragment.
     public static void populateParameters(Intent intent, String userId, boolean multiSelect, boolean showTitleBar) {
         intent.putExtra(FriendPickerFragment.USER_ID_BUNDLE_KEY, userId);
         intent.putExtra(FriendPickerFragment.MULTI_SELECT_BUNDLE_KEY, multiSelect);
@@ -68,6 +68,10 @@ public class FriendPickerActivity extends FragmentActivity {
                 finish();
             }
         });
+
+        if(SELECTION != null && SELECTION.size() > 0){
+            friendPickerFragment.setSelection(SELECTION);
+        }
     }
 
     private void onError(Exception error) {

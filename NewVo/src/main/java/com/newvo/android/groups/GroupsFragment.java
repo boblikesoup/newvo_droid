@@ -70,7 +70,7 @@ public class GroupsFragment extends Fragment implements LoadingFragment {
         final View rootView = inflater.inflate(R.layout.groups, container, false);
         ButterKnife.inject(this, rootView);
 
-        groupsList.setAdapter(new GroupAdapter(getActivity(), R.layout.text));
+        groupsList.setAdapter(new GroupAdapter(getActivity(), R.layout.group_item));
 
         if(groups != null){
             ((ArrayAdapter) groupsList.getAdapter()).addAll(groups);

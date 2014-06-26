@@ -27,7 +27,7 @@ public class GroupAdapter extends ArrayAdapter<Group> {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.text, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.group_item, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {

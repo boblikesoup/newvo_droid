@@ -18,8 +18,11 @@ public class Group extends ParseObject {
     public static final String MEMBER_IDS = "member_ids";
     public static final String PUSH_IDS = "push_ids";
     public static final String STATUS = "status";
+    public static final String USER_ID = "user_id";
 
     public static final String CREATED_AT = "createdAt";
+    public static final String DELETED = "Deleted";
+    public static final String UNDELETED = "Undeleted";
 
     public String getTitle() {
         return getString(TITLE);
@@ -61,5 +64,32 @@ public class Group extends ParseObject {
         }
         ids.add(User.getCurrentUser().getFacebookId());
         put(MEMBER_IDS, ids);
+    }
+
+    public User getUserId(){
+        return (User) getParseUser(USER_ID);
+    }
+
+    public void setUserId(User user){
+        put(USER_ID, user);
+    }
+
+    public String getStatus(){
+        int deleted = getInt(STATUS);
+        if(deleted == 0){
+            return DELETED;
+        } else if(deleted == 1) {
+            return UNDELETED;
+        } else {
+            return null;
+        }
+    }
+
+    public void setStatus(String deleted){
+        if(deleted.equals(DELETED)){
+            put(STATUS, 0);
+        } else if(deleted.equals(UNDELETED)){
+            put(STATUS, 1);
+        }
     }
 }

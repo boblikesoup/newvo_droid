@@ -113,6 +113,7 @@ public class CreateGroupFragment extends Fragment implements ChildFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == IntentUtils.FRIEND_PICKER){
             List<GraphUser> selection = FriendPickerActivity.SELECTION;
+            friendsToAdd.setAdapter(new FriendAdapter(getActivity(), R.layout.suggestion_single));
             if(selection != null){
                 ((FriendAdapter)friendsToAdd.getAdapter()).addAll(selection);
             }

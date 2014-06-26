@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/new_group"
         android:layout_margin="2dp"
-        android:background="@null">
+        android:background="@color/light_transparent_background">
 
         <ImageView
             android:layout_width="76dp"
@@ -28,7 +28,8 @@
             android:id="@+id/new_group_text"
             android:layout_gravity="center_vertical"
             android:textSize="32sp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:textColor="@android:color/white"/>
     </LinearLayout>
 
     <ListView

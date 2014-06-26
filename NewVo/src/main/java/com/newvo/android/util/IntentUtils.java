@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.speech.RecognizerIntent;
 import android.util.Log;
+import com.facebook.widget.FriendPickerFragment;
 import com.newvo.android.friends.FriendPickerActivity;
 import com.soundcloud.android.crop.Crop;
 
@@ -110,6 +111,8 @@ public class IntentUtils {
 
     public static void startFriendPickerIntent(Fragment fragment) {
         Intent intent = new Intent(fragment.getActivity(), FriendPickerActivity.class);
+        intent.putExtra(FriendPickerFragment.MULTI_SELECT_BUNDLE_KEY, true);
+        intent.putExtra(FriendPickerFragment.SHOW_TITLE_BAR_BUNDLE_KEY, true);
         //... put other settings in the Intent
         fragment.startActivityForResult(intent, 1500);
     }

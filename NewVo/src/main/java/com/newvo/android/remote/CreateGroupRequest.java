@@ -29,6 +29,8 @@ public class CreateGroupRequest {
         group.setTitle(title);
         group.setDescription(description);
         group.setMemberIds(users);
+        group.setUserId(User.getCurrentUser());
+        group.setStatus(Group.UNDELETED);
 
     }
 

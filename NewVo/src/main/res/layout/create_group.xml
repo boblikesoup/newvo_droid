@@ -9,7 +9,7 @@
         android:id="@+id/group_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/light_semi_transparent"
+        android:background="@color/light_transparent_background"
         android:gravity="center"
         android:hint="Group Name"
         android:textColorHint="@android:color/white"
@@ -23,7 +23,7 @@
         android:id="@+id/group_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/light_semi_transparent"
+        android:background="@color/light_transparent_background"
         android:gravity="center"
         android:inputType="textMultiLine"
         android:hint="Group Description"
@@ -53,7 +53,7 @@
             android:layout_marginRight="50dp"
             android:layout_marginLeft="50dp"
             android:layout_marginBottom="4dp"
-            android:background="@null"/>
+            android:background="@color/light_transparent_background"/>
 
         <ListView
             android:layout_width="match_parent"
@@ -71,6 +71,9 @@
         android:hint="Create Group"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
-        android:background="@null"/>
+        android:background="@color/light_transparent_background"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="4dp"/>
 
 </LinearLayout>
