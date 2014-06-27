@@ -16,6 +16,7 @@ import com.newvo.android.parse.Group;
 import com.newvo.android.parse.Post;
 import com.newvo.android.parse.User;
 import com.newvo.android.remote.GroupProfileRequest;
+import com.newvo.android.util.ChildFragment;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 
@@ -24,7 +25,7 @@ import java.util.List;
 /**
  * Created by David on 6/26/2014.
  */
-public class GroupFragment extends Fragment {
+public class GroupFragment extends Fragment implements ChildFragment {
 
     @InjectView(R.id.group_name)
     TextView groupName;
