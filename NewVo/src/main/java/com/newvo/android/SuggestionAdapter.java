@@ -43,9 +43,9 @@ public class SuggestionAdapter extends ArrayAdapter<Suggestion> {
     }
 
     class ViewHolder {
-        @InjectView(R.id.suggestion_text)
+        @InjectView(R.id.text)
         TextView suggestionText;
-        @InjectView(R.id.suggestion_x)
+        @InjectView(R.id.x)
         ImageButton suggestionX;
         @InjectView(R.id.in_progress)
         ProgressBar inProgressBar;

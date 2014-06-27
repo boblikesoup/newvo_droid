@@ -15,6 +15,13 @@ public class ParseUsersFromFacebookUsersRequest {
 
     private ParseQuery<User> query;
 
+
+    public ParseUsersFromFacebookUsersRequest(List<String> ids, boolean isId) {
+
+        query = ParseQuery.getQuery(User.class);
+        query.whereContainedIn(User.FACEBOOK_ID, ids);
+    }
+
     public ParseUsersFromFacebookUsersRequest(List<GraphUser> users) {
 
         query = ParseQuery.getQuery(User.class);

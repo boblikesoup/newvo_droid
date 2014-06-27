@@ -12,20 +12,23 @@ import java.util.List;
 /**
  * Created by David on 6/25/2014.
  */
-public class CreateGroupRequest {
+public class EditGroupRequest {
 
     private final List<GraphUser> users;
     private Group group;
 
     private SaveCallback saveCallback;
 
-    public CreateGroupRequest(String title, String description, List<GraphUser> users) throws MissingTitleError {
+    public EditGroupRequest(Group group, String title, String description, List<GraphUser> users) throws MissingTitleError {
         if(title == null || title.isEmpty()){
             throw new MissingTitleError();
         }
         this.users = users;
 
-        group = new Group();
+        if(group == null) {
+            group = new Group();
+        }
+        this.group = group;
         group.setTitle(title);
         group.setDescription(description);
         group.setMemberIds(users);

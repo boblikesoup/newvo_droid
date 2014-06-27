@@ -4,6 +4,9 @@ import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by David on 4/26/2014.
  */
@@ -26,6 +29,7 @@ public class Post extends ParseObject implements Comparable<Post> {
     public static final String VOTED_ON_ARRAY = "voted_on_array";
 
     public static final String GROUP_ID = "group_id";
+    public static final String USER_TAG = "user_tags";
 
     //status strings
     public static final String ACTIVE = "active";
@@ -150,6 +154,30 @@ public class Post extends ParseObject implements Comparable<Post> {
         if (viewableByInt > -1) {
             put(VIEWABLE_BY, viewableByInt);
         }
+    }
+
+    public List<String> getGroupIds(){
+        return (List<String>) get(GROUP_ID);
+    }
+
+    public void setGroupIds(List<Group> groups) {
+        List<String> ids = new ArrayList<String>();
+        for(Group group : groups){
+            ids.add(group.getObjectId());
+        }
+        put(GROUP_ID, ids);
+    }
+
+    public List<String> getUserTags(){
+        return (List<String>) get(USER_TAG);
+    }
+
+    public void setUserTags(List<User> users) {
+        List<String> ids = new ArrayList<String>();
+        for(User user : users){
+            ids.add(user.getObjectId());
+        }
+        put(USER_TAG, ids);
     }
 
     @Override

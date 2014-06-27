@@ -20,6 +20,7 @@ import com.newvo.android.util.ImageFileUtils;
 import com.newvo.android.util.IntentUtils;
 import com.newvo.android.util.ToastUtils;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.SaveCallback;
 import com.soundcloud.android.crop.Crop;
 
@@ -49,14 +50,14 @@ public class CreatePostFragment extends Fragment {
     LinearLayout buffer2;
 
     @InjectView(R.id.progress_bar)
-    ProgressBar progressBar;
+    protected ProgressBar progressBar;
 
     ViewHolder image1;
     ViewHolder image2;
 
     private int imageNumber = -1;
 
-    private boolean posted;
+    protected boolean posted;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,7 +83,7 @@ public class CreatePostFragment extends Fragment {
 
     @OnClick(R.id.main_button)
     public void createPost() {
-        if(posted){
+        if (posted) {
             return;
         }
         CharSequence text = caption.getText();
@@ -95,19 +96,7 @@ public class CreatePostFragment extends Fragment {
         final Activity activity = getActivity();
         if (activity != null) {
             try {
-                new CreatePostRequest(activity, caption, image1.getParseFile(), image2.getParseFile()).request(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if(e == null) {
-                            ToastUtils.makeText(activity, activity.getString(R.string.post_created), Toast.LENGTH_LONG, DP_OFFSET).show();
-                            ((NewVoActivity) activity).restartFragment();
-                        } else {
-                            ToastUtils.makeText(activity, activity.getString(R.string.could_not_create_post), Toast.LENGTH_LONG, DP_OFFSET).show();
-                            progressBar.setVisibility(View.GONE);
-                            posted = false;
-                        }
-                    }
-                });
+                createPostRequest(activity, caption, image1.getParseFile(), image2.getParseFile());
                 progressBar.setVisibility(View.VISIBLE);
                 posted = true;
 
@@ -117,6 +106,22 @@ public class CreatePostFragment extends Fragment {
                 ToastUtils.makeText(activity, activity.getString(R.string.needs_image), Toast.LENGTH_LONG, DP_OFFSET).show();
             }
         }
+    }
+
+    protected void createPostRequest(final Activity activity, String caption, ParseFile parseFile1, ParseFile parseFile2) {
+        new CreatePostRequest(activity, caption, parseFile1, parseFile2).request(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    ToastUtils.makeText(activity, activity.getString(R.string.post_created), Toast.LENGTH_LONG, DP_OFFSET).show();
+                    ((NewVoActivity) activity).restartFragment();
+                } else {
+                    ToastUtils.makeText(activity, activity.getString(R.string.could_not_create_post), Toast.LENGTH_LONG, DP_OFFSET).show();
+                    progressBar.setVisibility(View.GONE);
+                    posted = false;
+                }
+            }
+        });
     }
 
     @Override
@@ -146,9 +151,9 @@ public class CreatePostFragment extends Fragment {
 
                 IntentUtils.startImageCropIntent(this, uri.toString());
 
-            } else if(requestCode == MICROPHONE_INTENT){
+            } else if (requestCode == MICROPHONE_INTENT) {
                 ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                if(text.size() > 0) {
+                if (text.size() > 0) {
                     caption.setText(text.get(0));
                 }
             }
@@ -187,7 +192,7 @@ public class CreatePostFragment extends Fragment {
             this.swapButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(IntentUtils.loadingEitherIntent()){
+                    if (IntentUtils.loadingEitherIntent()) {
                         return;
                     }
                     swapPhoto(image1);
@@ -203,7 +208,7 @@ public class CreatePostFragment extends Fragment {
 
         @Override
         public void deletePhoto() {
-            if(IntentUtils.loadingEitherIntent()){
+            if (IntentUtils.loadingEitherIntent()) {
                 return;
             }
             super.deletePhoto();
@@ -225,11 +230,11 @@ public class CreatePostFragment extends Fragment {
 
         @Override
         public void deletePhoto() {
-            if(IntentUtils.loadingEitherIntent()){
+            if (IntentUtils.loadingEitherIntent()) {
                 return;
             }
             super.deletePhoto();
-            if(image2.getParseFile() != null){
+            if (image2.getParseFile() != null) {
                 swapPhoto(image2);
             } else {
                 removeSecondOption();

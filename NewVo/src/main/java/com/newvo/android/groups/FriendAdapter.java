@@ -21,15 +21,20 @@ import java.util.List;
  */
 public class FriendAdapter extends ArrayAdapter<GraphUser> {
 
-    public FriendAdapter(Context context, int resource) {
+    private final int resource;
+    private final boolean writeAccess;
+
+    public FriendAdapter(Context context, int resource, boolean writeAccess) {
         super(context, resource);
+        this.resource = resource;
+        this.writeAccess = writeAccess;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.suggestion_single, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(resource, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
@@ -52,10 +57,10 @@ public class FriendAdapter extends ArrayAdapter<GraphUser> {
 
     class ViewHolder {
 
-        @InjectView(R.id.suggestion_text)
-        TextView suggestionText;
-        @InjectView(R.id.suggestion_x)
-        ImageButton suggestionX;
+        @InjectView(R.id.text)
+        TextView text;
+        @InjectView(R.id.x)
+        ImageButton x;
 
         public ViewHolder(View view) {
             ButterKnife.inject(this, view);
@@ -63,14 +68,18 @@ public class FriendAdapter extends ArrayAdapter<GraphUser> {
 
 
         public void setItem(final GraphUser item) {
-            suggestionText.setText(item.getName());
-            suggestionX.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    FriendPickerActivity.SELECTION.remove(item);
-                    remove(item);
-                }
-            });
+            text.setText(item.getName());
+            if(writeAccess) {
+                x.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        FriendPickerActivity.SELECTION.remove(item);
+                        remove(item);
+                    }
+                });
+            } else {
+                x.setVisibility(View.GONE);
+            }
         }
     }
 }

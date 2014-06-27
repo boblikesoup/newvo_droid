@@ -1,10 +1,13 @@
 package com.newvo.android.remote;
 
 import android.content.Context;
+import com.newvo.android.parse.Group;
 import com.newvo.android.parse.Post;
 import com.newvo.android.parse.User;
 import com.parse.ParseFile;
 import com.parse.SaveCallback;
+
+import java.util.List;
 
 import static com.parse.ParseUser.getCurrentUser;
 
@@ -14,6 +17,13 @@ import static com.parse.ParseUser.getCurrentUser;
 public class CreatePostRequest {
 
     private Post post;
+
+    public CreatePostRequest(Context context, String caption, ParseFile image1, ParseFile image2, List<Group> groups, List<User> users) throws MissingCaptionError, MissingImageError {
+        this(context, caption, image1, image2);
+        post.setGroupIds(groups);
+        post.setUserTags(users);
+
+    }
 
     public CreatePostRequest(Context context, String caption, ParseFile image1, ParseFile image2) throws MissingCaptionError, MissingImageError {
         if(caption == null || caption.isEmpty()){

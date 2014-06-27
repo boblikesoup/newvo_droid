@@ -80,7 +80,7 @@ public class GroupsFragment extends Fragment implements LoadingFragment {
         newGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((NewVoActivity) getActivity()).displayChildFragment(new CreateGroupFragment(), getActivity().getString(R.string.title_groups), "CreateGroup");
+                ((NewVoActivity) getActivity()).displayChildFragment(new EditGroupFragment(null), getActivity().getString(R.string.title_groups), "CreateGroup");
             }
         });
 
