@@ -25,6 +25,8 @@ public class Post extends ParseObject implements Comparable<Post> {
     public static final String VIEWABLE_BY = "viewable_by";
     public static final String VOTED_ON_ARRAY = "voted_on_array";
 
+    public static final String GROUP_ID = "group_id";
+
     //status strings
     public static final String ACTIVE = "active";
     public static final String INACTIVE = "inactive";

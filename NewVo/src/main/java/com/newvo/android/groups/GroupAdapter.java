@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import com.newvo.android.NewVoActivity;
 import com.newvo.android.R;
 import com.newvo.android.parse.Group;
 
@@ -60,6 +61,12 @@ public class GroupAdapter extends ArrayAdapter<Group> {
 
         public void setItem(final Group item) {
             text.setText(item.getTitle());
+            text.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((NewVoActivity) getContext()).displayChildFragment(new GroupFragment(item), getContext().getString(R.string.title_group), "SingleGroup");
+                }
+            });
         }
     }
 }
