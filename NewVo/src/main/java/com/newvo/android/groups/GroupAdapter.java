@@ -51,6 +51,9 @@ public class GroupAdapter extends ArrayAdapter<Group> {
 
     class ViewHolder {
 
+        @InjectView(R.id.layout)
+        View layout;
+
         @InjectView(R.id.text)
         TextView text;
 
@@ -61,7 +64,7 @@ public class GroupAdapter extends ArrayAdapter<Group> {
 
         public void setItem(final Group item) {
             text.setText(item.getTitle());
-            text.setOnClickListener(new View.OnClickListener() {
+            layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     ((NewVoActivity) getContext()).displayChildFragment(new GroupFragment(item), getContext().getString(R.string.title_group), "SingleGroup");

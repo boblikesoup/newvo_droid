@@ -17,9 +17,9 @@ public class GroupProfileRequest {
     public GroupProfileRequest(Group group) {
 
         query = ParseQuery.getQuery(Post.class);
-        query.whereEqualTo("status", Post.getStatusValue(Post.ACTIVE));
+        query.whereEqualTo(Post.STATUS, Post.getStatusValue(Post.ACTIVE));
         query.whereContainsAll(Post.GROUP_ID, Arrays.asList(group.getObjectId()));
-        query.orderByDescending("createdAt");
+        query.orderByDescending(Post.CREATED_AT);
     }
 
     public void request(FindCallback<Post> callback) {
