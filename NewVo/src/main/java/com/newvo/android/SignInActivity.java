@@ -10,6 +10,7 @@ import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.model.GraphUser;
+import com.newvo.android.parse.Installation;
 import com.newvo.android.parse.User;
 import com.newvo.android.util.ImageFileUtils;
 import com.parse.*;
@@ -34,7 +35,7 @@ public class SignInActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ParseUser currentUser = ParseUser.getCurrentUser();
+        User currentUser = User.getCurrentUser();
         ParseAnalytics.trackAppOpened(getIntent());
         if ((currentUser != null) && ParseFacebookUtils.isLinked(currentUser)) {
             // Go to the user info activity
@@ -45,7 +46,7 @@ public class SignInActivity extends Activity {
                 @Override
                 public void done(ParseUser user, ParseException err) {
                     if (user != null) {
-                        assignUser(user);
+                        assignUser((User)user);
                     }
                 }
             });
@@ -61,9 +62,16 @@ public class SignInActivity extends Activity {
         ParseFacebookUtils.finishAuthentication(requestCode, resultCode, data);
     }
 
-    private void assignUser(ParseUser user) {
+    private void assignUser(User user) {
         if (user != null) {
             updateFacebookInfo();
+
+            Installation currentInstallation = Installation.getCurrentInstallation();
+            currentInstallation.setPublicId(user.getObjectId());
+            currentInstallation.setUser(user);
+            currentInstallation.setUserName(user.getUsername());
+            currentInstallation.saveInBackground();
+
             if(intent == null) {
                 intent = new Intent(this, NewVo.class);
                 startActivity(intent);

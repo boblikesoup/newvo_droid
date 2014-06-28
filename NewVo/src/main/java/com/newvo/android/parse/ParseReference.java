@@ -10,6 +10,7 @@ import com.parse.ParseUser;
 public class ParseReference {
 
     public static void initialize() {
+        ParseObject.registerSubclass(Installation.class);
         ParseUser.registerSubclass(User.class);
         ParseUser.registerSubclass(Group.class);
         ParseObject.registerSubclass(Post.class);
