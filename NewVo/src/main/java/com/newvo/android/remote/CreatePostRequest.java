@@ -43,6 +43,8 @@ public class CreatePostRequest {
         post.setViewableBy(Post.PUBLIC);
         post.setVotes1(0);
         post.setVotes2(0);
+        post.setCounter1(0);
+        post.setCounter2(0);
         post.setNumberOfSuggestions(0);
     }
 

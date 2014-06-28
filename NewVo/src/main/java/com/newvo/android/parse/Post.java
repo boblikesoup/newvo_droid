@@ -28,6 +28,9 @@ public class Post extends ParseObject implements Comparable<Post> {
     public static final String VIEWABLE_BY = "viewable_by";
     public static final String VOTED_ON_ARRAY = "voted_on_array";
 
+    public static final String COUNTER_0 = "counter_0";
+    public static final String COUNTER_1 = "counter_1";
+
     public static final String GROUP_ID = "group_id";
     public static final String USER_TAG = "user_tags";
 
@@ -96,6 +99,22 @@ public class Post extends ParseObject implements Comparable<Post> {
 
     public void setVotes2(int votes2) {
         put(VOTES_1, votes2);
+    }
+
+    public int getCounter1() {
+        return getInt(COUNTER_0);
+    }
+
+    public void setCounter1(int counter1) {
+        put(COUNTER_0, counter1);
+    }
+
+    public int getCounter2() {
+        return getInt(COUNTER_1);
+    }
+
+    public void setCounter2(int counter2) {
+        put(COUNTER_1, counter2);
     }
 
     public int getNumberOfSuggestions() {

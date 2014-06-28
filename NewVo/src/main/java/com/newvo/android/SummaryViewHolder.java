@@ -8,6 +8,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.newvo.android.parse.Post;
 import com.newvo.android.parse.User;
+import com.newvo.android.remote.ClearCountersRequest;
 import com.newvo.android.remote.RemovePostRequest;
 import com.newvo.android.remote.SetPostActiveRequest;
 import com.newvo.android.util.ToastUtils;
@@ -74,11 +75,27 @@ public class SummaryViewHolder {
             firstImage.setParseFile(null);
         }
 
+        boolean userIsPoster = item.getUser().getUserId().equals(User.getCurrentUser().getUserId());
         boolean votedOn = item.getVotedOnArray().contains(User.getCurrentUser().getUserId());
         int votes1 = item.getVotes1();
         int votes2 = item.getVotes2();
 
-        if(votedOn || item.getUser().getUserId().equals(User.getCurrentUser().getUserId())){
+        if(userIsPoster){
+            int counter1 = item.getCounter1();
+            if(counter1 > 0) {
+                firstVotes.votesNotification.setText("+" + counter1);
+                firstVotes.votesNotification.setVisibility(View.VISIBLE);
+            }
+
+            int counter2 = item.getCounter2();
+            if(counter2 > 0) {
+                secondVotes.votesNotification.setText("+" + counter2);
+                secondVotes.votesNotification.setVisibility(View.VISIBLE);
+            }
+            new ClearCountersRequest(item).request(null);
+        }
+
+        if(votedOn || userIsPoster){
             if(votes1 > votes2){
                 firstVotes.choiceIcon.setActivated(true);
             } else if(votes2 > votes1){

@@ -16,29 +16,32 @@
         android:layout_gravity="center"
         android:layout_margin="2dp"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:id="@+id/votes_layout">
+        android:id="@+id/votes_layout"
+        android:layout_gravity="center_horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/votes"
-            android:layout_centerInParent="true"
             android:textColor="@android:color/white"
-            android:textSize="26sp"/>
+            android:textSize="26sp"
+            android:layout_gravity="center"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:id="@+id/votes_notification"
-            android:layout_toRightOf="@+id/votes"
-            android:layout_centerVertical="true"
-            android:textColor="#ff0100"/>
-    </RelativeLayout>
+            android:textColor="#ff0100"
+            android:textSize="20sp"
+            android:singleLine="true"
+            android:layout_gravity="center"
+            />
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
