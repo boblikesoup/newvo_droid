@@ -13,6 +13,8 @@ public class Suggestion extends ParseObject {
     public static final String USER_ID = User.USER_ID;
     public static final String POST_ID = Post.POST_ID;
     public static final String STATUS = "status";
+    public static final int UNDELETED = 0;
+    public static final int DELETED = 1;
 
     public String getBody(){
         return getString(BODY);
@@ -41,7 +43,6 @@ public class Suggestion extends ParseObject {
     public void setStatus(int status) {
         put(STATUS, status);
     }
-
 
     private boolean loading = false;
     public void setLoading(boolean loading) {

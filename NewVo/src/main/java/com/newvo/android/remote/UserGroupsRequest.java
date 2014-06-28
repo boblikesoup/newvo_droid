@@ -20,7 +20,7 @@ public class UserGroupsRequest {
         query = ParseQuery.getQuery(Group.class);
         String userId = user.getFacebookId();
         query.whereContainsAll(Group.MEMBER_IDS, Arrays.asList(userId));
-        query.whereEqualTo(Group.STATUS, 1);
+        query.whereNotEqualTo(Group.STATUS, Group.getStatusValue(Group.DELETED));
         query.orderByDescending(Group.CREATED_AT);
     }
 

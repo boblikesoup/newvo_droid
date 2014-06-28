@@ -24,6 +24,7 @@ public class FeedRequest {
         query.whereEqualTo(Post.VIEWABLE_BY, 0);
         String userId = user.getUserId();
         query.whereNotEqualTo(Post.USER_ID, user);
+        query.whereNotEqualTo(Post.STATUS, Post.getStatusValue(Post.DELETED));
         query.whereNotContainedIn(Post.VOTED_ON_ARRAY, Arrays.asList(userId));
         query.orderByDescending(Post.CREATED_AT);
     }

@@ -16,6 +16,7 @@ public class PostSuggestionsRequest {
 
         query = ParseQuery.getQuery(Suggestion.class);
         query.whereEqualTo("post_id", post);
+        query.whereNotEqualTo(Suggestion.STATUS, Suggestion.DELETED);
     }
 
     public void request(FindCallback<Suggestion> callback){

@@ -85,11 +85,20 @@ public class Group extends ParseObject {
         }
     }
 
+    public static int getStatusValue(String status){
+        if (status.equals(DELETED)) {
+            return 0;
+        } else if (status.equals(UNDELETED)) {
+            return 1;
+        }
+        return -1;
+    }
+
+
     public void setStatus(String deleted){
-        if(deleted.equals(DELETED)){
-            put(STATUS, 0);
-        } else if(deleted.equals(UNDELETED)){
-            put(STATUS, 1);
+        int statusValue = getStatusValue(deleted);
+        if(statusValue != -1) {
+            put(STATUS, statusValue);
         }
     }
 }

@@ -167,7 +167,7 @@ public class SummaryViewHolder {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
                     if (menuItem.getTitle().equals("Delete")) {
-                        new RemovePostRequest(item).request(new DeleteCallback() {
+                        new RemovePostRequest(item).request(new SaveCallback() {
                             @Override
                             public void done(ParseException e) {
                                 if(e == null) {

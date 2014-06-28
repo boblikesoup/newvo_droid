@@ -12,8 +12,8 @@ import com.newvo.android.parse.Suggestion;
 import com.newvo.android.parse.User;
 import com.newvo.android.remote.RemoveSuggestionRequest;
 import com.newvo.android.util.ToastUtils;
-import com.parse.DeleteCallback;
 import com.parse.ParseException;
+import com.parse.SaveCallback;
 
 /**
  * Created by David on 4/20/2014.
@@ -62,7 +62,7 @@ public class SuggestionAdapter extends ArrayAdapter<Suggestion> {
                 @Override
                 public void onClick(View v) {
                     setInProgress(true);
-                    new RemoveSuggestionRequest(suggestion).request(new DeleteCallback() {
+                    new RemoveSuggestionRequest(suggestion).request(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
                             if(e == null){

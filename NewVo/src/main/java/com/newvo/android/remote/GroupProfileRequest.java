@@ -18,6 +18,7 @@ public class GroupProfileRequest {
 
         query = ParseQuery.getQuery(Post.class);
         query.whereEqualTo(Post.STATUS, Post.getStatusValue(Post.ACTIVE));
+        query.whereNotEqualTo(Post.STATUS, Post.getStatusValue(Post.DELETED));
         query.whereContainsAll(Post.GROUP_ID, Arrays.asList(group.getObjectId()));
         query.orderByDescending(Post.CREATED_AT);
     }

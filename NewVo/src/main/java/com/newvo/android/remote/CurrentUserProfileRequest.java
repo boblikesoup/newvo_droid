@@ -17,6 +17,7 @@ public class CurrentUserProfileRequest {
 
         query = ParseQuery.getQuery(Post.class);
         query.whereEqualTo(Post.USER_ID, user);
+        query.whereNotEqualTo(Post.STATUS, Post.getStatusValue(Post.DELETED));
         query.orderByDescending("createdAt");
     }
 
