@@ -149,8 +149,10 @@ public class EditGroupFragment extends Fragment implements ChildFragment {
                                     ToastUtils.makeText(activity, failureText, Toast.LENGTH_LONG, DP_OFFSET).show();
                                 } else {
                                     ToastUtils.makeText(activity, successText, Toast.LENGTH_LONG, DP_OFFSET).show();
-                                    activity.onBackPressed();
-                                    ((NewVoActivity) activity).restartFragment();
+                                    if(EditGroupFragment.this.equals( ((NewVoActivity) activity).getActiveFragment())) {
+                                        activity.onBackPressed();
+                                    }
+
                                 }
                             }
                         });
