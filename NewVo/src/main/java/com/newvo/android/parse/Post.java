@@ -156,6 +156,8 @@ public class Post extends ParseObject implements Comparable<Post> {
         }
     }
 
+    public List<String> getVotedOnArray(){ return  (List<String>) get(VOTED_ON_ARRAY);}
+
     public List<String> getGroupIds(){
         return (List<String>) get(GROUP_ID);
     }

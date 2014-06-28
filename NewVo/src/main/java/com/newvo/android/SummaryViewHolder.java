@@ -33,6 +33,12 @@ public class SummaryViewHolder {
     @InjectView(R.id.photo2)
     ParseImageView secondImage;
 
+    @InjectView(R.id.photo2_layout)
+    View secondImageLayout;
+
+    @InjectView(R.id.buffer)
+    View buffer;
+
     //Suggestions Section
     @InjectView(R.id.suggestions_icon)
     ImageButton suggestionsIcon;
@@ -68,6 +74,24 @@ public class SummaryViewHolder {
             firstImage.setParseFile(null);
         }
 
+        boolean votedOn = item.getVotedOnArray().contains(User.getCurrentUser().getUserId());
+        int votes1 = item.getVotes1();
+        int votes2 = item.getVotes2();
+
+        if(votedOn || item.getUser().getUserId().equals(User.getCurrentUser().getUserId())){
+            if(votes1 > votes2){
+                firstVotes.choiceIcon.setActivated(true);
+            } else if(votes2 > votes1){
+                secondVotes.choiceIcon.setActivated(true);
+            }
+        }
+        else {
+            firstVotes.percent.setVisibility(View.GONE);
+            firstVotes.votesLayout.setVisibility(View.GONE);
+            secondVotes.percent.setVisibility(View.GONE);
+            secondVotes.votesLayout.setVisibility(View.GONE);
+        }
+
         final ParseFile photo2 = item.getPhoto2();
         if (photo2 != null) {
             secondImage.setParseFile(photo2);
@@ -80,9 +104,11 @@ public class SummaryViewHolder {
             });
         } else {
             secondImage.setParseFile(null);
+            secondVotes.choiceIcon.setImageResource(R.drawable.x);
+            secondImageLayout.setVisibility(View.GONE);
+            buffer.setVisibility(View.INVISIBLE);
         }
-        int votes1 = item.getVotes1();
-        int votes2 = item.getVotes2();
+
         int totalVotes = votes1 + votes2;
         if (totalVotes == 0) {
             totalVotes = 1;
@@ -197,6 +223,8 @@ public class SummaryViewHolder {
 
         @InjectView(R.id.choice_icon)
         ImageView choiceIcon;
+        @InjectView(R.id.votes_layout)
+        View votesLayout;
         @InjectView(R.id.votes)
         TextView votes;
         @InjectView(R.id.votes_notification)
