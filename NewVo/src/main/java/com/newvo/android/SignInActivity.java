@@ -35,6 +35,7 @@ public class SignInActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         ParseUser currentUser = ParseUser.getCurrentUser();
+        ParseAnalytics.trackAppOpened(getIntent());
         if ((currentUser != null) && ParseFacebookUtils.isLinked(currentUser)) {
             // Go to the user info activity
             assignUser(currentUser);
