@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/add_friend"
+        android:layout_margin="2dp"
+        android:background="@color/light_transparent_background">
+
+        <ImageView
+            android:layout_width="76dp"
+            android:layout_height="76dp"
+            android:id="@+id/add_friend_image"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/plus"
+            android:layout_margin="8dp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Add Friend"
+            android:id="@+id/add_friend_text"
+            android:layout_gravity="center_vertical"
+            android:textSize="32sp"
+            android:layout_weight="1"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/friends_list"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/add_group"
+        android:layout_margin="2dp"
+        android:background="@color/light_transparent_background">
+
+        <ImageView
+            android:layout_width="76dp"
+            android:layout_height="76dp"
+            android:id="@+id/add_group_image"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/plus"
+            android:layout_margin="8dp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Add Group"
+            android:id="@+id/add_group_text"
+            android:layout_gravity="center_vertical"
+            android:textSize="32sp"
+            android:layout_weight="1"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/groups_list"
+        android:layout_weight="1"
+        />
+
+</LinearLayout>

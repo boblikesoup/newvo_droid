@@ -15,6 +15,8 @@ import android.widget.*;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import com.newvo.android.friends.FriendPickerActivity;
+import com.newvo.android.friends.TaggingFragment;
 import com.newvo.android.remote.CreatePostRequest;
 import com.newvo.android.util.ImageFileUtils;
 import com.newvo.android.util.IntentUtils;
@@ -38,6 +40,8 @@ public class CreatePostFragment extends Fragment {
     TextView caption;
     @InjectView(R.id.microphone)
     ImageButton microphone;
+    @InjectView(R.id.tagging)
+    ImageButton tagging;
     @InjectView(R.id.main_button)
     ImageButton mainButton;
     @InjectView(R.id.first_choice)
@@ -59,6 +63,11 @@ public class CreatePostFragment extends Fragment {
 
     protected boolean posted;
 
+    public CreatePostFragment() {
+        FriendPickerActivity.SELECTION = null;
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -75,6 +84,12 @@ public class CreatePostFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 IntentUtils.startMicrophoneIntent(CreatePostFragment.this);
+            }
+        });
+        tagging.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NewVoActivity) getActivity()).displayChildFragment(new TaggingFragment(), getActivity().getString(R.string.title_create_post), "Tagging");
             }
         });
 
