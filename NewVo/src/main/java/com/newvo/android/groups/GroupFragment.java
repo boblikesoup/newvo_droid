@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import com.newvo.android.DrawerActivity;
 import com.newvo.android.NewVoActivity;
 import com.newvo.android.R;
 import com.newvo.android.SummaryAdapter;
@@ -171,9 +172,13 @@ public class GroupFragment extends Fragment implements ChildFragment {
                 HashMap<String, Object> params = new HashMap<String, Object>();
                 params.put("groupId", group.getObjectId());
                 params.put("push_ids", pushIds);
+                ((DrawerActivity) getActivity()).setActionBarLoading(true);
                 ParseCloud.callFunctionInBackground("updateGroupNotifications", params, new FunctionCallback<Object>() {
                     @Override
                     public void done(Object o, ParseException e) {
+                        if(GroupFragment.this.equals( ((NewVoActivity) context).getActiveFragment())) {
+                            ((DrawerActivity) context).setActionBarLoading(false);
+                        }
                         if (e != null) {
                             ToastUtils.makeText(context, "Could Not " + status + " Notifications", Toast.LENGTH_SHORT, -1).show();
                         } else {
@@ -197,9 +202,13 @@ public class GroupFragment extends Fragment implements ChildFragment {
             public void onClick(DialogInterface dialog, int which) {
                 final Activity activity = getActivity();
                 group.setStatus(Group.DELETED);
+                ((DrawerActivity) getActivity()).setActionBarLoading(true);
                 group.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
+                        if(GroupFragment.this.equals( ((NewVoActivity) activity).getActiveFragment())) {
+                            ((DrawerActivity) activity).setActionBarLoading(false);
+                        }
                         if (e != null) {
                             ToastUtils.makeText(activity, "Could Not Disband Group", Toast.LENGTH_SHORT, -1).show();
                         } else {
@@ -227,17 +236,30 @@ public class GroupFragment extends Fragment implements ChildFragment {
                 final Activity activity = getActivity();
                 HashMap<String, Object> params = new HashMap<String, Object>();
                 params.put("groupId", group.getObjectId());
-                params.put("push_ids", Arrays.asList(User.getCurrentUser().getUserId()));
-                params.put("member_ids", Arrays.asList(User.getCurrentUser().getFacebookId()));
+                List<String> pushIds = group.getPushIds();
+                if(pushIds.contains(User.getCurrentUser().getUserId())) {
+                    pushIds.remove(User.getCurrentUser().getUserId());
+                }
+                List<String> memberIds = group.getMemberIds();
+                if(memberIds.contains(User.getCurrentUser().getFacebookId())){
+                    memberIds.remove(User.getCurrentUser().getFacebookId());
+                }
+                params.put("push_ids", pushIds);
+                params.put("member_ids", memberIds);
+                ((DrawerActivity) getActivity()).setActionBarLoading(true);
                 ParseCloud.callFunctionInBackground("leaveGroup", params, new FunctionCallback<Object>() {
                     @Override
                     public void done(Object o, ParseException e) {
+                        if(GroupFragment.this.equals( ((NewVoActivity) activity).getActiveFragment())) {
+                            ((DrawerActivity) activity).setActionBarLoading(false);
+                        }
                         if (e != null) {
                             ToastUtils.makeText(activity, "Could Not Leave Group", Toast.LENGTH_SHORT, -1).show();
                         } else {
                             ToastUtils.makeText(activity, "Left Group", Toast.LENGTH_SHORT, -1).show();
                             if(GroupFragment.this.equals( ((NewVoActivity) activity).getActiveFragment())) {
                                 activity.onBackPressed();
+                                ((NewVoActivity) activity).attachDetachFragment();
                             }
                         }
                     }

@@ -36,7 +36,7 @@ public class GroupsFragment extends Fragment implements LoadingFragment {
     List<Group> groups;
 
     public GroupsFragment(){
-        requestGroups();
+
     }
 
     public void requestGroups() {
@@ -72,17 +72,14 @@ public class GroupsFragment extends Fragment implements LoadingFragment {
 
         groupsList.setAdapter(new GroupAdapter(getActivity(), R.layout.group_item));
 
-        if(groups != null){
-            ((ArrayAdapter) groupsList.getAdapter()).addAll(groups);
-            ((DrawerActivity) getActivity()).setActionBarLoading(false);
-        }
-
         newGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((NewVoActivity) getActivity()).displayChildFragment(new EditGroupFragment(null), getActivity().getString(R.string.title_groups), "CreateGroup");
             }
         });
+
+        requestGroups();
 
         return rootView;
     }

@@ -17,6 +17,7 @@ import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.model.GraphUser;
+import com.newvo.android.DrawerActivity;
 import com.newvo.android.NewVoActivity;
 import com.newvo.android.R;
 import com.newvo.android.friends.FriendPickerActivity;
@@ -140,11 +141,15 @@ public class EditGroupFragment extends Fragment implements ChildFragment {
                         description = text.toString();
                     }
                     try {
+                        ((DrawerActivity) getActivity()).setActionBarLoading(true);
                         new EditGroupRequest(group, name,
                                 description,
                                 ((FriendAdapter) friendsToAdd.getAdapter()).getFriends()).request(new SaveCallback() {
                             @Override
                             public void done(ParseException e) {
+                                if(EditGroupFragment.this.equals( ((NewVoActivity) activity).getActiveFragment())) {
+                                    ((DrawerActivity) activity).setActionBarLoading(false);
+                                }
                                 if (e != null) {
                                     ToastUtils.makeText(activity, failureText, Toast.LENGTH_LONG, DP_OFFSET).show();
                                 } else {
@@ -157,6 +162,7 @@ public class EditGroupFragment extends Fragment implements ChildFragment {
                             }
                         });
                     } catch (EditGroupRequest.MissingTitleError missingTitleError) {
+                        ((DrawerActivity) getActivity()).setActionBarLoading(false);
                         ToastUtils.makeText(activity, "Needs a Group Name", Toast.LENGTH_LONG, DP_OFFSET).show();
                     }
                 }
