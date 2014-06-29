@@ -39,7 +39,7 @@ public class CreatePostPhotoViewHolder {
 
     View createPostImageContainer;
 
-    private Uri photo;
+    public Uri photo;
     private Uri uncroppedPhoto;
 
     private ParseFile parseFile;
@@ -69,6 +69,12 @@ public class CreatePostPhotoViewHolder {
         }
     }
 
+    public void onCreateView(Fragment fragment, View view){
+        this.fragment = fragment;
+        createPostImageContainer = view;
+        ButterKnife.inject(this, view);
+    }
+
 
     public void onDestroyView() {
         parseFile = null;
@@ -81,7 +87,9 @@ public class CreatePostPhotoViewHolder {
 
     public void setPhoto(Uri photo) {
         this.photo = photo;
-        parseFile = ParseFileUtils.getParseFile(fragment.getActivity(), photo.toString());
+        if(photo != null) {
+            parseFile = ParseFileUtils.getParseFile(fragment.getActivity(), photo.toString());
+        }
         updateImageView();
 
     }

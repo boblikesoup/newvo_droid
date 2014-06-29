@@ -193,11 +193,7 @@ public class Post extends ParseObject implements Comparable<Post> {
         return (List<String>) get(USER_TAG);
     }
 
-    public void setUserTags(List<User> users) {
-        List<String> ids = new ArrayList<String>();
-        for(User user : users){
-            ids.add(user.getObjectId());
-        }
+    public void setUserTags(List<String> ids) {
         put(USER_TAG, ids);
     }
 

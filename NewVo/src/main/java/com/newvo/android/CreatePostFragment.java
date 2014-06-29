@@ -77,8 +77,20 @@ public class CreatePostFragment extends Fragment {
 
         posted = false;
 
-        image1 = new FirstViewHolder(this, rootView.findViewById(R.id.image_container_1), 1);
-        image2 = new SecondViewHolder(this, rootView.findViewById(R.id.image_container_2), 2);
+        if (image1 == null) {
+            image1 = new FirstViewHolder(this, rootView.findViewById(R.id.image_container_1), 1);
+        } else {
+            image1.onCreateView(this, rootView.findViewById(R.id.image_container_1));
+        }
+        if (image2 == null) {
+            image2 = new SecondViewHolder(this, rootView.findViewById(R.id.image_container_2), 2);
+        } else {
+            image2.onCreateView(this, rootView.findViewById(R.id.image_container_2));
+
+        }
+
+        image1.setPhoto(image1.photo);
+        image2.setPhoto(image2.photo);
 
         microphone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,7 +136,7 @@ public class CreatePostFragment extends Fragment {
     }
 
     protected void createPostRequest(final Activity activity, String caption, ParseFile parseFile1, ParseFile parseFile2) {
-        new CreatePostRequest(activity, caption, parseFile1, parseFile2).request(new SaveCallback() {
+        new CreatePostRequest(activity, caption, parseFile1, parseFile2, null, FriendPickerActivity.SELECTION).request(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
@@ -218,7 +230,11 @@ public class CreatePostFragment extends Fragment {
         @Override
         public void setPhoto(Uri photo) {
             super.setPhoto(photo);
-            secondChoice.setImageResource(R.drawable.check);
+            if(photo != null) {
+                secondChoice.setImageResource(R.drawable.check);
+            } else {
+                secondChoice.setImageResource(R.drawable.x);
+            }
         }
 
         @Override
@@ -240,7 +256,11 @@ public class CreatePostFragment extends Fragment {
         @Override
         public void setPhoto(Uri photo) {
             super.setPhoto(photo);
-            loadSecondOption();
+            if(photo != null) {
+                loadSecondOption();
+            } else {
+                removeSecondOption();
+            }
         }
 
         @Override

@@ -14,6 +14,8 @@ import com.newvo.android.remote.SetPostActiveRequest;
 import com.newvo.android.util.ToastUtils;
 import com.parse.*;
 
+import java.util.List;
+
 /**
  * Created by David on 4/21/2014.
  */
@@ -76,7 +78,11 @@ public class SummaryViewHolder {
         }
 
         boolean userIsPoster = item.getUser().getUserId().equals(User.getCurrentUser().getUserId());
-        boolean votedOn = item.getVotedOnArray().contains(User.getCurrentUser().getUserId());
+        List<String> votedOnArray = item.getVotedOnArray();
+        boolean votedOn = false;
+        if(votedOnArray != null) {
+            votedOn = votedOnArray.contains(User.getCurrentUser().getUserId());
+        }
         int votes1 = item.getVotes1();
         int votes2 = item.getVotes2();
 
