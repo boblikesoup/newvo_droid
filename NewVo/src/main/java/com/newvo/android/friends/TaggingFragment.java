@@ -10,8 +10,12 @@ import android.widget.ListView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.facebook.model.GraphUser;
+import com.newvo.android.NewVoActivity;
 import com.newvo.android.R;
 import com.newvo.android.groups.FriendAdapter;
+import com.newvo.android.groups.GroupAdapter;
+import com.newvo.android.groups.GroupPickerAdapter;
+import com.newvo.android.groups.GroupPickerFragment;
 import com.newvo.android.util.ChildFragment;
 import com.newvo.android.util.IntentUtils;
 
@@ -51,8 +55,19 @@ public class TaggingFragment extends Fragment implements ChildFragment {
             }
         });
 
+        addGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NewVoActivity) getActivity()).displayChildFragment(new GroupPickerFragment(), getActivity().getString(R.string.title_create_post), "GroupPicker");
+            }
+        });
+
         if(FriendPickerActivity.SELECTION != null){
             initFriendAdapter();
+        }
+
+        if(GroupPickerAdapter.SELECTION != null){
+            initGroupAdapter();
         }
 
         return rootView;
@@ -62,6 +77,12 @@ public class TaggingFragment extends Fragment implements ChildFragment {
         FriendAdapter adapter = new FriendAdapter(getActivity(), R.layout.suggestion_single, true);
         adapter.addAll(FriendPickerActivity.SELECTION);
         friends.setAdapter(adapter);
+    }
+
+    private void initGroupAdapter() {
+        GroupAdapter adapter = new GroupAdapter(getActivity(), R.layout.suggestion_single);
+        adapter.addAll(GroupPickerAdapter.SELECTION);
+        groups.setAdapter(adapter);
     }
 
     @Override

@@ -81,18 +81,36 @@ public class GroupFragment extends Fragment implements ChildFragment {
         final PopupMenu popupMenu = new PopupMenu(getActivity(), settings);
         boolean writeAccess = group.getACL().getWriteAccess(User.getCurrentUser());
 
+        String edit = writeAccess ? "Edit Group" : "View Group";
+        String disband = writeAccess ? "Disband Group" : "Leave Group";
+        MenuItem.OnMenuItemClickListener disbandListener = writeAccess ?
+                new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        createDisbandGroupDialog();
+                        return true;
+                    }
+                } :
+                new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        createLeaveGroupDialog();
+                        return true;
+                    }
+                };
 
         //Populate popup with available choices
-        popupMenu.getMenu().add(0, 0, 0, "Create Post");
+        popupMenu.getMenu().add(0, 0, 0, edit);
+        popupMenu.getMenu().add(0, 0, 0, "Manage Notification Settings");
+        popupMenu.getMenu().add(0, 0, 2, disband);
+        //Popup Actions
         popupMenu.getMenu().getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                //TODO: When tagging has been implemented, add this.
-                //       ((NewVoActivity) getActivity()).displayChildFragment(new CreatePostFragment(group), getActivity().getString(R.string.title_create_post), "CreateGroupPost");
+                ((NewVoActivity) getActivity()).displayChildFragment(new EditGroupFragment(group), getActivity().getString(R.string.title_group), "EditGroup");
                 return true;
             }
         });
-        popupMenu.getMenu().add(0, 0, 1, "Manage Notification Settings");
         popupMenu.getMenu().getItem(1).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -100,37 +118,8 @@ public class GroupFragment extends Fragment implements ChildFragment {
                 return true;
             }
         });
+        popupMenu.getMenu().getItem(2).setOnMenuItemClickListener(disbandListener);
 
-
-        if (writeAccess) {
-            popupMenu.getMenu().add(0, 0, 1, "Edit Group");
-            popupMenu.getMenu().add(0, 0, 3, "Disband Group");
-            popupMenu.getMenu().getItem(3).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    createDisbandGroupDialog();
-                    return true;
-                }
-            });
-        } else {
-            popupMenu.getMenu().add(0, 0, 1, "View Group");
-            popupMenu.getMenu().add(0, 0, 3, "Leave Group");
-            popupMenu.getMenu().getItem(3).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    createLeaveGroupDialog();
-                    return true;
-                }
-            });
-        }
-        //Edit/View Group
-        popupMenu.getMenu().getItem(2).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                ((NewVoActivity) getActivity()).displayChildFragment(new EditGroupFragment(group), getActivity().getString(R.string.title_group), "EditGroup");
-                return true;
-            }
-        });
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,7 +152,7 @@ public class GroupFragment extends Fragment implements ChildFragment {
                     pushIds.removeAll(Arrays.asList(userId));
                     status = "Disable";
                 } else {
-                    if(!pushIds.contains(userId)) {
+                    if (!pushIds.contains(userId)) {
                         pushIds.add(userId);
                     }
                     status = "Enable";
@@ -176,7 +165,7 @@ public class GroupFragment extends Fragment implements ChildFragment {
                 ParseCloud.callFunctionInBackground("updateGroupNotifications", params, new FunctionCallback<Object>() {
                     @Override
                     public void done(Object o, ParseException e) {
-                        if(GroupFragment.this.equals( ((NewVoActivity) context).getActiveFragment())) {
+                        if (GroupFragment.this.equals(((NewVoActivity) context).getActiveFragment())) {
                             ((DrawerActivity) context).setActionBarLoading(false);
                         }
                         if (e != null) {
@@ -206,14 +195,14 @@ public class GroupFragment extends Fragment implements ChildFragment {
                 group.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        if(GroupFragment.this.equals( ((NewVoActivity) activity).getActiveFragment())) {
+                        if (GroupFragment.this.equals(((NewVoActivity) activity).getActiveFragment())) {
                             ((DrawerActivity) activity).setActionBarLoading(false);
                         }
                         if (e != null) {
                             ToastUtils.makeText(activity, "Could Not Disband Group", Toast.LENGTH_SHORT, -1).show();
                         } else {
                             ToastUtils.makeText(activity, "Group Disbanded", Toast.LENGTH_SHORT, -1).show();
-                            if(GroupFragment.this.equals( ((NewVoActivity) activity).getActiveFragment())) {
+                            if (GroupFragment.this.equals(((NewVoActivity) activity).getActiveFragment())) {
                                 activity.onBackPressed();
                             }
                         }
@@ -237,11 +226,11 @@ public class GroupFragment extends Fragment implements ChildFragment {
                 HashMap<String, Object> params = new HashMap<String, Object>();
                 params.put("groupId", group.getObjectId());
                 List<String> pushIds = group.getPushIds();
-                if(pushIds.contains(User.getCurrentUser().getUserId())) {
+                if (pushIds.contains(User.getCurrentUser().getUserId())) {
                     pushIds.remove(User.getCurrentUser().getUserId());
                 }
                 List<String> memberIds = group.getMemberIds();
-                if(memberIds.contains(User.getCurrentUser().getFacebookId())){
+                if (memberIds.contains(User.getCurrentUser().getFacebookId())) {
                     memberIds.remove(User.getCurrentUser().getFacebookId());
                 }
                 params.put("push_ids", pushIds);
@@ -250,14 +239,14 @@ public class GroupFragment extends Fragment implements ChildFragment {
                 ParseCloud.callFunctionInBackground("leaveGroup", params, new FunctionCallback<Object>() {
                     @Override
                     public void done(Object o, ParseException e) {
-                        if(GroupFragment.this.equals( ((NewVoActivity) activity).getActiveFragment())) {
+                        if (GroupFragment.this.equals(((NewVoActivity) activity).getActiveFragment())) {
                             ((DrawerActivity) activity).setActionBarLoading(false);
                         }
                         if (e != null) {
                             ToastUtils.makeText(activity, "Could Not Leave Group", Toast.LENGTH_SHORT, -1).show();
                         } else {
                             ToastUtils.makeText(activity, "Left Group", Toast.LENGTH_SHORT, -1).show();
-                            if(GroupFragment.this.equals( ((NewVoActivity) activity).getActiveFragment())) {
+                            if (GroupFragment.this.equals(((NewVoActivity) activity).getActiveFragment())) {
                                 activity.onBackPressed();
                                 ((NewVoActivity) activity).attachDetachFragment();
                             }
@@ -269,7 +258,7 @@ public class GroupFragment extends Fragment implements ChildFragment {
         createDialog(title, values, onClickListener);
     }
 
-    private void createDialog(String title, CharSequence[] values,  DialogInterface.OnClickListener onClickListener){
+    private void createDialog(String title, CharSequence[] values, DialogInterface.OnClickListener onClickListener) {
         Activity activity = getActivity();
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         LinearLayout inflate = (LinearLayout) activity.getLayoutInflater().inflate(R.layout.flag_dialog, null);

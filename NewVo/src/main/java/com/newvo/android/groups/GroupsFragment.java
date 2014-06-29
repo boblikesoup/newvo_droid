@@ -70,7 +70,7 @@ public class GroupsFragment extends Fragment implements LoadingFragment {
         final View rootView = inflater.inflate(R.layout.groups, container, false);
         ButterKnife.inject(this, rootView);
 
-        groupsList.setAdapter(new GroupAdapter(getActivity(), R.layout.group_item));
+        groupsList.setAdapter(getAdapter());
 
         newGroup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +82,10 @@ public class GroupsFragment extends Fragment implements LoadingFragment {
         requestGroups();
 
         return rootView;
+    }
+
+    protected ArrayAdapter<Group> getAdapter() {
+        return new GroupAdapter(getActivity(), R.layout.group_item);
     }
 
     @Override
