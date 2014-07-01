@@ -141,6 +141,10 @@ public class EditGroupFragment extends Fragment implements ChildFragment {
                         description = text.toString();
                     }
                     try {
+                        if(FriendPickerActivity.SELECTION == null || FriendPickerActivity.SELECTION.isEmpty()){
+                            ToastUtils.makeText(activity, "Please Add Friends To Your Group", Toast.LENGTH_LONG, DP_OFFSET).show();
+                            return;
+                        }
                         ((DrawerActivity) getActivity()).setActionBarLoading(true);
                         new EditGroupRequest(group, name,
                                 description,

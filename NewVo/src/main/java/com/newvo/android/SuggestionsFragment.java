@@ -95,6 +95,7 @@ public class SuggestionsFragment extends Fragment implements ChildFragment {
             @Override
             public void onClick(View v) {
                 CharSequence text = SuggestionsFragment.this.text.getText();
+                final Activity activity = getActivity();
                 if(text != null && text.toString().replaceAll("\\s+","").length() > 1){
                     hideKeyboard();
                     CreateSuggestionRequest createSuggestionRequest = new CreateSuggestionRequest(post, text.toString());
@@ -107,18 +108,18 @@ public class SuggestionsFragment extends Fragment implements ChildFragment {
                         @Override
                         public void done(ParseException e) {
                             if (e == null) {
-                                ToastUtils.makeText(getActivity(), getActivity().getString(R.string.suggestion_added), Toast.LENGTH_LONG).show();
+                                ToastUtils.makeText(activity, activity.getString(R.string.suggestion_added), Toast.LENGTH_LONG).show();
                                 suggestion.setLoading(false);
                                 adapter.notifyDataSetChanged();
                             } else {
                                 adapter.remove(suggestion);
                                 SuggestionsFragment.this.text.setText(suggestion.getBody());
-                                ToastUtils.makeText(getActivity(), getActivity().getString(R.string.suggestion_could_not_be_posted), Toast.LENGTH_LONG).show();
+                                ToastUtils.makeText(activity, activity.getString(R.string.suggestion_could_not_be_posted), Toast.LENGTH_LONG).show();
                             }
                         }
                     });
                 } else {
-                    ToastUtils.makeText(getActivity(), getActivity().getString(R.string.missing_suggestion), Toast.LENGTH_LONG).show();
+                    ToastUtils.makeText(activity, activity.getString(R.string.missing_suggestion), Toast.LENGTH_LONG).show();
                 }
             }
         });
