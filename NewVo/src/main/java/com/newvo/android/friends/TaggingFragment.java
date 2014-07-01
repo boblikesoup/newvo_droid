@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.facebook.model.GraphUser;
@@ -25,6 +26,9 @@ import java.util.List;
  * Created by David on 6/28/2014.
  */
 public class TaggingFragment extends Fragment implements ChildFragment {
+
+    @InjectView(R.id.scroll_view)
+    ScrollView scrollView;
 
     @InjectView(R.id.add_friend)
     View addFriend;
