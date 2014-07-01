@@ -85,6 +85,7 @@ public class SummaryViewHolder {
         }
         int votes1 = item.getVotes1();
         int votes2 = item.getVotes2();
+        int totalVotes = votes1 + votes2;
 
         if(userIsPoster){
             int counter1 = item.getCounter1();
@@ -119,10 +120,18 @@ public class SummaryViewHolder {
                 secondVotes.choiceIcon.setActivated(false);
             }
 
-            firstVotes.percent.setVisibility(View.VISIBLE);
             firstVotes.votesLayout.setVisibility(View.VISIBLE);
-            secondVotes.percent.setVisibility(View.VISIBLE);
+
             secondVotes.votesLayout.setVisibility(View.VISIBLE);
+
+            if (totalVotes == 0) {
+                totalVotes = 1;
+                firstVotes.percent.setVisibility(View.INVISIBLE);
+                secondVotes.percent.setVisibility(View.INVISIBLE);
+            } else {
+                firstVotes.percent.setVisibility(View.VISIBLE);
+                secondVotes.percent.setVisibility(View.VISIBLE);
+            }
         }
         else {
             firstVotes.percent.setVisibility(View.GONE);
@@ -150,11 +159,6 @@ public class SummaryViewHolder {
             secondVotes.choiceIcon.setImageResource(R.drawable.x);
             secondImageLayout.setVisibility(View.GONE);
             buffer.setVisibility(View.INVISIBLE);
-        }
-
-        int totalVotes = votes1 + votes2;
-        if (totalVotes == 0) {
-            totalVotes = 1;
         }
 
         int percent1 = votes1 * 100 / totalVotes;
