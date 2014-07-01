@@ -16,14 +16,16 @@ import static com.parse.ParseUser.getCurrentUser;
  */
 public class CreatePostRequest {
 
+    private boolean friendsOnly;
     private Post post;
     private List<GraphUser> users;
     private List<Group> groups;
 
-    public CreatePostRequest(Context context, String caption, ParseFile image1, ParseFile image2, List<Group> groups, List<GraphUser> users) throws MissingCaptionError, MissingImageError {
+    public CreatePostRequest(Context context, String caption, ParseFile image1, ParseFile image2, List<Group> groups, List<GraphUser> users, boolean friendsOnly) throws MissingCaptionError, MissingImageError {
         this(context, caption, image1, image2);
         this.users = users;
         this.groups = groups;
+        this.friendsOnly = friendsOnly;
 
     }
 
@@ -60,6 +62,7 @@ public class CreatePostRequest {
         final Set<String> ids = new HashSet<String>();
 
         //Notify users after tagging is successful.
+        final User self = User.getCurrentUser();
         final SaveCallback nestedCallback = new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -67,7 +70,7 @@ public class CreatePostRequest {
                     if (!ids.isEmpty()) {
                         HashMap<String, Object> params = new HashMap<String, Object>();
                         params.put("userIDS", post.getUserTags());
-                        params.put("msg", User.getCurrentUser().getPublicName() + " has tagged you in a post. Take a look!");
+                        params.put("msg", self.getPublicName() + " has tagged you in a post. Take a look!");
                         ParseCloud.callFunctionInBackground("push_tagged_notifications", params, null);
                     }
                 }
@@ -86,6 +89,9 @@ public class CreatePostRequest {
                 for(String pushId : group.getPushIds()){
                     ids.add(pushId);
                 }
+            }
+            if(ids.contains(self.getObjectId())){
+                ids.remove(self.getObjectId());
             }
             if(users == null || users.isEmpty()){
                 post.setUserTags(new ArrayList<String>(ids));

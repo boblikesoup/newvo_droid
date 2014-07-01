@@ -41,6 +41,7 @@ public class Post extends ParseObject implements Comparable<Post> {
 
     //viewable by strings
     public static final String PUBLIC = "public";
+    public static final String FRIENDS = "friends";
 
 
     public User getUser() {
@@ -161,6 +162,8 @@ public class Post extends ParseObject implements Comparable<Post> {
         switch (status) {
             case 0:
                 return PUBLIC;
+            case 3:
+                return FRIENDS;
         }
         return null;
     }
@@ -169,6 +172,9 @@ public class Post extends ParseObject implements Comparable<Post> {
         int viewableByInt = -1;
         if (viewableBy.equals(PUBLIC)) {
             viewableByInt = 0;
+        }
+        if (viewableBy.equals(FRIENDS)) {
+            viewableByInt = 3;
         }
         if (viewableByInt > -1) {
             put(VIEWABLE_BY, viewableByInt);

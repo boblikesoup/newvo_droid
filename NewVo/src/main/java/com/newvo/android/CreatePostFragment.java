@@ -17,6 +17,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import com.newvo.android.friends.FriendPickerActivity;
 import com.newvo.android.friends.TaggingFragment;
+import com.newvo.android.groups.GroupPickerAdapter;
 import com.newvo.android.remote.CreatePostRequest;
 import com.newvo.android.util.ImageFileUtils;
 import com.newvo.android.util.IntentUtils;
@@ -65,6 +66,8 @@ public class CreatePostFragment extends Fragment {
 
     public CreatePostFragment() {
         FriendPickerActivity.SELECTION = null;
+        GroupPickerAdapter.SELECTION = null;
+        TaggingFragment.FRIENDS_ONLY = false;
 
     }
 
@@ -136,7 +139,10 @@ public class CreatePostFragment extends Fragment {
     }
 
     protected void createPostRequest(final Activity activity, String caption, ParseFile parseFile1, ParseFile parseFile2) {
-        new CreatePostRequest(activity, caption, parseFile1, parseFile2, null, FriendPickerActivity.SELECTION).request(new SaveCallback() {
+        new CreatePostRequest(activity, caption, parseFile1, parseFile2,
+                GroupPickerAdapter.SELECTION,
+                FriendPickerActivity.SELECTION,
+                TaggingFragment.FRIENDS_ONLY).request(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e == null) {

@@ -26,7 +26,7 @@ import java.util.List;
  */
 public class TaggingFragment extends Fragment implements ChildFragment {
 
-    private static boolean FRIENDS_ONLY = false;
+    public static boolean FRIENDS_ONLY = false;
 
     @InjectView(R.id.scroll_view)
     ScrollView scrollView;
