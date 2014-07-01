@@ -135,8 +135,6 @@ public class Post extends ParseObject implements Comparable<Post> {
                 return INACTIVE;
             case 2:
                 return DELETED;
-            case 3:
-                return FRIENDS;
         }
         return null;
     }
@@ -155,8 +153,6 @@ public class Post extends ParseObject implements Comparable<Post> {
             return 1;
         } else if (status.equals(DELETED)) {
             return 2;
-        } else if (status.equals(FRIENDS)) {
-            return 3;
         }
         return -1;
     }

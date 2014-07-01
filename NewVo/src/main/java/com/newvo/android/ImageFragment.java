@@ -14,7 +14,8 @@ import com.parse.ParseFile;
  */
 public class ImageFragment extends Fragment implements ChildFragment {
 
-    private final ParseFile imageSource;
+    private ParseFile imageSource;
+    private ParseTouchImageView imageView;
 
     public ImageFragment(ParseFile imageSource){
         this.imageSource = imageSource;
@@ -23,9 +24,18 @@ public class ImageFragment extends Fragment implements ChildFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ParseTouchImageView imageView = new ParseTouchImageView(container.getContext());
+        imageView = new ParseTouchImageView(container.getContext());
         imageView.setParseFile(imageSource);
         imageView.loadInBackground();
         return imageView;
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        imageSource = null;
+        imageView.setParseFile(null);
     }
 }

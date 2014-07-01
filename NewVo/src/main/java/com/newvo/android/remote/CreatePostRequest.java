@@ -26,6 +26,7 @@ public class CreatePostRequest {
         this.users = users;
         this.groups = groups;
         this.friendsOnly = friendsOnly;
+        post.setViewableBy(this.friendsOnly ? Post.FRIENDS : Post.PUBLIC);
 
     }
 
@@ -44,7 +45,7 @@ public class CreatePostRequest {
         User currentUser = (User) getCurrentUser();
         post.setUser(currentUser);
         post.setStatus(Post.ACTIVE);
-        post.setViewableBy(this.friendsOnly ? Post.FRIENDS : Post.PUBLIC);
+        post.setViewableBy(Post.PUBLIC);
         post.setVotes1(0);
         post.setVotes2(0);
         post.setCounter1(0);

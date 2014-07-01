@@ -22,6 +22,7 @@ import java.util.List;
 public class SummaryViewHolder {
 
     private final Context context;
+    private Post item;
 
     @InjectView(R.id.votes1)
     View firstVotesView;
@@ -63,6 +64,10 @@ public class SummaryViewHolder {
     }
 
     public void setItem(final Post item) {
+        if(this.item != null && this.item.equals(item)){
+            return;
+        }
+        this.item = item;
         final ParseFile photo1 = item.getPhoto1();
         if (photo1 != null) {
             firstImage.setParseFile(photo1);
