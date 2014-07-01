@@ -101,4 +101,12 @@ public class Group extends ParseObject {
             put(STATUS, statusValue);
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o == null || !(o instanceof ParseObject)){
+            return false;
+        }
+        return getObjectId().equals(((ParseObject)o).getObjectId());
+    }
 }

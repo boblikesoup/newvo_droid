@@ -46,14 +46,6 @@ public class GroupPickerAdapter extends ArrayAdapter<Group> {
         return convertView;
     }
 
-    public List<Group> getGroups() {
-        List<Group> friends = new ArrayList<Group>();
-        for(int i = 0; i < getCount(); i++){
-            friends.add(getItem(i));
-        }
-        return friends;
-    }
-
     class ViewHolder {
 
         @InjectView(R.id.picker_layout)

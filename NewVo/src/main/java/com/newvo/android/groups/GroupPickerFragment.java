@@ -17,6 +17,7 @@ public class GroupPickerFragment extends GroupsFragment implements ChildFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
+        newGroup.setVisibility(View.GONE);
         return view;
     }
 

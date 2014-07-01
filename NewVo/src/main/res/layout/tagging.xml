@@ -12,6 +12,11 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <include
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/picker_item"/>
+
         <LinearLayout
             android:id="@+id/add_friend"
             android:layout_width="match_parent"
@@ -79,5 +84,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:clickable="false"/>
+
     </LinearLayout>
 </com.newvo.android.util.AdjustingScrollView>

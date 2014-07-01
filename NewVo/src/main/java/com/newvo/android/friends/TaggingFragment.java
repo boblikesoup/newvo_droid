@@ -6,17 +6,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.facebook.model.GraphUser;
 import com.newvo.android.NewVoActivity;
 import com.newvo.android.R;
-import com.newvo.android.groups.FriendAdapter;
-import com.newvo.android.groups.GroupAdapter;
-import com.newvo.android.groups.GroupPickerAdapter;
-import com.newvo.android.groups.GroupPickerFragment;
+import com.newvo.android.groups.*;
 import com.newvo.android.util.ChildFragment;
 import com.newvo.android.util.IntentUtils;
 
@@ -26,6 +25,8 @@ import java.util.List;
  * Created by David on 6/28/2014.
  */
 public class TaggingFragment extends Fragment implements ChildFragment {
+
+    private static boolean FRIENDS_ONLY = false;
 
     @InjectView(R.id.scroll_view)
     ScrollView scrollView;
@@ -41,6 +42,15 @@ public class TaggingFragment extends Fragment implements ChildFragment {
 
     @InjectView(R.id.groups_list)
     ListView groups;
+
+    @InjectView(R.id.picker_layout)
+    View pickerLayout;
+
+    @InjectView(R.id.picker_text)
+    TextView pickerText;
+
+    @InjectView(R.id.picker_checkbox)
+    CheckBox pickerCheckbox;
 
     public TaggingFragment() {
 
@@ -74,6 +84,16 @@ public class TaggingFragment extends Fragment implements ChildFragment {
             initGroupAdapter();
         }
 
+        pickerText.setText("Friends Only");
+        pickerCheckbox.setChecked(FRIENDS_ONLY);
+        pickerLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FRIENDS_ONLY = !FRIENDS_ONLY;
+                pickerCheckbox.setChecked(FRIENDS_ONLY);
+            }
+        });
+
         return rootView;
     }
 
@@ -84,7 +104,7 @@ public class TaggingFragment extends Fragment implements ChildFragment {
     }
 
     private void initGroupAdapter() {
-        GroupAdapter adapter = new GroupAdapter(getActivity(), R.layout.suggestion_single);
+        GroupTaggingAdapter adapter = new GroupTaggingAdapter(getActivity(), R.layout.suggestion_single, true);
         adapter.addAll(GroupPickerAdapter.SELECTION);
         groups.setAdapter(adapter);
     }

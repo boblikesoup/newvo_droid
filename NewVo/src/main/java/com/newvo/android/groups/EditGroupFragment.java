@@ -144,7 +144,7 @@ public class EditGroupFragment extends Fragment implements ChildFragment {
                         ((DrawerActivity) getActivity()).setActionBarLoading(true);
                         new EditGroupRequest(group, name,
                                 description,
-                                ((FriendAdapter) friendsToAdd.getAdapter()).getFriends()).request(new SaveCallback() {
+                                FriendPickerActivity.SELECTION).request(new SaveCallback() {
                             @Override
                             public void done(ParseException e) {
                                 if(EditGroupFragment.this.equals( ((NewVoActivity) activity).getActiveFragment())) {
