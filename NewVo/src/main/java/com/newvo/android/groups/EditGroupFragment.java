@@ -3,6 +3,7 @@ package com.newvo.android.groups;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,10 +62,16 @@ public class EditGroupFragment extends Fragment implements ChildFragment {
     private String successText;
     private String failureText;
 
-    public EditGroupFragment(Group group) {
-        FriendPickerActivity.SELECTION = null;
+    public EditGroupFragment(Group group){
+        this(group, group == null || group.getACL().getWriteAccess(User.getCurrentUser()));
+    }
+
+    public EditGroupFragment(Group group, boolean writeAccess) {
+        if(writeAccess) {
+            FriendPickerActivity.SELECTION = null;
+        }
         this.group = group;
-        writeAccess = group == null || group.getACL().getWriteAccess(User.getCurrentUser());
+        this.writeAccess = writeAccess;
         if(group != null){
             requestUsers(group);
         }
@@ -176,6 +183,8 @@ public class EditGroupFragment extends Fragment implements ChildFragment {
             groupDescription.setEnabled(false);
             addMoreFriends.setVisibility(View.GONE);
             createGroup.setVisibility(View.GONE);
+            groupName.setTextColor(Color.WHITE);
+            groupDescription.setTextColor(Color.WHITE);
         }
 
         return rootView;

@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import com.newvo.android.NewVoActivity;
 import com.newvo.android.R;
 import com.newvo.android.parse.Group;
 
@@ -57,6 +58,12 @@ public class GroupTaggingAdapter extends ArrayAdapter<Group> {
 
         public void setItem(final Group item) {
             text.setText(item.getTitle());
+            text.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((NewVoActivity) getContext()).displayChildFragment(new EditGroupFragment(item, false), getContext().getString(R.string.title_create_post), "EditGroup");
+                }
+            });
             if(writeAccess) {
                 x.setOnClickListener(new View.OnClickListener() {
                     @Override
