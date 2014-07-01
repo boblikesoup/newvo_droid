@@ -44,7 +44,7 @@ public class CreatePostRequest {
         User currentUser = (User) getCurrentUser();
         post.setUser(currentUser);
         post.setStatus(Post.ACTIVE);
-        post.setViewableBy(Post.PUBLIC);
+        post.setViewableBy(this.friendsOnly ? Post.FRIENDS : Post.PUBLIC);
         post.setVotes1(0);
         post.setVotes2(0);
         post.setCounter1(0);

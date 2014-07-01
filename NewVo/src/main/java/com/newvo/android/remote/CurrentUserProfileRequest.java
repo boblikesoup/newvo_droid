@@ -5,6 +5,8 @@ import com.newvo.android.parse.User;
 import com.parse.FindCallback;
 import com.parse.ParseQuery;
 
+import java.util.Arrays;
+
 /**
  * Created by David on 4/26/2014.
  */
@@ -22,7 +24,12 @@ public class CurrentUserProfileRequest {
     }
 
     public void request(String status, FindCallback<Post> callback){
-        query.whereEqualTo("status", Post.getStatusValue(status));
+
+        if(status.equals(Post.ACTIVE)) {
+            query.whereContainedIn("status", Arrays.asList(Post.getStatusValue(status),Post.getStatusValue(Post.FRIENDS)));
+        } else {
+            query.whereEqualTo("status", Post.getStatusValue(status));
+        }
         query.findInBackground(callback);
     }
 

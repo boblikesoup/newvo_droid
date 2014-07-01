@@ -91,12 +91,18 @@ public class SummaryViewHolder {
             if(counter1 > 0) {
                 firstVotes.votesNotification.setText("+" + counter1);
                 firstVotes.votesNotification.setVisibility(View.VISIBLE);
+            } else {
+                firstVotes.votesNotification.setText("");
+                firstVotes.votesNotification.setVisibility(View.GONE);
             }
 
             int counter2 = item.getCounter2();
             if(counter2 > 0) {
                 secondVotes.votesNotification.setText("+" + counter2);
                 secondVotes.votesNotification.setVisibility(View.VISIBLE);
+            } else {
+                secondVotes.votesNotification.setText("");
+                secondVotes.votesNotification.setVisibility(View.GONE);
             }
             new ClearCountersRequest(item).request(null);
         }
@@ -104,9 +110,19 @@ public class SummaryViewHolder {
         if(votedOn || userIsPoster){
             if(votes1 > votes2){
                 firstVotes.choiceIcon.setActivated(true);
-            } else if(votes2 > votes1){
+                secondVotes.choiceIcon.setActivated(false);
+            }  if(votes2 > votes1){
+                firstVotes.choiceIcon.setActivated(false);
                 secondVotes.choiceIcon.setActivated(true);
+            } else {
+                firstVotes.choiceIcon.setActivated(false);
+                secondVotes.choiceIcon.setActivated(false);
             }
+
+            firstVotes.percent.setVisibility(View.VISIBLE);
+            firstVotes.votesLayout.setVisibility(View.VISIBLE);
+            secondVotes.percent.setVisibility(View.VISIBLE);
+            secondVotes.votesLayout.setVisibility(View.VISIBLE);
         }
         else {
             firstVotes.percent.setVisibility(View.GONE);
@@ -125,6 +141,10 @@ public class SummaryViewHolder {
                     ((NewVoActivity) context).displayChildFragment(new ImageFragment(photo2), context.getString(R.string.title_home), "SummaryImage");
                 }
             });
+
+            secondVotes.choiceIcon.setImageResource(R.drawable.check);
+            secondImageLayout.setVisibility(View.VISIBLE);
+            buffer.setVisibility(View.GONE);
         } else {
             secondImage.setParseFile(null);
             secondVotes.choiceIcon.setImageResource(R.drawable.x);
@@ -200,6 +220,9 @@ public class SummaryViewHolder {
                     popupMenu.show();
                 }
             });
+            settingsIcon.setVisibility(View.VISIBLE);
+        } else {
+            settingsIcon.setVisibility(View.INVISIBLE);
         }
 
     }
