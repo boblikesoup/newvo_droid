@@ -20,17 +20,17 @@ public class FeedRequest {
         String userId = user.getUserId();
 
         ParseQuery<Post> taggedPosts = ParseQuery.getQuery(Post.class);
+        taggedPosts.whereEqualTo(Post.USER_TAG, userId);
+
         ParseQuery<Post> regularPosts = ParseQuery.getQuery(Post.class);
-        taggedPosts.whereContainedIn(Post.USER_TAG, Arrays.asList(userId));
         regularPosts.whereEqualTo(Post.VIEWABLE_BY, 0);
 
 
         query = ParseQuery.or(Arrays.asList(taggedPosts, regularPosts));
-
         query.setLimit(NUMBER_OF_POSTS);
         query.whereNotEqualTo(Post.USER_ID, user);
-        query.whereNotEqualTo(Post.STATUS, Post.getStatusValue(Post.DELETED));
-        query.whereNotContainedIn(Post.VOTED_ON_ARRAY, Arrays.asList(userId));
+        query.whereEqualTo(Post.STATUS, 0);
+        query.whereNotEqualTo(Post.VOTED_ON_ARRAY, userId);
         query.orderByDescending(Post.CREATED_AT);
     }
 

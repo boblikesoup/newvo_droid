@@ -42,6 +42,7 @@ public class Post extends ParseObject implements Comparable<Post> {
     //viewable by strings
     public static final String PUBLIC = "public";
     public static final String FRIENDS = "friends";
+    private static final String GROUP = "group";
 
 
     public User getUser() {
@@ -53,7 +54,7 @@ public class Post extends ParseObject implements Comparable<Post> {
     }
 
     public String getPostId() {
-        return  getString(POST_ID);
+        return getString(POST_ID);
     }
 
     public String getCaption() {
@@ -146,7 +147,7 @@ public class Post extends ParseObject implements Comparable<Post> {
         }
     }
 
-    public static int getStatusValue(String status){
+    public static int getStatusValue(String status) {
         if (status.equals(ACTIVE)) {
             return 0;
         } else if (status.equals(INACTIVE)) {
@@ -162,6 +163,8 @@ public class Post extends ParseObject implements Comparable<Post> {
         switch (status) {
             case 0:
                 return PUBLIC;
+            case 1:
+                return GROUP;
             case 3:
                 return FRIENDS;
         }
@@ -172,8 +175,9 @@ public class Post extends ParseObject implements Comparable<Post> {
         int viewableByInt = -1;
         if (viewableBy.equals(PUBLIC)) {
             viewableByInt = 0;
-        }
-        if (viewableBy.equals(FRIENDS)) {
+        } else if (viewableBy.equals(GROUP)) {
+            viewableByInt = 1;
+        } else if (viewableBy.equals(FRIENDS)) {
             viewableByInt = 3;
         }
         if (viewableByInt > -1) {
@@ -181,21 +185,23 @@ public class Post extends ParseObject implements Comparable<Post> {
         }
     }
 
-    public List<String> getVotedOnArray(){ return  (List<String>) get(VOTED_ON_ARRAY);}
+    public List<String> getVotedOnArray() {
+        return (List<String>) get(VOTED_ON_ARRAY);
+    }
 
-    public List<String> getGroupIds(){
+    public List<String> getGroupIds() {
         return (List<String>) get(GROUP_ID);
     }
 
     public void setGroupIds(List<Group> groups) {
         List<String> ids = new ArrayList<String>();
-        for(Group group : groups){
+        for (Group group : groups) {
             ids.add(group.getObjectId());
         }
         put(GROUP_ID, ids);
     }
 
-    public List<String> getUserTags(){
+    public List<String> getUserTags() {
         return (List<String>) get(USER_TAG);
     }
 
@@ -205,12 +211,12 @@ public class Post extends ParseObject implements Comparable<Post> {
 
     @Override
     public boolean equals(Object o) {
-        if(o == null || !(o instanceof Post)){
+        if (o == null || !(o instanceof Post)) {
             return false;
         }
         String objectId = getObjectId();
         String otherObjectId = ((Post) o).getObjectId();
-        if(objectId == null || otherObjectId == null){
+        if (objectId == null || otherObjectId == null) {
             return false;
         }
         return objectId.equals(otherObjectId);
