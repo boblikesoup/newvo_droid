@@ -22,6 +22,7 @@ import com.newvo.android.parse.Post;
 import com.newvo.android.parse.User;
 import com.newvo.android.remote.GroupProfileRequest;
 import com.newvo.android.util.ChildFragment;
+import com.newvo.android.util.LoadingFragment;
 import com.newvo.android.util.ToastUtils;
 import com.parse.*;
 
@@ -32,7 +33,7 @@ import java.util.List;
 /**
  * Created by David on 6/26/2014.
  */
-public class GroupFragment extends Fragment implements ChildFragment {
+public class GroupFragment extends Fragment implements ChildFragment, LoadingFragment {
 
     @InjectView(R.id.group_name)
     TextView groupName;
@@ -53,6 +54,10 @@ public class GroupFragment extends Fragment implements ChildFragment {
 
 
     private void requestPosts() {
+        Activity activity = getActivity();
+        if(activity != null) {
+            ((DrawerActivity) activity).setActionBarLoading(true);
+        }
         new GroupProfileRequest(group).request(new FindCallback<Post>() {
 
             @Override
@@ -61,6 +66,10 @@ public class GroupFragment extends Fragment implements ChildFragment {
                     GroupFragment.this.postList = postList;
                     if (posts != null) {
                         ((ArrayAdapter<Post>) posts.getAdapter()).addAll(postList);
+                    }
+                    Activity activity = getActivity();
+                    if(activity != null) {
+                        ((DrawerActivity) activity).setActionBarLoading(false);
                     }
                 } else {
                     requestPosts();
@@ -275,4 +284,8 @@ public class GroupFragment extends Fragment implements ChildFragment {
                 .create().show();
     }
 
+    @Override
+    public boolean hasLoaded() {
+        return postList != null;
+    }
 }

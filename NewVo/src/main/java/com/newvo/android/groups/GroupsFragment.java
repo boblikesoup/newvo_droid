@@ -40,6 +40,11 @@ public class GroupsFragment extends Fragment implements LoadingFragment {
     }
 
     public void requestGroups() {
+        Activity activity = getActivity();
+        if(activity != null) {
+            groups = null;
+            ((DrawerActivity) activity).setActionBarLoading(true);
+        }
         new UserGroupsRequest().request(new FindCallback<Group>() {
             @Override
             public void done(List<Group> groups, ParseException e) {

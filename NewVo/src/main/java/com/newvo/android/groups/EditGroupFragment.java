@@ -27,6 +27,7 @@ import com.newvo.android.parse.User;
 import com.newvo.android.remote.EditGroupRequest;
 import com.newvo.android.util.ChildFragment;
 import com.newvo.android.util.IntentUtils;
+import com.newvo.android.util.LoadingFragment;
 import com.newvo.android.util.ToastUtils;
 import com.parse.ParseException;
 import com.parse.SaveCallback;
@@ -37,7 +38,7 @@ import java.util.List;
 /**
  * Created by David on 6/22/2014.
  */
-public class EditGroupFragment extends Fragment implements ChildFragment {
+public class EditGroupFragment extends Fragment implements ChildFragment, LoadingFragment {
 
     public static final int DP_OFFSET = 40;
 
@@ -63,13 +64,17 @@ public class EditGroupFragment extends Fragment implements ChildFragment {
     private String failureText;
 
     public EditGroupFragment(Group group){
-        this(group, group == null || group.getACL().getWriteAccess(User.getCurrentUser()));
-    }
-
-    public EditGroupFragment(Group group, boolean writeAccess) {
+        writeAccess = group == null || group.getACL().getWriteAccess(User.getCurrentUser());
         if(writeAccess) {
             FriendPickerActivity.SELECTION = null;
         }
+        this.group = group;
+        if(group != null){
+            requestUsers(group);
+        }
+    }
+
+    public EditGroupFragment(Group group, boolean writeAccess) {
         this.group = group;
         this.writeAccess = writeAccess;
         if(group != null){
@@ -103,6 +108,11 @@ public class EditGroupFragment extends Fragment implements ChildFragment {
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.create_group, container, false);
         ButterKnife.inject(this, rootView);
+
+        Activity activity = getActivity();
+        if(activity != null) {
+            ((DrawerActivity) activity).setActionBarLoading(true);
+        }
 
         if(FriendPickerActivity.SELECTION != null){
             initFriendAdapter(writeAccess);
@@ -194,6 +204,11 @@ public class EditGroupFragment extends Fragment implements ChildFragment {
         FriendAdapter adapter = new FriendAdapter(getActivity(), R.layout.suggestion_single, writeAccess);
         adapter.addAll(FriendPickerActivity.SELECTION);
         friendsToAdd.setAdapter(adapter);
+
+        Activity activity = getActivity();
+        if(activity != null) {
+            ((DrawerActivity) activity).setActionBarLoading(false);
+        }
     }
 
     @Override
@@ -206,5 +221,10 @@ public class EditGroupFragment extends Fragment implements ChildFragment {
                 ((FriendAdapter)friendsToAdd.getAdapter()).addAll(selection);
             }
         }
+    }
+
+    @Override
+    public boolean hasLoaded() {
+        return FriendPickerActivity.SELECTION != null;
     }
 }

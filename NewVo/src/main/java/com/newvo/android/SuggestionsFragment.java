@@ -19,6 +19,7 @@ import com.newvo.android.parse.User;
 import com.newvo.android.remote.CreateSuggestionRequest;
 import com.newvo.android.remote.PostSuggestionsRequest;
 import com.newvo.android.util.ChildFragment;
+import com.newvo.android.util.LoadingFragment;
 import com.newvo.android.util.ToastUtils;
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
@@ -30,7 +31,7 @@ import java.util.List;
 /**
  * Created by David on 4/21/2014.
  */
-public class SuggestionsFragment extends Fragment implements ChildFragment {
+public class SuggestionsFragment extends Fragment implements ChildFragment, LoadingFragment {
 
     @InjectView(R.id.summary)
     LinearLayout summary;
@@ -53,6 +54,7 @@ public class SuggestionsFragment extends Fragment implements ChildFragment {
 
 
     private final Post post;
+    private List<Suggestion> suggestions;
 
     public SuggestionsFragment(Post post) {
         this.post = post;
@@ -75,7 +77,10 @@ public class SuggestionsFragment extends Fragment implements ChildFragment {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
-                    getActivity().onBackPressed();
+                    Activity activity = getActivity();
+                    if(activity != null){
+                        activity.onBackPressed();
+                    }
                 } else {
                     Log.e("NewVo", "Failed to remove suggestion.");
                 }
@@ -137,10 +142,21 @@ public class SuggestionsFragment extends Fragment implements ChildFragment {
     }
 
     private void updateSuggestions(){
+        final Activity activity = getActivity();
+        if(activity != null) {
+            ((DrawerActivity) activity).setActionBarLoading(true);
+        }
         new PostSuggestionsRequest(post).request(new FindCallback<Suggestion>() {
             @Override
             public void done(List<Suggestion> suggestions, ParseException e) {
-                initSuggestions(suggestions);
+                if(e == null) {
+                    initSuggestions(suggestions);
+                    if(activity != null) {
+                        ((DrawerActivity) activity).setActionBarLoading(false);
+                    }
+                } else {
+                    updateSuggestions();
+                }
             }
         });
     }
@@ -152,9 +168,15 @@ public class SuggestionsFragment extends Fragment implements ChildFragment {
     }
 
     protected void initSuggestions(List<Suggestion> suggestions) {
+        this.suggestions = suggestions;
         final SuggestionAdapter adapter = (SuggestionAdapter) suggestionsList.getAdapter();
         if (post != null && suggestions.size() > 0) {
             adapter.addAll(suggestions);
         }
+    }
+
+    @Override
+    public boolean hasLoaded() {
+        return suggestions != null;
     }
 }
