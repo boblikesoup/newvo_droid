@@ -5,8 +5,6 @@ import com.newvo.android.parse.User;
 import com.parse.FindCallback;
 import com.parse.ParseQuery;
 
-import java.util.Arrays;
-
 /**
  * Created by David on 6/22/2014.
  */
@@ -19,7 +17,7 @@ public class UserGroupsRequest {
 
         query = ParseQuery.getQuery(Group.class);
         String userId = user.getFacebookId();
-        query.whereContainsAll(Group.MEMBER_IDS, Arrays.asList(userId));
+        query.whereEqualTo(Group.MEMBER_IDS, userId);
         query.whereNotEqualTo(Group.STATUS, Group.getStatusValue(Group.DELETED));
         query.orderByDescending(Group.CREATED_AT);
     }

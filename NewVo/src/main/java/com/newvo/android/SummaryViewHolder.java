@@ -117,7 +117,7 @@ public class SummaryViewHolder {
             if(votes1 > votes2){
                 firstVotes.choiceIcon.setActivated(true);
                 secondVotes.choiceIcon.setActivated(false);
-            }  if(votes2 > votes1){
+            } else if(votes2 > votes1){
                 firstVotes.choiceIcon.setActivated(false);
                 secondVotes.choiceIcon.setActivated(true);
             } else {

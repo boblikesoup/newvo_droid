@@ -5,8 +5,6 @@ import com.newvo.android.parse.Post;
 import com.parse.FindCallback;
 import com.parse.ParseQuery;
 
-import java.util.Arrays;
-
 /**
  * Created by David on 6/26/2014.
  */
@@ -18,8 +16,7 @@ public class GroupProfileRequest {
 
         query = ParseQuery.getQuery(Post.class);
         query.whereEqualTo(Post.STATUS, Post.getStatusValue(Post.ACTIVE));
-        query.whereNotEqualTo(Post.STATUS, Post.getStatusValue(Post.DELETED));
-        query.whereContainsAll(Post.GROUP_ID, Arrays.asList(group.getObjectId()));
+        query.whereEqualTo(Post.GROUP_ID, group.getObjectId());
         query.orderByDescending(Post.CREATED_AT);
     }
 
