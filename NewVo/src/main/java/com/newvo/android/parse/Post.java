@@ -34,6 +34,8 @@ public class Post extends ParseObject implements Comparable<Post> {
     public static final String GROUP_ID = "group_id";
     public static final String USER_TAG = "user_tags";
 
+    public static final String SCREEN_SHOT = "screenShot";
+
     //status strings
     public static final String ACTIVE = "active";
     public static final String INACTIVE = "inactive";
@@ -207,6 +209,15 @@ public class Post extends ParseObject implements Comparable<Post> {
 
     public void setUserTags(List<String> ids) {
         put(USER_TAG, ids);
+    }
+
+
+    public ParseFile getScreenShot(){
+        return getParseFile(SCREEN_SHOT);
+    }
+
+    public void setScreenShot(ParseFile screenShot) {
+        put(SCREEN_SHOT, screenShot);
     }
 
     @Override

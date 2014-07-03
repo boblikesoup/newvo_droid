@@ -177,4 +177,8 @@ public class CreatePostRequest {
 
     public class MissingImageError extends Error {
     }
+
+    public Post getPost() {
+        return post;
+    }
 }

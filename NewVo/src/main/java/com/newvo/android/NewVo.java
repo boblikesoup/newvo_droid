@@ -1,7 +1,9 @@
 package com.newvo.android;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
+import com.facebook.Session;
 import com.newvo.android.groups.GroupsFragment;
 
 
@@ -35,6 +37,13 @@ public class NewVo extends NewVoActivity {
         }
         //Default to home.
         return new HomeFragment();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+
     }
 
     private boolean compareToString(String name, int resId){

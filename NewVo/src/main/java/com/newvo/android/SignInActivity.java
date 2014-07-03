@@ -46,6 +46,7 @@ public class SignInActivity extends Activity {
                 @Override
                 public void done(ParseUser user, ParseException err) {
                     if (user != null) {
+                        updateFacebookInfo();
                         assignUser((User)user);
                     }
                 }
@@ -64,7 +65,6 @@ public class SignInActivity extends Activity {
 
     private void assignUser(User user) {
         if (user != null) {
-            updateFacebookInfo();
 
             Installation currentInstallation = Installation.getCurrentInstallation();
             currentInstallation.setPublicId(user.getObjectId());

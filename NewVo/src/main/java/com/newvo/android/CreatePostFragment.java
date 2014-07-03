@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,9 +18,12 @@ import android.widget.*;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import com.newvo.android.friends.FacebookPublisher;
 import com.newvo.android.friends.FriendPickerActivity;
 import com.newvo.android.friends.TaggingFragment;
 import com.newvo.android.groups.GroupPickerAdapter;
+import com.newvo.android.parse.Post;
+import com.newvo.android.parse.User;
 import com.newvo.android.remote.CreatePostRequest;
 import com.newvo.android.util.ImageFileUtils;
 import com.newvo.android.util.IntentUtils;
@@ -56,6 +60,9 @@ public class CreatePostFragment extends Fragment {
     LinearLayout buffer1;
     @InjectView(R.id.buffer2)
     LinearLayout buffer2;
+
+    @InjectView(R.id.create_post_images)
+    LinearLayout createPostImages;
 
     @InjectView(R.id.facebook_share_button)
     ImageButton facebookShareButton;
@@ -156,14 +163,16 @@ public class CreatePostFragment extends Fragment {
         }
     }
 
-    protected void createPostRequest(final Activity activity, String caption, ParseFile parseFile1, ParseFile parseFile2) {
-        new CreatePostRequest(activity, caption, parseFile1, parseFile2,
+    protected void createPostRequest(final Activity activity, final String caption, final ParseFile parseFile1, final ParseFile parseFile2) {
+        final CreatePostRequest createPostRequest = new CreatePostRequest(activity, caption, parseFile1, parseFile2,
                 GroupPickerAdapter.SELECTION,
                 FriendPickerActivity.SELECTION,
-                TaggingFragment.FRIENDS_ONLY).request(new SaveCallback() {
+                TaggingFragment.FRIENDS_ONLY);
+        createPostRequest.request(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
+                    shareOnFacebook(activity, createPostRequest.getPost(), image1.photoView, parseFile2 == null ? null : image2.photoView);
                     ToastUtils.makeText(activity, activity.getString(R.string.post_created), Toast.LENGTH_LONG, DP_OFFSET).show();
                     ((NewVoActivity) activity).restartFragment();
                 } else {
@@ -173,6 +182,32 @@ public class CreatePostFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void shareOnFacebook(final Activity activity, final Post post, final View image1, final View image2) {
+        boolean facebookSharingEnabled = PreferenceManager.getDefaultSharedPreferences(activity).getBoolean(FACEBOOK_SHARING, false);
+        if(facebookSharingEnabled){
+            Bitmap screenShot = FacebookPublisher.getScreenShot(image1, image2);
+            final ParseFile parseFile = new ParseFile(ImageFileUtils.bitmapToByteArray(screenShot));
+            post.setScreenShot(parseFile);
+            parseFile.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if(e == null) {
+                        post.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if(e == null){
+                                    new FacebookPublisher(activity).publishStory(parseFile, post.getCaption(), post.getObjectId(), User.getCurrentUser().getFacebookId());
+                                }
+
+                            }
+                        });
+                    }
+                }
+            });
+
+        }
     }
 
     @Override
