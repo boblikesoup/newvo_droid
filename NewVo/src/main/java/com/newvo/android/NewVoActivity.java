@@ -8,7 +8,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import com.newvo.android.parse.User;
 import com.newvo.android.slidingmenu.NavigationDrawerListAdapter;
+import com.personagraph.api.PGAgent;
 
 /**
  * Created by David on 4/11/2014.
@@ -26,11 +28,23 @@ public abstract class NewVoActivity extends DrawerActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        PGAgent.startSession(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        PGAgent.endSession(this);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         fragmentRetriever = new FragmentRetriever(this);
         super.onCreate(savedInstanceState);
 
-
+        PGAgent.shareFBToken(User.getCurrentUser().getFacebookId(), LoginView.PERMISSIONS);
         adapter = new NavigationDrawerListAdapter(getApplicationContext(),
                 fragmentRetriever.getNavigationDrawerItems());
 

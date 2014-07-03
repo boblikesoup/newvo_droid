@@ -15,3 +15,12 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+    -keep class com.personagraph.api.** {*;}
+    -keep class net.sqlcipher.** {*;}
+    -keep class org.brickred.socialauth.** {*;}
+    -keep class com.personagraph.sensor.app.AppSensor** {*;}
+    -keep class com.personagraph.sensor.fb.FBSensor** {*;}
+
+    -dontwarnorg.apache.commons.logging.LogFactory
+    -dontwarn android.webkit.*
+

@@ -9,6 +9,7 @@ import butterknife.OnClick;
 import com.parse.LogInCallback;
 import com.parse.ParseFacebookUtils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,6 +17,8 @@ import java.util.List;
  * Created by David on 4/25/2014.
  */
 public class LoginView extends LinearLayout {
+
+    public static ArrayList<String> PERMISSIONS = new ArrayList<String>(Arrays.asList("public_profile", "user_friends", "user_about_me", "user_relationships", "user_birthday", "user_location"));
 
     @InjectView(R.id.facebook_button)
     Button facebookButton;
@@ -34,7 +37,7 @@ public class LoginView extends LinearLayout {
 
     @OnClick (R.id.facebook_button)
     public void submit(){
-        List<String> permissions = Arrays.asList("public_profile","user_friends", "user_about_me", "user_relationships", "user_birthday", "user_location");
+        List<String> permissions = PERMISSIONS;
         ParseFacebookUtils.logIn(permissions, activity, callback);
     }
 }
