@@ -63,26 +63,25 @@ public class EditGroupFragment extends Fragment implements ChildFragment, Loadin
     private String successText;
     private String failureText;
 
+    private List<GraphUser> friends;
+
     public EditGroupFragment(Group group){
-        writeAccess = group == null || group.getACL().getWriteAccess(User.getCurrentUser());
-        if(writeAccess) {
-            FriendPickerActivity.SELECTION = null;
-        }
-        this.group = group;
-        if(group != null){
-            requestUsers(group);
-        }
+        this(group, group == null || group.getACL().getWriteAccess(User.getCurrentUser()));
     }
 
     public EditGroupFragment(Group group, boolean writeAccess) {
         this.group = group;
         this.writeAccess = writeAccess;
-        if(group != null){
-            requestUsers(group);
+        //If creating a new group, reset friends.
+        if(writeAccess) {
+            FriendPickerActivity.SELECTION = null;
+        }
+        if(group != null) {
+            requestUsers();
         }
     }
 
-    public void requestUsers(final Group group) {
+    public void requestUsers() {
         Request.newMyFriendsRequest(Session.getActiveSession(), new Request.GraphUserListCallback() {
             @Override
             public void onCompleted(List<GraphUser> graphUsers, Response response) {
@@ -95,9 +94,12 @@ public class EditGroupFragment extends Fragment implements ChildFragment, Loadin
                         }
                     }
                 }
-                FriendPickerActivity.SELECTION = members;
+                friends = members;
+                if(writeAccess){
+                    FriendPickerActivity.SELECTION = friends;
+                }
                 if(friendsToAdd != null && friendsToAdd.getAdapter() == null){
-                    initFriendAdapter(writeAccess);
+                    initFriendAdapter();
                 }
             }
         }).executeAsync();
@@ -109,13 +111,8 @@ public class EditGroupFragment extends Fragment implements ChildFragment, Loadin
         final View rootView = inflater.inflate(R.layout.create_group, container, false);
         ButterKnife.inject(this, rootView);
 
-        Activity activity = getActivity();
-        if(activity != null) {
-            ((DrawerActivity) activity).setActionBarLoading(true);
-        }
-
-        if(FriendPickerActivity.SELECTION != null){
-            initFriendAdapter(writeAccess);
+        if(friends != null){
+            initFriendAdapter();
         }
 
         successText = "Group Created Successfully!";
@@ -158,14 +155,14 @@ public class EditGroupFragment extends Fragment implements ChildFragment, Loadin
                         description = text.toString();
                     }
                     try {
-                        if(FriendPickerActivity.SELECTION == null || FriendPickerActivity.SELECTION.isEmpty()){
+                        if(friends == null || friends.isEmpty()){
                             ToastUtils.makeText(activity, "Please Add Friends To Your Group", Toast.LENGTH_LONG, DP_OFFSET).show();
                             return;
                         }
                         ((DrawerActivity) getActivity()).setActionBarLoading(true);
                         new EditGroupRequest(group, name,
                                 description,
-                                FriendPickerActivity.SELECTION).request(new SaveCallback() {
+                                friends).request(new SaveCallback() {
                             @Override
                             public void done(ParseException e) {
                                 if(EditGroupFragment.this.equals( ((NewVoActivity) activity).getActiveFragment())) {
@@ -200,9 +197,9 @@ public class EditGroupFragment extends Fragment implements ChildFragment, Loadin
         return rootView;
     }
 
-    private void initFriendAdapter(boolean writeAccess) {
-        FriendAdapter adapter = new FriendAdapter(getActivity(), R.layout.suggestion_single, writeAccess);
-        adapter.addAll(FriendPickerActivity.SELECTION);
+    private void initFriendAdapter() {
+        FriendAdapter adapter = new FriendAdapter(getActivity(), friends, R.layout.suggestion_single, writeAccess);
+        adapter.addAll(friends);
         friendsToAdd.setAdapter(adapter);
 
         Activity activity = getActivity();
@@ -215,16 +212,16 @@ public class EditGroupFragment extends Fragment implements ChildFragment, Loadin
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == IntentUtils.FRIEND_PICKER){
-            List<GraphUser> selection = FriendPickerActivity.SELECTION;
-            friendsToAdd.setAdapter(new FriendAdapter(getActivity(), R.layout.suggestion_single, writeAccess));
-            if(selection != null){
-                ((FriendAdapter)friendsToAdd.getAdapter()).addAll(selection);
+            friends = FriendPickerActivity.SELECTION;
+            friendsToAdd.setAdapter(new FriendAdapter(getActivity(), friends, R.layout.suggestion_single, writeAccess));
+            if(friends != null){
+                ((FriendAdapter)friendsToAdd.getAdapter()).addAll(friends);
             }
         }
     }
 
     @Override
     public boolean hasLoaded() {
-        return FriendPickerActivity.SELECTION != null;
+        return friends != null || group == null;
     }
 }

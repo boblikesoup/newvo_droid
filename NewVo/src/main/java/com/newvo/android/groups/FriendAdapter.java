@@ -13,7 +13,6 @@ import com.facebook.model.GraphUser;
 import com.newvo.android.R;
 import com.newvo.android.friends.FriendPickerActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,9 +22,15 @@ public class FriendAdapter extends ArrayAdapter<GraphUser> {
 
     private final int resource;
     private final boolean writeAccess;
+    private final List<GraphUser> friends;
 
     public FriendAdapter(Context context, int resource, boolean writeAccess) {
+        this(context, FriendPickerActivity.SELECTION, resource, writeAccess);
+    }
+
+    public FriendAdapter(Context context, List<GraphUser> friends, int resource, boolean writeAccess) {
         super(context, resource);
+        this.friends = friends;
         this.resource = resource;
         this.writeAccess = writeAccess;
     }
@@ -47,14 +52,6 @@ public class FriendAdapter extends ArrayAdapter<GraphUser> {
         return convertView;
     }
 
-    public List<GraphUser> getFriends() {
-        List<GraphUser> friends = new ArrayList<GraphUser>();
-        for(int i = 0; i < getCount(); i++){
-            friends.add(getItem(i));
-        }
-        return friends;
-    }
-
     class ViewHolder {
 
         @InjectView(R.id.text)
@@ -73,7 +70,7 @@ public class FriendAdapter extends ArrayAdapter<GraphUser> {
                 x.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        FriendPickerActivity.SELECTION.remove(item);
+                        friends.remove(item);
                         remove(item);
                     }
                 });
