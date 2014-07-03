@@ -6,6 +6,7 @@ import com.newvo.android.parse.Group;
 import com.newvo.android.parse.Post;
 import com.newvo.android.parse.User;
 import com.parse.*;
+import com.personagraph.api.PGAgent;
 
 import java.util.*;
 
@@ -62,7 +63,7 @@ public class CreatePostRequest {
         ParseFile photo1 = post.getPhoto1();
         ParseFile photo2 = post.getPhoto2();
 
-        if(photo1 != null && photo2 != null) {
+        if (photo1 != null && photo2 != null) {
             PhotoPairSaver photo1PairSaver = new PhotoPairSaver(photo1, saveCallback);
             PhotoPairSaver photo2PairSaver = new PhotoPairSaver(photo2, saveCallback);
             photo1PairSaver.setOtherSaver(photo2PairSaver);
@@ -102,11 +103,11 @@ public class CreatePostRequest {
             };
         }
 
-        public void setOtherSaver(PhotoPairSaver otherSaver){
+        public void setOtherSaver(PhotoPairSaver otherSaver) {
             this.otherSaver = otherSaver;
         }
 
-        public void save(){
+        public void save() {
             image.saveInBackground(saveCallback);
         }
     }
@@ -123,9 +124,20 @@ public class CreatePostRequest {
                 if (e == null) {
                     if (!ids.isEmpty()) {
                         HashMap<String, Object> params = new HashMap<String, Object>();
-                        params.put("userIDS", post.getUserTags());
+                        List<String> userTags = post.getUserTags();
+                        params.put("userIDS", userTags);
                         params.put("msg", self.getPublicName() + " has tagged you in a post. Take a look!");
                         ParseCloud.callFunctionInBackground("push_tagged_notifications", params, null);
+
+                        if (post.getStatus().equals(Post.getStatusValue(Post.ACTIVE))) {
+                            if (userTags == null | userTags.isEmpty()) {
+                                PGAgent.logEvent("user shared with everyone");
+                            } else {
+                                PGAgent.logEvent("user shared with friends and community");
+                            }
+                        } else {
+                            PGAgent.logEvent("user shared with friends only");
+                        }
                     }
                 }
                 if (saveCallback != null) {

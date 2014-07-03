@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.facebook.*;
 import com.newvo.android.util.ToastUtils;
 import com.parse.ParseFile;
+import com.personagraph.api.PGAgent;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -98,6 +99,8 @@ public class FacebookPublisher {
 
             RequestAsyncTask task = new RequestAsyncTask(request);
             task.execute();
+
+            PGAgent.logEvent("facebook sharing");
         }
 
     }

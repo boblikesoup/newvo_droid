@@ -16,6 +16,7 @@ import com.newvo.android.parse.Post;
 import com.newvo.android.remote.VoteOnPostRequest;
 import com.newvo.android.util.ToastUtils;
 import com.parse.*;
+import com.personagraph.api.PGAgent;
 
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -147,6 +148,7 @@ public class ComparisonViewHolder {
                                             ToastUtils.makeText(context, "Could Not Flag Post", Toast.LENGTH_SHORT, -1).show();
                                         } else {
                                             ToastUtils.makeText(context, "Flagged Post", Toast.LENGTH_SHORT, -1).show();
+                                            PGAgent.logEvent("post flagged");
                                             nextPost();
                                         }
                                     }

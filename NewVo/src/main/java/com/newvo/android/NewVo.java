@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import com.facebook.Session;
 import com.newvo.android.groups.GroupsFragment;
+import com.personagraph.api.PGAgent;
 
 
 public class NewVo extends NewVoActivity {
@@ -44,6 +45,42 @@ public class NewVo extends NewVoActivity {
         super.onActivityResult(requestCode, resultCode, data);
         Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
 
+    }
+
+    @Override
+    public void displayFragment(Fragment fragment, String name, String tag, String parentTag) {
+        super.displayFragment(fragment, name, tag, parentTag);
+        if(tag == null){
+            return;
+        }
+        if(compareToString(name,R.string.title_home)){
+            PGAgent.logEvent("main view controller");
+        } else if(compareToString(name,R.string.title_create_post)){
+            PGAgent.logEvent("create post view controller");
+        } else if(compareToString(name,R.string.title_profile)){
+            PGAgent.logEvent("my posts view controller");
+        } else if(compareToString(name,R.string.title_groups)){
+            PGAgent.logEvent("main groups tab");
+        }
+
+    }
+
+    @Override
+    public void displayChildFragment(Fragment fragment, String name, String tag) {
+        super.displayChildFragment(fragment, name, tag);
+        if(tag.equals("Caption")){
+            PGAgent.logEvent("caption zoomed");
+        } else if(tag.equals("Image1") || tag.equals("Image2") || tag.equals("SummaryImage")){
+            PGAgent.logEvent("image zoomed");
+        } else if(tag.equals("AddSuggestion") || tag.equals("SuggestionsList")){
+            PGAgent.logEvent("comment view controller");
+        } else if(tag.equals("CreateGroup")){
+            PGAgent.logEvent("create group controller");
+        } else if(tag.equals("SingleGroup")){
+            PGAgent.logEvent("single group controller");
+        }else if(tag.equals("Tagging")){
+            PGAgent.logEvent("entered tagging page");
+        }
     }
 
     private boolean compareToString(String name, int resId){
