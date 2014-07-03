@@ -3,9 +3,11 @@ package com.newvo.android;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.speech.RecognizerIntent;
 import android.view.LayoutInflater;
@@ -37,6 +39,7 @@ import static com.newvo.android.util.IntentUtils.*;
 public class CreatePostFragment extends Fragment {
 
     public static final int DP_OFFSET = 40;
+    public static final String FACEBOOK_SHARING = "facebookSharing";
     @InjectView(R.id.caption)
     TextView caption;
     @InjectView(R.id.microphone)
@@ -53,6 +56,9 @@ public class CreatePostFragment extends Fragment {
     LinearLayout buffer1;
     @InjectView(R.id.buffer2)
     LinearLayout buffer2;
+
+    @InjectView(R.id.facebook_share_button)
+    ImageButton facebookShareButton;
 
     @InjectView(R.id.progress_bar)
     protected ProgressBar progressBar;
@@ -107,6 +113,18 @@ public class CreatePostFragment extends Fragment {
                 ((NewVoActivity) getActivity()).displayChildFragment(new TaggingFragment(), getActivity().getString(R.string.title_create_post), "Tagging");
             }
         });
+
+        facebookShareButton.setActivated(PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean(FACEBOOK_SHARING, false));
+        facebookShareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                facebookShareButton.setActivated(!facebookShareButton.isActivated());
+                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
+                editor.putBoolean(FACEBOOK_SHARING, facebookShareButton.isActivated());
+                editor.commit();
+            }
+        });
+
 
         return rootView;
     }

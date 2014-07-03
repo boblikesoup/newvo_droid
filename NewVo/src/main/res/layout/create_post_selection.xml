@@ -29,22 +29,11 @@
                      android:layout_marginLeft="10dp"
                      android:contentDescription="@string/first_selection_description"/>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <ImageButton
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/main_button"
-                android:background="@null"
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:layout_margin="10dp"
-                android:contentDescription="@string/comment_description"
-                android:src="@drawable/post"
-                android:visibility="visible"/>
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <ProgressBar
                 style="?android:attr/progressBarStyleHorizontal"
@@ -60,7 +49,38 @@
                 android:indeterminate="true"
                 />
 
-        </RelativeLayout>
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/main_button"
+                android:background="@null"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:contentDescription="@string/comment_description"
+                android:src="@drawable/post"
+                android:visibility="visible"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/facebook_share_button"
+                android:layout_weight="1"
+                android:scaleType="fitEnd"
+                android:contentDescription="@string/comment_description"
+                android:background="@null"
+                android:src="@drawable/facebook_share"
+                android:visibility="visible"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:checked="false"
+                android:textOn=" "
+                android:textOff=" "
+                android:enabled="true"
+                />
+
+        </LinearLayout>
 
         <ImageButton
             android:layout_width="match_parent"
