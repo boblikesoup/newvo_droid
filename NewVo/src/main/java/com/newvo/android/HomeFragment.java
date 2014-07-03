@@ -91,6 +91,7 @@ public class HomeFragment extends Fragment implements LoadingFragment {
         new FeedRequest().request(new FindCallback<Post>() {
             @Override
             public void done(List<Post> posts, ParseException e) {
+                Activity activity = getActivity();
                 if (e == null) {
                     //Remove already voted on posts.
                     if (posts != null) {
@@ -106,9 +107,8 @@ public class HomeFragment extends Fragment implements LoadingFragment {
                                 if (size == FeedRequest.NUMBER_OF_POSTS) {
                                     requestMorePosts();
                                 } else {
-                                    Activity activity = getActivity();
                                     if (activity != null) {
-                                        ((NewVoActivity)getActivity()).attachDetachFragment();
+                                        ((NewVoActivity) activity).attachDetachFragment();
                                     }
                                 }
                                 return;
@@ -121,12 +121,11 @@ public class HomeFragment extends Fragment implements LoadingFragment {
                     }
                     if(loadingPosts){
                         loadingPosts = false;
-                        Activity activity = getActivity();
                         if (activity != null) {
-                            ((NewVoActivity)getActivity()).attachDetachFragment();
+                            ((NewVoActivity) activity).attachDetachFragment();
                         }
                     }
-                } else {
+                } else if (activity != null){
                     requestMorePosts();
                 }
             }

@@ -48,7 +48,7 @@ public class GroupsFragment extends Fragment implements LoadingFragment {
         new UserGroupsRequest().request(new FindCallback<Group>() {
             @Override
             public void done(List<Group> groups, ParseException e) {
-                if(e == null) {
+                if (e == null) {
                     GroupsFragment.this.groups = groups;
                     if (groups != null && groups.size() > 0 && groupsList != null && groupsList.getAdapter() != null && groupsList.getAdapter() instanceof ArrayAdapter) {
                         ((ArrayAdapter) groupsList.getAdapter()).addAll(groups);
@@ -57,7 +57,7 @@ public class GroupsFragment extends Fragment implements LoadingFragment {
                     if(activity != null) {
                         ((DrawerActivity) activity).setActionBarLoading(false);
                     }
-                } else {
+                } else if (getActivity() != null) {
                     requestGroups();
                 }
             }

@@ -62,16 +62,16 @@ public class GroupFragment extends Fragment implements ChildFragment, LoadingFra
 
             @Override
             public void done(List<Post> postList, ParseException e) {
+                Activity activity = getActivity();
                 if (e == null) {
                     GroupFragment.this.postList = postList;
                     if (posts != null) {
                         ((ArrayAdapter<Post>) posts.getAdapter()).addAll(postList);
                     }
-                    Activity activity = getActivity();
                     if(activity != null) {
                         ((DrawerActivity) activity).setActionBarLoading(false);
                     }
-                } else {
+                } else if(activity != null) {
                     requestPosts();
                 }
             }

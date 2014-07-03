@@ -142,19 +142,20 @@ public class SuggestionsFragment extends Fragment implements ChildFragment, Load
     }
 
     private void updateSuggestions(){
-        final Activity activity = getActivity();
+        Activity activity = getActivity();
         if(activity != null) {
             ((DrawerActivity) activity).setActionBarLoading(true);
         }
         new PostSuggestionsRequest(post).request(new FindCallback<Suggestion>() {
             @Override
             public void done(List<Suggestion> suggestions, ParseException e) {
+                Activity activity = getActivity();
                 if(e == null) {
                     initSuggestions(suggestions);
                     if(activity != null) {
                         ((DrawerActivity) activity).setActionBarLoading(false);
                     }
-                } else {
+                } else if(getActivity() != null) {
                     updateSuggestions();
                 }
             }

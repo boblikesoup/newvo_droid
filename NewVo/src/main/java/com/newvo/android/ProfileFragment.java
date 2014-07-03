@@ -33,17 +33,17 @@ public class ProfileFragment extends Fragment implements LoadingFragment {
         new CurrentUserProfileRequest().request(active, new FindCallback<Post>() {
             @Override
             public void done(List<Post> posts, ParseException e) {
+                final Activity activity = getActivity();
                 if(e == null) {
                     profile.populateList(active, posts);
                     if(holder != null){
                         holder.populateListView(active, posts);
                     } else {
-                        Activity activity = getActivity();
                         if (activity != null) {
-                            ((NewVoActivity)getActivity()).attachDetachFragment();
+                            ((NewVoActivity) activity).attachDetachFragment();
                         }
                     }
-                } else {
+                } else if (activity != null) {
                     requestPosts(active);
                 }
             }
