@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Handler;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -65,6 +66,7 @@ public class ComparisonViewHolder {
         this.post = item;
 
         question.setText(item.getCaption());
+        question.setMovementMethod(new ScrollingMovementMethod());
 
         final ParseFile photo2 = item.getPhoto2();
         if (photo2 == null) {

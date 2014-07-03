@@ -137,6 +137,25 @@ public class SummaryViewHolder {
                 firstVotes.percent.setVisibility(View.VISIBLE);
                 secondVotes.percent.setVisibility(View.VISIBLE);
             }
+
+            int percent1 = votes1 * 100 / totalVotes;
+            int percent2 = votes2 * 100 / totalVotes;
+
+            //Start with the one with the larger remainder.
+            boolean addToFirst = (votes1 * 100.0 / totalVotes) - percent1 >= (votes2 * 100.0 / totalVotes) - percent2;
+            while(percent1 + percent2 < 100){
+                if(addToFirst){
+                    percent1++;
+                } else {
+                    percent2++;
+                }
+                addToFirst = !addToFirst;
+            }
+            firstVotes.percent.setText(percent1 + "%");
+            firstVotes.votes.setText(votes1 + "");
+
+            secondVotes.percent.setText(percent2 + "%");
+            secondVotes.votes.setText(votes2 + "");
         }
         else {
             firstVotes.percent.setVisibility(View.GONE);
@@ -165,25 +184,6 @@ public class SummaryViewHolder {
             secondImageLayout.setVisibility(View.GONE);
             buffer.setVisibility(View.INVISIBLE);
         }
-
-        int percent1 = votes1 * 100 / totalVotes;
-        int percent2 = votes2 * 100 / totalVotes;
-
-        //Start with the one with the larger remainder.
-        boolean addToFirst = (votes1 * 100.0 / totalVotes) - percent1 >= (votes2 * 100.0 / totalVotes) - percent2;
-        while(percent1 + percent2 < 100){
-            if(addToFirst){
-                percent1++;
-            } else {
-                percent2++;
-            }
-            addToFirst = !addToFirst;
-        }
-        firstVotes.percent.setText(percent1 + "%");
-        firstVotes.votes.setText(votes1 + "");
-
-        secondVotes.percent.setText(percent2 + "%");
-        secondVotes.votes.setText(votes2 + "");
 
         int numberOfSuggestions1 = item.getNumberOfSuggestions();
         numberOfSuggestions.setText(numberOfSuggestions1 + "");

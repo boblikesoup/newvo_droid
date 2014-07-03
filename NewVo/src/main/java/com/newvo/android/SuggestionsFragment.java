@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,6 +72,8 @@ public class SuggestionsFragment extends Fragment implements ChildFragment, Load
         SuggestionAdapter adapter = new SuggestionAdapter(getActivity(), R.layout.suggestion_single);
         updateSuggestions();
         suggestionsList.setAdapter(adapter);
+
+        caption.setMovementMethod(new ScrollingMovementMethod());
 
         SummaryViewHolder summaryViewHolder = new SummaryViewHolder(getActivity(), summary);
         summaryViewHolder.setDeleteCallback(new DeleteCallback() {

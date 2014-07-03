@@ -47,7 +47,7 @@ public class SummaryAdapter extends ArrayAdapter<Post> {
         holder.setSaveCallback(saveCallback);
         holder.setItem(item);
 
-        if (item != null && item.getNumberOfSuggestions() != 0 && getContext() instanceof NewVoActivity) {
+        if (item != null && getContext() instanceof NewVoActivity) {
             holder.suggestionsIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
