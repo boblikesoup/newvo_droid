@@ -74,6 +74,15 @@ public class SuggestionsFragment extends Fragment implements ChildFragment, Load
         suggestionsList.setAdapter(adapter);
 
         caption.setMovementMethod(new ScrollingMovementMethod());
+        caption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Activity activity = getActivity();
+                if(activity != null) {
+                    ((NewVoActivity) activity).displayChildFragment(new TextFragment(post.getCaption()), "Caption", "Caption");
+                }
+            }
+        });
 
         SummaryViewHolder summaryViewHolder = new SummaryViewHolder(getActivity(), summary);
         summaryViewHolder.setDeleteCallback(new DeleteCallback() {

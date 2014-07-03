@@ -62,11 +62,17 @@ public class ComparisonViewHolder {
         context = view.getContext();
     }
 
-    public void setItem(Post item) {
+    public void setItem(final Post item) {
         this.post = item;
 
         question.setText(item.getCaption());
         question.setMovementMethod(new ScrollingMovementMethod());
+        question.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NewVoActivity) context).displayChildFragment(new TextFragment(item.getCaption()), "Caption", "Caption");
+            }
+        });
 
         final ParseFile photo2 = item.getPhoto2();
         if (photo2 == null) {
