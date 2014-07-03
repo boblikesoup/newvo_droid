@@ -59,6 +59,59 @@ public class CreatePostRequest {
     }
 
     public void request(final SaveCallback saveCallback) {
+        ParseFile photo1 = post.getPhoto1();
+        ParseFile photo2 = post.getPhoto2();
+
+        if(photo1 != null && photo2 != null) {
+            PhotoPairSaver photo1PairSaver = new PhotoPairSaver(photo1, saveCallback);
+            PhotoPairSaver photo2PairSaver = new PhotoPairSaver(photo2, saveCallback);
+            photo1PairSaver.setOtherSaver(photo2PairSaver);
+            photo2PairSaver.setOtherSaver(photo1PairSaver);
+            photo1PairSaver.save();
+            photo2PairSaver.save();
+        } else {
+            new PhotoPairSaver(photo1, saveCallback).save();
+        }
+
+
+    }
+
+    class PhotoPairSaver {
+
+        private final SaveCallback saveCallback;
+        private boolean photoSaved = false;
+        private PhotoPairSaver otherSaver;
+        private ParseFile image;
+
+        public PhotoPairSaver(ParseFile image, final SaveCallback saveCallback) {
+            this.image = image;
+            this.saveCallback = new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null) {
+                        if (saveCallback != null) {
+                            saveCallback.done(e);
+                        }
+                        return;
+                    }
+                    photoSaved = true;
+                    if (otherSaver == null || otherSaver.photoSaved && saveCallback != null) {
+                        savePost(saveCallback);
+                    }
+                }
+            };
+        }
+
+        public void setOtherSaver(PhotoPairSaver otherSaver){
+            this.otherSaver = otherSaver;
+        }
+
+        public void save(){
+            image.saveInBackground(saveCallback);
+        }
+    }
+
+    private void savePost(final SaveCallback saveCallback) {
 
         final Set<String> ids = new HashSet<String>();
 
@@ -82,19 +135,18 @@ public class CreatePostRequest {
         };
 
 
-
         //Tagging groups
-        if(groups != null && !groups.isEmpty()){
+        if (groups != null && !groups.isEmpty()) {
             post.setGroupIds(groups);
-            for(Group group : groups){
-                for(String pushId : group.getPushIds()){
+            for (Group group : groups) {
+                for (String pushId : group.getPushIds()) {
                     ids.add(pushId);
                 }
             }
-            if(ids.contains(self.getObjectId())){
+            if (ids.contains(self.getObjectId())) {
                 ids.remove(self.getObjectId());
             }
-            if(users == null || users.isEmpty()){
+            if (users == null || users.isEmpty()) {
                 post.setUserTags(new ArrayList<String>(ids));
             }
         }
@@ -105,7 +157,7 @@ public class CreatePostRequest {
                 @Override
                 public void done(List<User> pushUsers, ParseException e) {
                     if (e == null) {
-                        for(User pushUser : pushUsers){
+                        for (User pushUser : pushUsers) {
                             ids.add(pushUser.getUserId());
                         }
                         post.setUserTags(new ArrayList<String>(ids));
