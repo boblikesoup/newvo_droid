@@ -6,11 +6,12 @@
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="match_parent"
-                    android:layout_height="75dp"
+                    android:layout_height="wrap_content"
                     android:background="@color/light_transparent_background"
                     android:orientation="horizontal"
                     android:layout_marginTop="2dp"
-                    android:layout_marginBottom="2dp">
+                    android:layout_marginBottom="2dp"
+                    android:minHeight="75dp">
 
         <TextView
             android:id="@+id/text"
@@ -23,12 +24,13 @@
             android:layout_toLeftOf="@+id/x"
             android:singleLine="false"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_margin="4dp"/>
+            android:layout_margin="4dp"
+            android:maxHeight="300dp"/>
 
         <ImageButton
             android:id="@+id/x"
             android:layout_width="wrap_content"
-            android:layout_height="70dp"
+            android:layout_height="35dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
