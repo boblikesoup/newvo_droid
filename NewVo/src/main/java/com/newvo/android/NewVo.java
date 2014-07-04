@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import com.facebook.Session;
+import com.newvo.android.friends.FacebookPublisher;
 import com.newvo.android.groups.GroupsFragment;
 import com.personagraph.api.PGAgent;
 
@@ -44,6 +45,9 @@ public class NewVo extends NewVoActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+        if(FacebookPublisher.statusCallback != null){
+            FacebookPublisher.statusCallback.call(Session.getActiveSession(), Session.getActiveSession().getState(), null);
+        }
 
     }
 

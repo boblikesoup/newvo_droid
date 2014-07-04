@@ -13,6 +13,7 @@ import com.parse.ParseFile;
 public class NewVoImageView extends ImageView {
 
     private ParseFile parseFile;
+    private boolean local;
 
     public NewVoImageView(Context context) {
         super(context);
@@ -38,5 +39,13 @@ public class NewVoImageView extends ImageView {
 
     public void setParseFile(com.parse.ParseFile file) {
         this.parseFile = file;
+    }
+
+    public void setLocal(boolean local) {
+        this.local = local;
+    }
+
+    public boolean isLocal() {
+        return local;
     }
 }

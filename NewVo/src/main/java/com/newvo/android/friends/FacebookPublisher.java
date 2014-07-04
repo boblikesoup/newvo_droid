@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import com.facebook.*;
+import com.facebook.model.GraphObject;
 import com.newvo.android.util.ToastUtils;
 import com.parse.ParseFile;
 import com.personagraph.api.PGAgent;
@@ -27,7 +28,7 @@ public class FacebookPublisher {
     private static final String PENDING_PUBLISH_KEY = "pendingPublishReauthorization";
 
     private final Activity activity;
-    private Session.StatusCallback statusCallback;
+    public static Session.StatusCallback statusCallback;
 
     public FacebookPublisher(Activity activity){
         this.activity = activity;
@@ -37,8 +38,9 @@ public class FacebookPublisher {
         return activity;
     }
 
-    public void publishStory(final ParseFile shareImage, final String caption, final String postId, final String facebookId) {
+    public void publishStory(final ParseFile shareImage, final String caption, final String postId, final String facebookId, boolean definitelyLacksPermissions) {
         Session session = Session.getActiveSession();
+        statusCallback = null;
 
         if (session != null){
             // Check for publish permissions
@@ -49,13 +51,12 @@ public class FacebookPublisher {
                     @Override
                     public void call(Session session, SessionState sessionState, Exception e) {
                         if (!isSubsetOf(PERMISSIONS, session.getDeclinedPermissions())) {
-                            publishStory(shareImage, caption, postId, facebookId);
+                            publishStory(shareImage, caption, postId, facebookId, false);
                         }
-                        session.removeCallback(statusCallback);
                     }
                 };
                 Session.NewPermissionsRequest newPermissionsRequest = new Session
-                        .NewPermissionsRequest(getActivity(), PERMISSIONS).setCallback(statusCallback);
+                        .NewPermissionsRequest(getActivity(), PERMISSIONS);
                 session.requestNewPublishPermissions(newPermissionsRequest);
                 return;
             }
@@ -69,8 +70,13 @@ public class FacebookPublisher {
 
             Request.Callback callback= new Request.Callback() {
                 public void onCompleted(Response response) {
-                    JSONObject graphResponse = response
-                            .getGraphObject()
+                    GraphObject graphObject = response
+                            .getGraphObject();
+                    if(graphObject == null){
+                        publishStory(shareImage, caption, postId, facebookId, true);
+                        return;
+                    }
+                    JSONObject graphResponse = graphObject
                             .getInnerJSONObject();
                     String postId = null;
                     try {

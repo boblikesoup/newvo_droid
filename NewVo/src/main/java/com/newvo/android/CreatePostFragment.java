@@ -198,7 +198,7 @@ public class CreatePostFragment extends Fragment {
                             @Override
                             public void done(ParseException e) {
                                 if(e == null){
-                                    new FacebookPublisher(activity).publishStory(parseFile, post.getCaption(), post.getObjectId(), User.getCurrentUser().getFacebookId());
+                                    new FacebookPublisher(activity).publishStory(parseFile, post.getCaption(), post.getObjectId(), User.getCurrentUser().getFacebookId(), false);
                                 }
 
                             }
