@@ -92,6 +92,11 @@
                 <category android:name="com.newvo.android"/>
             </intent-filter>
         </receiver>
+        <receiver android:name="com.newvo.android.CommentsReceiver" android:exported="false">
+            <intent-filter>
+                <action android:name="Comments" />
+            </intent-filter>
+        </receiver>
     </application>
 
     <receiver android:name="com.personagraph.sensor.service.StartupReceiver">

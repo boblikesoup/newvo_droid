@@ -8,9 +8,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import com.newvo.android.parse.Post;
 import com.newvo.android.parse.User;
 import com.newvo.android.slidingmenu.NavigationDrawerListAdapter;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.personagraph.api.PGAgent;
+
+import java.util.List;
 
 /**
  * Created by David on 4/11/2014.
@@ -60,6 +66,20 @@ public abstract class NewVoActivity extends DrawerActivity {
             String[] navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
             displayView(navMenuTitles[0]);
             setTitle(navMenuTitles[0]);
+            String postId = CommentsReceiver.POST_ID;
+            if(postId != null){
+                CommentsReceiver.POST_ID = null;
+                ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+                query.whereEqualTo(User.OBJECT_ID, postId);
+                query.findInBackground(new FindCallback<Post>() {
+                    @Override
+                    public void done(List<Post> posts, ParseException e) {
+                        if(e == null && posts != null && !posts.isEmpty()) {
+                            displayChildFragment(new SuggestionsFragment(posts.get(0)), "NewVo", "SuggestionsList");
+                        }
+                    }
+                });
+            }
         }
 
     }
