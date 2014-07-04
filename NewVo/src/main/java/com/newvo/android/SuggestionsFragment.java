@@ -102,9 +102,8 @@ public class SuggestionsFragment extends Fragment implements ChildFragment, Load
         caption.setText(post.getCaption());
 
         boolean writeAccess = post.getACL().getWriteAccess(User.getCurrentUser());
-        if(!writeAccess){
-            summaryViewHolder.settingsIcon.setVisibility(View.INVISIBLE);
-        } else {
+        summaryViewHolder.settingsIcon.setVisibility(View.INVISIBLE);
+        if(writeAccess) {
             addSuggestionLayout.setVisibility(View.GONE);
         }
 
