@@ -127,6 +127,7 @@ public class CreatePostRequest {
                         List<String> userTags = post.getUserTags();
                         params.put("userIDS", userTags);
                         params.put("msg", self.getPublicName() + " has tagged you in a post. Take a look!");
+                        params.put("searchObjectPost", post.getObjectId());
                         ParseCloud.callFunctionInBackground("push_tagged_notifications", params, null);
 
                         if (post.getStatus().equals(Post.getStatusValue(Post.ACTIVE))) {

@@ -119,6 +119,7 @@ public class SuggestionsFragment extends Fragment implements ChildFragment, Load
                     suggestion.setLoading(true);
                     final SuggestionAdapter adapter = (SuggestionAdapter) suggestionsList.getAdapter();
                     adapter.add(suggestion);
+                    suggestionsList.setSelection(adapter.getCount() - 1);
                     SuggestionsFragment.this.text.setText(null);
                     createSuggestionRequest.request(new SaveCallback() {
                         @Override

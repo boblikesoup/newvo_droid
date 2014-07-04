@@ -7,6 +7,7 @@ import com.newvo.android.util.TypefaceUtil;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.parse.Parse;
 import com.parse.ParseFacebookUtils;
 import com.parse.PushService;
@@ -51,6 +52,9 @@ public class NewVoApplication extends Application {
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
                 .defaultDisplayImageOptions(defaultOptions)
+                .tasksProcessingOrder(QueueProcessingType.LIFO)
+                .diskCacheSize(50 * 1024 * 1024)
+                .diskCacheFileCount(100)
                 .build();
         IMAGE_LOADER.init(config);
     }

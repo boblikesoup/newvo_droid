@@ -111,7 +111,9 @@ public class SummaryViewHolder {
                 secondVotes.votesNotification.setText("");
                 secondVotes.votesNotification.setVisibility(View.GONE);
             }
-            new ClearCountersRequest(item).request(null);
+            if(counter1 > 0 || counter2 > 0) {
+                new ClearCountersRequest(item).request(null);
+            }
         }
 
         if(votedOn || userIsPoster){
