@@ -78,7 +78,7 @@ public class SuggestionsFragment extends Fragment implements ChildFragment, Load
             @Override
             public void onClick(View v) {
                 Activity activity = getActivity();
-                if(activity != null) {
+                if (activity != null) {
                     ((NewVoActivity) activity).displayChildFragment(new TextFragment(post.getCaption()), "Caption", "Caption");
                 }
             }
@@ -90,7 +90,7 @@ public class SuggestionsFragment extends Fragment implements ChildFragment, Load
             public void done(ParseException e) {
                 if (e == null) {
                     Activity activity = getActivity();
-                    if(activity != null){
+                    if (activity != null) {
                         activity.onBackPressed();
                     }
                 } else {
@@ -103,7 +103,7 @@ public class SuggestionsFragment extends Fragment implements ChildFragment, Load
 
         boolean writeAccess = post.getACL().getWriteAccess(User.getCurrentUser());
         summaryViewHolder.settingsIcon.setVisibility(View.INVISIBLE);
-        if(writeAccess) {
+        if (writeAccess) {
             addSuggestionLayout.setVisibility(View.GONE);
         }
 
@@ -112,7 +112,7 @@ public class SuggestionsFragment extends Fragment implements ChildFragment, Load
             public void onClick(View v) {
                 CharSequence text = SuggestionsFragment.this.text.getText();
                 final Activity activity = getActivity();
-                if(text != null && text.toString().replaceAll("\\s+","").length() > 1){
+                if (text != null && text.toString().replaceAll("\\s+", "").length() > 1) {
                     hideKeyboard();
                     CreateSuggestionRequest createSuggestionRequest = new CreateSuggestionRequest(post, text.toString());
                     final Suggestion suggestion = createSuggestionRequest.getSuggestion();
@@ -145,28 +145,29 @@ public class SuggestionsFragment extends Fragment implements ChildFragment, Load
 
     private void hideKeyboard() {
         Activity activity = getActivity();
-        if(activity != null) {
+        if (activity != null) {
             InputMethodManager imm = (InputMethodManager) activity.getSystemService(
                     Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(this.text.getWindowToken(), 0);
         }
     }
 
-    private void updateSuggestions(){
+    private void updateSuggestions() {
         Activity activity = getActivity();
-        if(activity != null) {
+        if (activity != null) {
+            suggestions = null;
             ((DrawerActivity) activity).setActionBarLoading(true);
         }
         new PostSuggestionsRequest(post).request(new FindCallback<Suggestion>() {
             @Override
             public void done(List<Suggestion> suggestions, ParseException e) {
                 Activity activity = getActivity();
-                if(e == null) {
+                if (e == null) {
                     initSuggestions(suggestions);
-                    if(activity != null) {
+                    if (activity != null && SuggestionsFragment.this.equals(((NewVoActivity) activity).getActiveFragment())) {
                         ((DrawerActivity) activity).setActionBarLoading(false);
                     }
-                } else if(getActivity() != null) {
+                } else if (getActivity() != null) {
                     updateSuggestions();
                 }
             }
