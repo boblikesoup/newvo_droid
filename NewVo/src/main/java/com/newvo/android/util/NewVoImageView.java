@@ -2,14 +2,17 @@ package com.newvo.android.util;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import com.parse.GetDataCallback;
-import com.parse.ParseException;
-import com.parse.ParseImageView;
+import android.widget.ImageView;
+import com.newvo.android.NewVoApplication;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.parse.ParseFile;
 
 /**
  * Created by David on 6/18/2014.
  */
-public class NewVoImageView extends ParseImageView {
+public class NewVoImageView extends ImageView {
+
+    private ParseFile parseFile;
 
     public NewVoImageView(Context context) {
         super(context);
@@ -23,29 +26,17 @@ public class NewVoImageView extends ParseImageView {
         super(context, attributeSet, defStyle);
     }
 
-    @Override
     public void loadInBackground() {
         loadInBackground(null);
     }
 
-    @Override
-    public void loadInBackground(final GetDataCallback completionCallback) {
-        GetDataCallback callback = new GetDataCallback() {
-            @Override
-            public void done(byte[] bytes, ParseException e) {
-                if(e != null){
-                    loadInBackground(this);
-                }
-                if(completionCallback != null) {
-                    completionCallback.done(bytes, e);
-                }
-            }
-        };
-        super.loadInBackground(callback);
+    public void loadInBackground(final ImageLoadingListener imageLoadingListener) {
+        if(parseFile != null){
+            NewVoApplication.IMAGE_LOADER.displayImage(parseFile.getUrl(), this);
+        }
     }
 
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
+    public void setParseFile(com.parse.ParseFile file) {
+        this.parseFile = file;
     }
 }

@@ -11,6 +11,7 @@ import com.newvo.android.parse.User;
 import com.newvo.android.remote.ClearCountersRequest;
 import com.newvo.android.remote.RemovePostRequest;
 import com.newvo.android.remote.SetPostActiveRequest;
+import com.newvo.android.util.NewVoImageView;
 import com.newvo.android.util.ToastUtils;
 import com.parse.*;
 
@@ -33,9 +34,9 @@ public class SummaryViewHolder {
     SideViewHolder secondVotes;
 
     @InjectView(R.id.photo1)
-    ParseImageView firstImage;
+    NewVoImageView firstImage;
     @InjectView(R.id.photo2)
-    ParseImageView secondImage;
+    NewVoImageView secondImage;
 
     @InjectView(R.id.photo2_layout)
     View secondImageLayout;

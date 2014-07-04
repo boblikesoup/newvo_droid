@@ -41,6 +41,7 @@ dependencies {
     }
     compile files('libs/parse/Parse-1.5.0.jar')
     compile files('libs/personagraph/personagraph_1.7.0.jar')
+    compile files('libs/universalimageloader/universal-image-loader-1.9.2.jar')
     compile project(':libraries:AndroidCrop')
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
 }

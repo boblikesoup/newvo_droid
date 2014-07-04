@@ -10,9 +10,9 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import com.newvo.android.util.IntentUtils;
+import com.newvo.android.util.NewVoImageView;
 import com.newvo.android.util.ParseFileUtils;
 import com.parse.ParseFile;
-import com.parse.ParseImageView;
 
 /**
  * Created by David on 5/3/2014.
@@ -26,7 +26,7 @@ public class CreatePostPhotoViewHolder {
     ImageButton folderButton;
 
     @InjectView(R.id.photo)
-    ParseImageView photoView;
+    NewVoImageView photoView;
 
     @InjectView(R.id.folder_camera_layout)
     LinearLayout folderCameraLayout;

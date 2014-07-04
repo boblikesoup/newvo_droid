@@ -14,6 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.newvo.android.parse.Post;
 import com.newvo.android.remote.VoteOnPostRequest;
+import com.newvo.android.util.NewVoImageView;
 import com.newvo.android.util.ToastUtils;
 import com.parse.*;
 import com.personagraph.api.PGAgent;
@@ -29,9 +30,9 @@ public class ComparisonViewHolder {
     @InjectView(R.id.caption)
     TextView question;
     @InjectView(R.id.photo1)
-    ParseImageView firstImage;
+    NewVoImageView firstImage;
     @InjectView(R.id.photo2)
-    ParseImageView secondImage;
+    NewVoImageView secondImage;
     @InjectView(R.id.main_button)
     ImageButton mainButton;
     @InjectView(R.id.first_choice)
