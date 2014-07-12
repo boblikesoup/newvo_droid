@@ -27,21 +27,21 @@ public class User extends ParseUser {
         return getParseFile(PROFILE_PIC);
     }
     public void setProfilePicture(ParseFile parseFile){
-        put("profile_pic", parseFile);
+        put(PROFILE_PIC, parseFile);
     }
 
     public String getGender(){
         return getString(GENDER);
     }
     public void setGender(String gender){
-        put("gender", gender);
+        put(GENDER, gender);
     }
 
     public String getPublicName(){
         return getString(PUBLIC_NAME);
     }
     public void setPublicName(String publicName){
-        put("public_name", publicName);
+        put(PUBLIC_NAME, publicName);
     }
 
     public static User getCurrentUser(){
@@ -50,5 +50,8 @@ public class User extends ParseUser {
 
     public String getFacebookId() {
         return getString(FACEBOOK_ID);
+    }
+    public void setFacebookId(String facebookId) {
+        put(FACEBOOK_ID, facebookId);
     }
 }

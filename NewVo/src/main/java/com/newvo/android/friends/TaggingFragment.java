@@ -86,7 +86,7 @@ public class TaggingFragment extends Fragment implements ChildFragment {
 
         pickerText.setText("Friends Only");
         pickerCheckbox.setChecked(FRIENDS_ONLY);
-        pickerLayout.setOnClickListener(new View.OnClickListener() {
+        pickerCheckbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FRIENDS_ONLY = !FRIENDS_ONLY;

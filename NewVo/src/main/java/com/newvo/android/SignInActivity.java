@@ -96,6 +96,7 @@ public class SignInActivity extends Activity {
                         if (currentUser != null && user != null) {
                             currentUser.setGender((String) user.getProperty("gender"));
                             currentUser.setPublicName(user.getName());
+                            currentUser.setFacebookId(user.getId());
                             try {
                                 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                                 StrictMode.setThreadPolicy(policy);
