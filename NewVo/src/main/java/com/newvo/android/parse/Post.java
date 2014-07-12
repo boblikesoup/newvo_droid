@@ -40,6 +40,7 @@ public class Post extends ParseObject implements Comparable<Post> {
     public static final String ACTIVE = "active";
     public static final String INACTIVE = "inactive";
     public static final String DELETED = "deleted";
+    public static final String FLAGGED = "deleted";
 
     //viewable by strings
     public static final String PUBLIC = "public";
@@ -134,6 +135,8 @@ public class Post extends ParseObject implements Comparable<Post> {
                 return INACTIVE;
             case 2:
                 return DELETED;
+            case 3:
+                return FLAGGED;
         }
         return null;
     }
@@ -152,6 +155,8 @@ public class Post extends ParseObject implements Comparable<Post> {
             return 1;
         } else if (status.equals(DELETED)) {
             return 2;
+        } else if(status.equals(FLAGGED)){
+            return 3;
         }
         return -1;
     }
