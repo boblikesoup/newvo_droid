@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
     package="com.newvo.android"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:versionCode="2"
+    android:versionName="0.1">
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -36,6 +38,7 @@
         android:allowBackup="true"
         android:icon="@drawable/newvo_icon"
         android:label="@string/app_name"
+        android:debuggable="false"
         >
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
