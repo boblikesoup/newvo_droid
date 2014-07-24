@@ -37,9 +37,7 @@ public class NewVoApplication extends Application {
         int sensorConfig = PGAgent.APP; // for including App Sensor
         sensorConfig |= PGAgent.FACEBOOK; // for including Facebook Sensor
         boolean enableAppSensorByDefault = true; // "true" if App sensor  is turned on by default
-
-
-        PGAgent.init(this, "371:g0fEuapkmqxbTb3d", sensorConfig, enableAppSensorByDefault);
+        PGAgent.init(this, "520:3gqSswGNbdu8vwBe", sensorConfig, enableAppSensorByDefault);
 
         TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", TypefaceUtil.UNIVERSAL_FONT); // font from assets: "assets/fonts/Roboto-Regular.ttf
 

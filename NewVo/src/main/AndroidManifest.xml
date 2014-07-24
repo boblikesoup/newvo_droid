@@ -75,6 +75,20 @@
             android:windowSoftInputMode="stateAlwaysVisible|adjustResize"/>
         <activity android:name="com.soundcloud.android.crop.CropImageActivity"/>
 
+
+        <receiver android:name="com.personagraph.sensor.service.StartupReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <category android:name="android.intent.category.HOME"/>
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.personagraph.sensor.service.SensorService">
+            <intent-filter>
+                <action android:name="com.personagraph.SensorService" />
+            </intent-filter>
+        </service>
+
         <!--Parse Push Notifications -->
         <service android:name="com.parse.PushService"/>
         <receiver android:name="com.parse.ParseBroadcastReceiver">
@@ -100,18 +114,5 @@
             </intent-filter>
         </receiver>
     </application>
-
-    <receiver android:name="com.personagraph.sensor.service.StartupReceiver">
-        <intent-filter>
-            <action android:name="android.intent.action.BOOT_COMPLETED"/>
-            <category android:name="android.intent.category.HOME"/>
-        </intent-filter>
-    </receiver>
-
-    <service android:name="com.personagraph.sensor.service.SensorService">
-        <intent-filter>
-            <action android:name="com.personagraph.SensorService"/>
-        </intent-filter>
-    </service>
 
 </manifest>
