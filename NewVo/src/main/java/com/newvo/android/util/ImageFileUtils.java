@@ -47,7 +47,7 @@ public class ImageFileUtils {
         Uri uri = Uri.parse(path);
         InputStream in = null;
         try {
-            final int IMAGE_MAX_SIZE = 1200000; // 1.2MP
+            final int IMAGE_MAX_SIZE = 300000; // 1.2MP
             in = contentResolver.openInputStream(uri);
 
             // Decode image size
