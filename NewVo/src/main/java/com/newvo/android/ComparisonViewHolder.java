@@ -113,8 +113,14 @@ public class ComparisonViewHolder {
             buffer2.setVisibility(View.INVISIBLE);
         }
 
-        firstChoice.setOnClickListener(new ChoiceClickListener(context, 0));
-        secondChoice.setOnClickListener(new ChoiceClickListener(context, 1));
+        if(photo2 != null){
+            firstChoice.setOnClickListener(new ChoiceClickListener(context, 0));
+            secondChoice.setOnClickListener(new ChoiceClickListener(context, 1));
+        } else {
+            firstChoice.setOnClickListener(new ChoiceClickListener(context, 1));
+            secondChoice.setOnClickListener(new ChoiceClickListener(context, 0));
+        }
+
 
         mainButton.setOnClickListener(new View.OnClickListener() {
             @Override
