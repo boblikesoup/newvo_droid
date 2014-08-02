@@ -89,8 +89,14 @@ public class SummaryViewHolder {
         if(votedOnArray != null) {
             votedOn = votedOnArray.contains(User.getCurrentUser().getUserId());
         }
+        final ParseFile photo2 = item.getPhoto2();
         int votes1 = item.getVotes1();
         int votes2 = item.getVotes2();
+        //The server says votes1 is negative.
+        if(photo2 == null){
+            votes1 = item.getVotes2();
+            votes2 = item.getVotes1();
+        }
         int totalVotes = votes1 + votes2;
 
         if(userIsPoster){
@@ -167,7 +173,6 @@ public class SummaryViewHolder {
             secondVotes.votesLayout.setVisibility(View.GONE);
         }
 
-        final ParseFile photo2 = item.getPhoto2();
         if (photo2 != null) {
             secondImage.setParseFile(photo2);
             secondImage.loadInBackground();
